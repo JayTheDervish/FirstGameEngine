@@ -8,8 +8,8 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	if(transform){delete transform}
-	if(sprite){delete sprite}
+	if (transform) { delete transform; }
+	if (sprite) { delete sprite; }
 }
 
 void GameObject::Update()

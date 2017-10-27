@@ -85,6 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\GameObject.cpp" />
+    <ClCompile Include="Components\Sprite.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -92,6 +94,8 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\GameObject.h" />
+    <ClInclude Include="Components\Sprite.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="InputManager.h" />
