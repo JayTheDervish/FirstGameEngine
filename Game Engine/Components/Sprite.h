@@ -21,8 +21,9 @@ Creation date: 10/26/2017
 #include <SDL_surface.h>
 #include "GameObject.h"
 #include "Transform.h"
+#include "Component.h"
 
-class Sprite
+class Sprite : public Component
 {
 public:
 	Sprite();
