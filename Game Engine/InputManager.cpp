@@ -86,7 +86,9 @@ InputManager::InputManager(int numPlayers, char mode)
 	else //mode == 'k' Keyboard Mode
 	{
 		//keyboard input startup
-		currentKeyboardState = SDL_GetKeyboardState(&length);
+		//currentKeyboardState = SDL_GetKeyboardState(&length);
+
+		memset(currentKeyboardState, SDL_GetKeyboardState(&length), length * sizeof(Uint8));
 
 		prevKeyboardState = new Uint8();
 
@@ -412,6 +414,7 @@ void InputManager::Update()
 		memcpy(prevKeyboardState, currentKeyboardState, length * sizeof(Uint8));
 
 		//Update Current
+		memcpy(currentKeyboardState, SDL_GetKeyboardState(&length), length * sizeof(Uint8));
 //		SDL_PumpEvents();
 	}
 	

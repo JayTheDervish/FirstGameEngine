@@ -91,7 +91,7 @@ private:
 	int numberOfPlayers;
 	char inputMode;
 	Uint8 * prevKeyboardState;
-	const Uint8 * currentKeyboardState;
+	Uint8 * currentKeyboardState;
 	int length;
 	Uint8 currentJoystick1State[2];
 	Uint8 currentJoystick2State[2];

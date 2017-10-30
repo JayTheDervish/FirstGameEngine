@@ -1,32 +1,3 @@
-﻿  ResourceManager.cpp
-  Main.cpp
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2143: syntax error: missing ';' before '*'
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2238: unexpected token(s) preceding ';'
-c:\sandbox\game engine - 1 - application startup\game engine\main.cpp(110): error C2039: 'sprite': is not a member of 'GameObject'
-  c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(28): note: see declaration of 'GameObject'
-  InputManager.cpp
-  FrameRateController.cpp
-c:\sandbox\game engine - 1 - application startup\game engine\frameratecontroller.cpp(24): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-c:\sandbox\game engine - 1 - application startup\game engine\frameratecontroller.cpp(36): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-c:\sandbox\game engine - 1 - application startup\game engine\frameratecontroller.cpp(51): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  Transform.cpp
-  Sprite.cpp
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2143: syntax error: missing ';' before '*'
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2238: unexpected token(s) preceding ';'
-c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.cpp(13): error C2039: 'Transform': is not a member of 'Sprite'
-  c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.h(26): note: see declaration of 'Sprite'
-c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.cpp(13): error C3861: 'GetOwner': identifier not found
-c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.cpp(13): error C2227: left of '->has' must point to class/struct/union/generic type
-  c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.cpp(13): note: type is 'unknown-type'
-c:\sandbox\game engine - 1 - application startup\game engine\components\sprite.cpp(13): error C2275: 'Transform': illegal use of this type as an expression
-  c:\sandbox\game engine - 1 - application startup\game engine\components\transform.h(5): note: see declaration of 'Transform'
-  GameObject.cpp
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2143: syntax error: missing ';' before '*'
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.h(42): error C2238: unexpected token(s) preceding ';'
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.cpp(23): error C2065: 'sprite': undeclared identifier
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.cpp(29): error C2065: 'sprite': undeclared identifier
-c:\sandbox\game engine - 1 - application startup\game engine\components\gameobject.cpp(29): error C2541: 'delete': cannot delete objects that are not pointers
-  Generating Code...
+﻿  InputManager.cpp
+  Game Engine.vcxproj -> E:\Software Projects\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.exe
+  Game Engine.vcxproj -> E:\Software Projects\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.pdb (Full PDB)

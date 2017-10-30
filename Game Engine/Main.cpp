@@ -99,7 +99,7 @@ int main(int argc, char* args[])
 	players[1]->h = 160;
 	players[1]->w = 256;
 
-	InputManager * inputManager = new InputManager(2, 'j');
+	InputManager * inputManager = new InputManager(2, 'k');
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 

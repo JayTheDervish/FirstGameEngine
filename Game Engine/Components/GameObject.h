@@ -13,7 +13,7 @@ Author:		Jay Coleman j.coleman 60000217
 Creation date: 10/26/2017
 
 - End Header --------------------------------------------------------*/
-
+#pragma once
 
 #include "Sprite.h"
 #include "Transform.h"
@@ -35,11 +35,11 @@ public:
 
 
 	//map with all components
-	std::map<std::string, Component*> components;
+	std::map<std::string, Component* > components;
 
 	//delete these
-	Transform *transform;
-	Sprite *sprite;
+	Transform * transform;
+	Sprite * sprite;
 
 private:
 	
@@ -50,4 +50,4 @@ private:
 #endif // !GameObject_H
 
 
-#pragma once
+
