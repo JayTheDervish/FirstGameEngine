@@ -6,3 +6,6 @@
 *.db
 *.opendb
 .vs/
+SDL2.0 Lib/
+Game Engine/Debug/
+Game Engine/Release/
