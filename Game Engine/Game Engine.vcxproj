@@ -85,12 +85,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Controller.cpp" />
     <ClCompile Include="Components\GameObject.cpp" />
     <ClCompile Include="Components\Sprite.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
+    <ClCompile Include="Components\UpDown.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MathLibraries\LineSegment2D.c" />
+    <ClCompile Include="MathLibraries\Math2D.c" />
+    <ClCompile Include="MathLibraries\Matrix2D.c" />
+    <ClCompile Include="MathLibraries\Vector2D.c" />
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,8 +105,13 @@
     <ClInclude Include="Components\GameObject.h" />
     <ClInclude Include="Components\Sprite.h" />
     <ClInclude Include="Components\Transform.h" />
+    <ClInclude Include="Components\UpDown.h" />
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MathLibraries\LineSegment2D.h" />
+    <ClInclude Include="MathLibraries\Math2D.h" />
+    <ClInclude Include="MathLibraries\Matrix2D.h" />
+    <ClInclude Include="MathLibraries\Vector2D.h" />
     <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>

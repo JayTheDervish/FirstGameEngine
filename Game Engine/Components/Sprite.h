@@ -8,7 +8,7 @@ File Name:	Sprite.h
 Purpose:	Contains the declaration for the Sprite class.
 Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
-Project:	jcoleman_CS529_maincpp
+Project:	jcoleman_CS529_spriteh
 Author:		Jay Coleman j.coleman 60000217
 Creation date: 10/26/2017
 
