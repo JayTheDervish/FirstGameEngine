@@ -99,7 +99,7 @@ int main(int argc, char* args[])
 	players[1]->h = 160;
 	players[1]->w = 256;
 
-	InputManager * inputManager = new InputManager(2, 'k');
+	InputManager * inputManager = new InputManager(2, 'j');
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
@@ -138,11 +138,22 @@ int main(int argc, char* args[])
 #pragma region Input
 		inputManager->Update();
 
-		players[0]->x += inputManager->GetP1Xpos();
-		players[0]->y += inputManager->GetP1Ypos();
-
-		players[1]->x += inputManager->GetP2Xpos();
-		players[1]->y += inputManager->GetP2Ypos();
+		if (inputManager->isP1DownPressed())
+			players[0]->y += -1;
+		if (inputManager->isP1UpPressed())
+			players[0]->y += 1;
+		if (inputManager->isP1RightPressed())
+			players[0]->x += 1;
+		if (inputManager->isP1LeftPressed())
+			players[0]->x += -1;
+		if (inputManager->isP2DownPressed())
+			players[1]->y += -1;
+		if (inputManager->isP2UpPressed())
+			players[1]->y += 1;
+		if (inputManager->isP2RightPressed())
+			players[1]->x += 1;
+		if (inputManager->isP2LeftPressed())
+			players[1]->x += -1;
 
 		if (inputManager->isP1Action1Pressed())
 			printf("Player 1 Action Button 1 is pressed.\n");
@@ -174,10 +185,13 @@ int main(int argc, char* args[])
 
 #pragma endregion Input
 
+		//update screen buffer
 		resources->Draw(pWindowSurface, players);
 
+		//update screen
 		SDL_UpdateWindowSurface(pWindow);
 
+		//wait frames out
 		frameRateController->WaitFrames();
 		
 	}

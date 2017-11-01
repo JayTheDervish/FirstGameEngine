@@ -31,17 +31,57 @@ public:
 	//Deconstructor
 	~InputManager();
 
-	//Player 1 X movement
-	int GetP1Xpos();
+	
 
-	//Player 1 Y movement
-	int GetP1Ypos();
+	bool isP1RightPressed();
 
-	//Player 2 X movement
-	int GetP2Xpos();
+	bool isP1RightTriggered();
 
-	//Player 2 Y movement
-	int GetP2Ypos();
+	bool isP1RightReleased();
+
+	bool isP1LeftPressed();
+
+	bool isP1LeftTriggered();
+
+	bool isP1LeftReleased();
+
+	bool isP1UpPressed();
+
+	bool isP1UpTriggered();
+
+	bool isP1UpReleased();
+
+	bool isP1DownPressed();
+
+	bool isP1DownTriggered();
+
+	bool isP1DownReleased();
+
+	bool isP2UpPressed();
+
+	bool isP2UpTriggered();
+
+	bool isP2UpReleased();
+
+	bool isP2DownPressed();
+
+	bool isP2DownTriggered();
+
+	bool isP2DownReleased();
+
+	bool isP2RightPressed();
+
+	bool isP2RightTriggered();
+
+	bool isP2RightReleased();
+
+	bool isP2LeftPressed();
+
+	bool isP2LeftTriggered();
+
+	bool isP2LeftReleased();
+
+	
 
 	//Player 1 Action 1 Button
 	//isPressed
@@ -91,12 +131,23 @@ private:
 	int numberOfPlayers;
 	char inputMode;
 	Uint8 * prevKeyboardState;
-	Uint8 * currentKeyboardState;
+	const Uint8 * currentKeyboardState;
 	int length;
-	Uint8 currentJoystick1State[2];
-	Uint8 currentJoystick2State[2];
-	Uint8 prevJoystick1State[2];
-	Uint8 prevJoystick2State[2];
+	Uint8 currentJoystick1State[6];
+	Uint8 currentJoystick2State[6];
+	Uint8 prevJoystick1State[6];
+	Uint8 prevJoystick2State[6];
+
+	//Player 1 X movement
+	int GetP1Xpos();
+	//Player 1 Y movement
+	int GetP1Ypos();
+
+	//Player 2 X movement
+	int GetP2Xpos();
+
+	//Player 2 Y movement
+	int GetP2Ypos();
 };
 
 
