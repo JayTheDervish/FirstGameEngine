@@ -17,6 +17,8 @@ Creation date: 10/26/2017
 
 #include "Sprite.h"
 #include "Transform.h"
+#include "Controller.h"
+#include "UpDown.h"
 #include "Component.h"
 #include <map>
 #include <string>
@@ -40,6 +42,8 @@ public:
 	//delete these
 	Transform * transform;
 	Sprite * sprite;
+	Controller * controller;
+	UpDown * updown;
 
 private:
 	

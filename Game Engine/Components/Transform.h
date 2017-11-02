@@ -25,16 +25,13 @@ Creation date: 10/19/2017
 class Transform : public Component
 {
 public:
-	Transform();
+	Transform(int x, int y);
 	~Transform();
 
 	void Update();
 
 	Vector2D postion2d;
 
-
-	//Get rid of this
-	int P1Xpos, P1Ypos, P2Xpos, P2Ypos;
 
 private:
 };

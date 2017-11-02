@@ -27,11 +27,11 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
-	SDL_Rect * getSprite(int player);
+	SDL_Surface * getSprite(char type);
 
 	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[2]);
 private:
-	SDL_Surface * Volts[2]; //Will change as needed (Name included)
+	SDL_Surface * surfaces[4]; 
 };
 
 #endif // !RESOURCEMANAGER_H

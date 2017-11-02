@@ -27,7 +27,7 @@ class GameObject;
 class Sprite : public Component
 {
 public:
-	Sprite();
+	Sprite(SDL_Surface * sprite);
 	~Sprite();
 
 	void Initialize(GameObject* parent);

@@ -103,13 +103,19 @@ int main(int argc, char* args[])
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
-	//Creating game objects
+	//Creating game objects (one for each player/enemy)
+	//Put in factory
 	{
+		//Player
 		GameObject *object = new GameObject();
-		object->transform = new Transform();
-		object->sprite = new Sprite();
-		object->transform->P1Xpos = 0;
+		object->transform = new Transform(0, 0);
+		object->sprite = new Sprite(resources->getSprite('c'));
+		object->controller = new Controller();
 
+		//Enemy
+		GameObject * enemy = new GameObject();
+		enemy->transform = new Transform(200, 200);
+		enemy->sprite = new Sprite(resources->getSprite('e'));
 	}
 	
 

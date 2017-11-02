@@ -19,26 +19,34 @@ Creation date: 10/19/2017
 ResourceManager::ResourceManager()
 {
 
-	Volts[0] = SDL_LoadBMP("Resources/Volt.bmp");
-	Volts[1] = SDL_LoadBMP("Resources/VoltStormHelm.bmp");
-
+	surfaces[0] = SDL_LoadBMP("Resources/Volt.bmp");
+	surfaces[1] = SDL_LoadBMP("Resources/VoltStormHelm.bmp");
+	surfaces[2] = SDL_LoadBMP("Resources/voltprime.bmp");
+	surfaces[3] = SDL_LoadBMP("Resources/GrineerProsecutor.bmp");
 }
 
 ResourceManager::~ResourceManager()
 {
 	//Free surfaces
-	SDL_FreeSurface(Volts[0]);
-	SDL_FreeSurface(Volts[1]);
+	for (int i = 0; i < 4; ++i)
+		SDL_FreeSurface(surfaces[i]);
+	
 }
 
-SDL_Rect * ResourceManager::getSprite(int player)
+SDL_Surface * ResourceManager::getSprite(char type)
 {
+	if (type == 'c')
+		return surfaces[0];
+	if (type == 'e')
+		return surfaces[3];
 	return nullptr;
 }
 
+
+//to be removed.
 void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[2])
 {
-	SDL_BlitSurface(Volts[0], NULL, windowSurface, players[0]);
-	SDL_BlitSurface(Volts[1], NULL, windowSurface, players[1]);
+	SDL_BlitSurface(surfaces[0], NULL, windowSurface, players[0]);
+	SDL_BlitSurface(surfaces[1], NULL, windowSurface, players[1]);
 }
 

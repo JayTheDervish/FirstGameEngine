@@ -1,3 +1,7 @@
-﻿  InputManager.cpp
-  Game Engine.vcxproj -> E:\Software Projects\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.exe
-  Game Engine.vcxproj -> E:\Software Projects\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.pdb (Full PDB)
+﻿  Math2D.c
+c:\sandbox\game engine - 1 - application startup\game engine\mathlibraries\math2d.c(117): warning C4047: 'function': 'Vector2D *' differs in levels of indirection from 'Vector2D **'
+c:\sandbox\game engine - 1 - application startup\game engine\mathlibraries\math2d.c(117): warning C4024: 'Vector2DDotProduct': different types for formal and actual parameter 2
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+SDL2main.lib(SDL_windows_main.obj) : warning LNK4217: locally defined symbol ___iob_func imported in function _ShowError
+  Game Engine.vcxproj -> C:\SandBox\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.exe
+  Game Engine.vcxproj -> C:\SandBox\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.pdb (Full PDB)

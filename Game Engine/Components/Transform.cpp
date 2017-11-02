@@ -16,8 +16,10 @@ Creation date: 10/26/2017
 
 #include "Transform.h"
 
-Transform::Transform()
+Transform::Transform(int x, int y)
 {
+	postion2d.x = x;
+	postion2d.y = y;
 }
 
 Transform::~Transform()
