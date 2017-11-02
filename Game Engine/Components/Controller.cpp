@@ -23,3 +23,8 @@ Controller::Controller()
 Controller::~Controller()
 {
 }
+
+void Controller::Update()
+{
+
+}

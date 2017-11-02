@@ -27,6 +27,7 @@ public:
 	Controller();
 	~Controller();
 
+	void Update();
 
 private:
 };
