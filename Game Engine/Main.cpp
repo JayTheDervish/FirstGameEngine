@@ -81,31 +81,17 @@ int main(int argc, char* args[])
 		freopen_s(&file, "CONOUT$", "wt", stderr);
 		freopen_s(&file, "CONOUT$", "wt", stdin);
 
-		SetConsoleTitle(L"SDL 2.0 Test");
+		SetConsoleTitle(L"Game Engine Console Input");
 	}
 
 
-	SDL_Rect * players[2];
-
-	players[0] = new SDL_Rect();
-
-	players[0]->x = 0;
-	players[0]->y = 0;
-	players[0]->h = 175;
-	players[0]->w = 280;
-
-	players[1] = new SDL_Rect();
-
-	players[1]->x = 300;
-	players[1]->y = 0;
-	players[1]->h = 160;
-	players[1]->w = 256;
+	
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
 	//Creating game objects (one for each player/enemy)
 	//Put in factory
-	{
+	
 		//Player
 		GameObject * object = new GameObject();
 		object->transform = new Transform(0, 0);
@@ -125,8 +111,23 @@ int main(int argc, char* args[])
 		enemy->sprite->Initialize(enemy);
 		enemy->updown = new UpDown();
 		enemy->updown->Initialize(enemy);
-	}
 	
+	
+		SDL_Rect * players[2];
+
+		players[0] = new SDL_Rect();
+
+		players[0]->x = object->transform->postion2d.x;
+		players[0]->y = object->transform->postion2d.y;
+		players[0]->h = 175;
+		players[0]->w = 280;
+
+		players[1] = new SDL_Rect();
+
+		players[1]->x = enemy->transform->postion2d.x;
+		players[1]->y = enemy->transform->postion2d.y;
+		players[1]->h = 160;
+		players[1]->w = 256;
 
 	// Game loop
 #pragma region Game Loop
@@ -150,6 +151,9 @@ int main(int argc, char* args[])
 
 		}
 
+		//Update all GameObjects
+		object->Update();
+		enemy->Update();
 
 		//update screen buffer
 		resources.Draw(pWindowSurface, players);

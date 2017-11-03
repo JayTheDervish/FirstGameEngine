@@ -25,6 +25,8 @@ Creation date: 10/26/2017
 
 extern InputManager inputManager;
 
+class GameObject;
+
 class Controller : public Component
 {
 public:

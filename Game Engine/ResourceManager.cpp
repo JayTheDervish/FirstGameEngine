@@ -44,9 +44,9 @@ SDL_Surface * ResourceManager::getSprite(char type)
 
 
 //to be removed.
-void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[2])
+void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[])
 {
-	SDL_BlitSurface(surfaces[0], NULL, windowSurface, players[0]);
-	SDL_BlitSurface(surfaces[1], NULL, windowSurface, players[1]);
+	SDL_BlitSurface(surfaces[2], NULL, windowSurface, players[0]);
+	SDL_BlitSurface(surfaces[3], NULL, windowSurface, players[1]);
 }
 

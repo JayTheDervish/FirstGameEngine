@@ -31,4 +31,6 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	if (controller) { controller->Update(); }
+	if (updown) { updown->Update(); }
 }

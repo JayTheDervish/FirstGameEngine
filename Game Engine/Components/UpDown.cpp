@@ -31,5 +31,8 @@ void UpDown::Initialize(GameObject * parent)
 
 void UpDown::Update()
 {
-
+	if (daddy->transform->postion2d.y > 0)
+		daddy->transform->postion2d.y -= 1;
+	else
+		daddy->transform->postion2d.y += 1;
 }

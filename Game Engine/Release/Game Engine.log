@@ -1,9 +1,33 @@
-﻿  Main.cpp
-  Generating code
-  29 of 162 functions (17.9%) were compiled, the rest were copied from previous compilation.
-    12 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-SDL2main.lib(SDL_windows_main.obj) : warning LNK4049: locally defined symbol ___iob_func imported
-  Game Engine.vcxproj -> C:\Users\Jay\Desktop\Game Engine - 1 - Application Startup\Game Engine\Release\Game Engine.exe
-  Game Engine.vcxproj -> C:\Users\Jay\Desktop\Game Engine - 1 - Application Startup\Game Engine\Release\Game Engine.pdb (Full PDB)
+﻿  Controller.cpp
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(45): error C2143: syntax error: missing ';' before '*'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(45): error C2238: unexpected token(s) preceding ';'
+  GameObject.cpp
+  Sprite.cpp
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C2143: syntax error: missing ';' before '*'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C2238: unexpected token(s) preceding ';'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(44): error C2143: syntax error: missing ';' before '*'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(44): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(44): error C2238: unexpected token(s) preceding ';'
+  Transform.cpp
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C2143: syntax error: missing ';' before '*'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(43): error C2238: unexpected token(s) preceding ';'
+Components\Transform.cpp(21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+Components\Transform.cpp(22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  UpDown.cpp
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(46): error C2143: syntax error: missing ';' before '*'
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(46): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\jay\desktop\game engine - 1 - application startup\game engine\components\GameObject.h(46): error C2238: unexpected token(s) preceding ';'
+  FrameRateController.cpp
+FrameRateController.cpp(24): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+FrameRateController.cpp(36): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+FrameRateController.cpp(51): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  InputManager.cpp
+  Main.cpp
+Main.cpp(120): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Main.cpp(121): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Main.cpp(127): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+Main.cpp(128): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  ResourceManager.cpp

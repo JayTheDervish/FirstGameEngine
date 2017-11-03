@@ -37,9 +37,9 @@ public:
 
 
 	//map with all components
-	std::map<std::string, Component* > components;
-
-	//delete these
+	std::map<std::string, Component*> components;
+	
+	//delete these after testing and add to map
 	Transform * transform;
 	Sprite * sprite;
 	Controller * controller;

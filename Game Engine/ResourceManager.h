@@ -31,7 +31,7 @@ public:
 
 
 	//Will move to Renderer when it is implemented.
-	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[2]);
+	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[]);
 private:
 	SDL_Surface * surfaces[4]; 
 };

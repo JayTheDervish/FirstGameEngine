@@ -23,6 +23,8 @@ Creation date: 10/19/2017
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+class GameObject;
+
 class Transform : public Component
 {
 public:

@@ -19,6 +19,11 @@ Creation date: 10/26/2017
 #include "Component.h"
 #include "GameObject.h"
 
+#ifndef UPDOWN_H
+#define UPDOWN_H
+
+class GameObject;
+
 class UpDown : public Component
 {
 public:
@@ -31,3 +36,5 @@ public:
 private:
 	GameObject * daddy;
 };
+
+#endif
