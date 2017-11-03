@@ -23,3 +23,13 @@ UpDown::UpDown()
 UpDown::~UpDown()
 {
 }
+
+void UpDown::Initialize(GameObject * parent)
+{
+	daddy = parent;
+}
+
+void UpDown::Update()
+{
+
+}

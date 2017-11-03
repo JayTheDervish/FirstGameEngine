@@ -25,6 +25,8 @@ GameObject::~GameObject()
 {
 	if (transform) { delete transform; }
 	if (sprite) { delete sprite; }
+	if (controller) { delete controller; }
+	if (updown) { delete updown; }
 }
 
 void GameObject::Update()

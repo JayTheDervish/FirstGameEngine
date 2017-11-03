@@ -17,6 +17,7 @@ Creation date: 10/26/2017
 #pragma once
 
 #include "Component.h"
+#include "GameObject.h"
 
 class UpDown : public Component
 {
@@ -24,5 +25,9 @@ public:
 	UpDown();
 	~UpDown();
 
+	void Initialize(GameObject * parent);
+
+	void Update();
 private:
+	GameObject * daddy;
 };

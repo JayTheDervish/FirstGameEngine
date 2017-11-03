@@ -37,6 +37,7 @@ public:
 	SDL_Surface * surface;
 
 private:
+	GameObject * daddy;
 };
 
 #endif // !Sprite_H

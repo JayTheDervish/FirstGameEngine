@@ -17,9 +17,13 @@ Creation date: 10/26/2017
 #pragma once
 
 #include "Component.h"
+#include "GameObject.h"
+#include "..\InputManager.h"
 
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
+
+extern InputManager inputManager;
 
 class Controller : public Component
 {
@@ -27,9 +31,12 @@ public:
 	Controller();
 	~Controller();
 
+	void Initialize(GameObject * parent);
+
 	void Update();
 
 private:
+	GameObject * daddy;
 };
 
 #endif // !CONTROLLER_H

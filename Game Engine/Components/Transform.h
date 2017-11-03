@@ -18,6 +18,7 @@ Creation date: 10/19/2017
 
 #include "Component.h"
 #include "..\MathLibraries\Vector2D.h"
+#include "GameObject.h"
 
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
@@ -28,12 +29,14 @@ public:
 	Transform(int x, int y);
 	~Transform();
 
+	void Initialize(GameObject * parent);
 	void Update();
 
 	Vector2D postion2d;
 
 
 private:
+	GameObject * daddy;
 };
 
 #endif // !TRANSFORM_H

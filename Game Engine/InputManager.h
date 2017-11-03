@@ -25,8 +25,10 @@ class InputManager
 {
 public:
 
-	//Constructor
+	//Constructors
 	InputManager(int numPlayers, char mode );
+
+	InputManager() : numberOfPlayers(1), inputMode('k') {};
 
 	//Deconstructor
 	~InputManager();

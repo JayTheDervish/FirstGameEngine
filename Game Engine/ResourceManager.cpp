@@ -36,7 +36,7 @@ ResourceManager::~ResourceManager()
 SDL_Surface * ResourceManager::getSprite(char type)
 {
 	if (type == 'c')
-		return surfaces[0];
+		return surfaces[2];
 	if (type == 'e')
 		return surfaces[3];
 	return nullptr;

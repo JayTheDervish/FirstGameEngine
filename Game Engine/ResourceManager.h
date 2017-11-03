@@ -29,6 +29,8 @@ public:
 
 	SDL_Surface * getSprite(char type);
 
+
+	//Will move to Renderer when it is implemented.
 	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[2]);
 private:
 	SDL_Surface * surfaces[4]; 

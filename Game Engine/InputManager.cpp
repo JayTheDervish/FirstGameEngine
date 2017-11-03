@@ -96,6 +96,7 @@ InputManager::InputManager(int numPlayers, char mode)
 	}
 }
 
+
 InputManager::~InputManager()
 {
 	if (SDL_JoystickGetAttached(joy2)) {

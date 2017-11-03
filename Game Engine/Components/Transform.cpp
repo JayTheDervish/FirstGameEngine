@@ -26,6 +26,11 @@ Transform::~Transform()
 {
 }
 
+void Transform::Initialize(GameObject * parent)
+{
+	daddy = parent;
+}
+
 void Transform::Update()
 {
 }
