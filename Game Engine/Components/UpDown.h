@@ -17,7 +17,6 @@ Creation date: 10/26/2017
 #pragma once
 
 #include "Component.h"
-#include "GameObject.h"
 
 #ifndef UPDOWN_H
 #define UPDOWN_H
@@ -32,9 +31,10 @@ public:
 
 	void Initialize(GameObject * parent);
 
-	void Update();
+	void Update(float dt);
 private:
 	GameObject * daddy;
+	float elapsedTime;
 };
 
 #endif

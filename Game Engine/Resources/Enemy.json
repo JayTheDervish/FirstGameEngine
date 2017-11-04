@@ -1,0 +1,16 @@
+{
+	"ObjectType" : "Enemy",
+	"Components" :
+	{
+		"Transform":
+		{
+			"position2D":
+			{
+				"x": 200,
+				"y": 200
+			}
+		},
+		"Sprite": "Resources/GrineerProsecutor.bmp",
+		"UpDown": ""
+	}
+}

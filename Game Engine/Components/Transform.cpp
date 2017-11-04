@@ -31,6 +31,6 @@ void Transform::Initialize(GameObject * parent)
 	daddy = parent;
 }
 
-void Transform::Update()
+void Transform::Update(float dt)
 {
 }

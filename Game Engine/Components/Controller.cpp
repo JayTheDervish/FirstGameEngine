@@ -15,6 +15,7 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #include "Controller.h"
+#include "GameObject.h"
 
 Controller::Controller()
 {
@@ -29,18 +30,18 @@ void Controller::Initialize(GameObject * parent)
 	daddy = parent;
 }
 
-void Controller::Update()
+void Controller::Update(float dt)
 {
 #pragma region Input
-	inputManager.Update();
+	inputManager->Update();
 
-	if (inputManager.isP1DownPressed())
+	if (inputManager->isP1DownPressed())
 		daddy->transform->postion2d.y += -1;
-	if (inputManager.isP1UpPressed())
+	if (inputManager->isP1UpPressed())
 		daddy->transform->postion2d.y += 1;
-	if (inputManager.isP1RightPressed())
+	if (inputManager->isP1RightPressed())
 		daddy->transform->postion2d.x += 1;
-	if (inputManager.isP1LeftPressed())
+	if (inputManager->isP1LeftPressed())
 		daddy->transform->postion2d.x += -1;
 
 	/*
@@ -53,17 +54,17 @@ void Controller::Update()
 	if (inputManager.isP2LeftPressed())
 		players[1]->x += -1;*/
 
-	if (inputManager.isP1Action1Pressed())
+	if (inputManager->isP1Action1Pressed())
 		printf("Player 1 Action Button 1 is pressed.\n");
-	if (inputManager.isP1Action1Triggered())
+	if (inputManager->isP1Action1Triggered())
 		printf("Player 1 Action Button 1 is triggered.\n");
-	if (inputManager.isP1Action1Released())
+	if (inputManager->isP1Action1Released())
 		printf("Player 1 Action Button 1 is released.\n");
-	if (inputManager.isP1Action2Pressed())
+	if (inputManager->isP1Action2Pressed())
 		printf("Player 1 Action Button 2 is pressed.\n");
-	if (inputManager.isP1Action2Released())
+	if (inputManager->isP1Action2Released())
 		printf("Player 1 Action Button 2 is released.\n");
-	if (inputManager.isP1Action2Triggered())
+	if (inputManager->isP1Action2Triggered())
 		printf("Player 1 Action Button 2 is triggered.\n");
 
 

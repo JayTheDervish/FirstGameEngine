@@ -44,8 +44,15 @@ SDL_Surface * ResourceManager::getSprite(char type)
 
 
 //to be removed.
-void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[])
+void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[], std::vector<Vector2D> positions)
 {
+	for (int i = 0; i < positions.size(); ++i)
+	{
+		players[i]->x = positions[i].x;
+		players[i]->y = positions[i].y;
+	}
+
+
 	SDL_BlitSurface(surfaces[2], NULL, windowSurface, players[0]);
 	SDL_BlitSurface(surfaces[3], NULL, windowSurface, players[1]);
 }

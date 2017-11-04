@@ -22,8 +22,10 @@ Creation date: 10/19/2017
 #include "Components\GameObject.h"
 #include "Components\Sprite.h"
 #include "Components\Transform.h"
+#include "MathLibraries\Vector2D.h"
 #include <SDL_surface.h>
 #include <Windows.h>
+#include <vector>
 
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
@@ -37,7 +39,7 @@ extern "C" FILE * __cdecl __iob_func(void)
 
 float FRAME_TIME_CAP = (1.0f / 60.0f) * 1000.0f;
 
-InputManager inputManager;
+InputManager * inputManager = new InputManager(1, 'j');
 ResourceManager resources;
 
 int main(int argc, char* args[])
@@ -91,7 +93,7 @@ int main(int argc, char* args[])
 
 	//Creating game objects (one for each player/enemy)
 	//Put in factory
-	
+#pragma region Object Factory creation
 		//Player
 		GameObject * object = new GameObject();
 		object->transform = new Transform(0, 0);
@@ -104,7 +106,7 @@ int main(int argc, char* args[])
 
 		//Enemy
 		GameObject * enemy = new GameObject();
-		enemy->transform = new Transform(200, 200);
+		enemy->transform = new Transform(200, 400);
 		enemy->transform->Initialize(enemy);
 		//200 x 200
 		enemy->sprite = new Sprite(resources.getSprite('e'));
@@ -128,6 +130,7 @@ int main(int argc, char* args[])
 		players[1]->y = enemy->transform->postion2d.y;
 		players[1]->h = 160;
 		players[1]->w = 256;
+#pragma endregion Object Factory creation
 
 	// Game loop
 #pragma region Game Loop
@@ -137,6 +140,7 @@ int main(int argc, char* args[])
 
 		float dt = frameRateController->getDeltaTime();
 		
+		//clearing the screen
 		SDL_FillRect(pWindowSurface, NULL, 0);
 
 
@@ -152,11 +156,14 @@ int main(int argc, char* args[])
 		}
 
 		//Update all GameObjects
-		object->Update();
-		enemy->Update();
+		object->Update(dt);
+		enemy->Update(dt);
 
 		//update screen buffer
-		resources.Draw(pWindowSurface, players);
+		std::vector<Vector2D> positions;
+		positions.push_back(object->transform->postion2d);
+		positions.push_back(enemy->transform->postion2d);
+		resources.Draw(pWindowSurface, players, positions);
 
 		//update screen
 		SDL_UpdateWindowSurface(pWindow);
@@ -167,7 +174,9 @@ int main(int argc, char* args[])
 	}
 #pragma endregion Game Loop
 
-
+	//Delete all GameObjects
+	delete object;
+	delete enemy;
 
 	// Close if opened
 	delete frameRateController;

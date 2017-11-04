@@ -20,6 +20,8 @@ Creation date: 10/19/2017
 #define RESOURCEMANAGER_H
 
 #include <SDL_surface.h>
+#include "MathLibraries\Vector2D.h"
+#include <vector>
 
 class ResourceManager
 {
@@ -31,7 +33,7 @@ public:
 
 
 	//Will move to Renderer when it is implemented.
-	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[]);
+	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[], std::vector<Vector2D> positions);
 private:
 	SDL_Surface * surfaces[4]; 
 };

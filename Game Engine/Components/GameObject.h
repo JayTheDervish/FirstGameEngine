@@ -33,7 +33,7 @@ public:
 	~GameObject();
 
 	//Calls Updates for each Compoenent
-	void Update();
+	void Update(float dt);
 
 
 	//map with all components

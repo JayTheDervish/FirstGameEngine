@@ -31,6 +31,6 @@ void Sprite::Initialize(GameObject * parent)
 	daddy = parent;
 }
 
-void Sprite::Update()
+void Sprite::Update(float dt)
 {
 }

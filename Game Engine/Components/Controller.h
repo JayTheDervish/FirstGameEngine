@@ -17,13 +17,12 @@ Creation date: 10/26/2017
 #pragma once
 
 #include "Component.h"
-#include "GameObject.h"
 #include "..\InputManager.h"
 
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
 
-extern InputManager inputManager;
+extern InputManager * inputManager;
 
 class GameObject;
 
@@ -35,7 +34,7 @@ public:
 
 	void Initialize(GameObject * parent);
 
-	void Update();
+	void Update(float dt);
 
 private:
 	GameObject * daddy;

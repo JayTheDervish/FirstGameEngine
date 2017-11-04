@@ -1,0 +1,16 @@
+{
+	"ObjectType" : "Player",
+	"Components" :
+	{
+		"Transform":
+		{
+			"position2D":
+			{
+				"x": 0,
+				"y": 0
+			}
+		},
+		"Sprite": "",
+		"Controller": "Resources/voltprime.bmp"
+	}
+}

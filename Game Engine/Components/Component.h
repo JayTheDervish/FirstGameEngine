@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 class Component
 {
 public:
+	virtual void Update(float dt) = 0;
 
 private:
 };

@@ -29,8 +29,8 @@ GameObject::~GameObject()
 	if (updown) { delete updown; }
 }
 
-void GameObject::Update()
+void GameObject::Update(float dt)
 {
-	if (controller) { controller->Update(); }
-	if (updown) { updown->Update(); }
+	if (controller) { controller->Update(dt); }
+	if (updown) { updown->Update(dt); }
 }

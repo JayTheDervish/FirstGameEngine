@@ -15,6 +15,7 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #include "UpDown.h"
+#include "GameObject.h"
 
 UpDown::UpDown()
 {
@@ -27,12 +28,18 @@ UpDown::~UpDown()
 void UpDown::Initialize(GameObject * parent)
 {
 	daddy = parent;
+	elapsedTime = 0.0f;
 }
 
-void UpDown::Update()
+
+void UpDown::Update(float dt)
 {
-	if (daddy->transform->postion2d.y > 0)
+	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
 		daddy->transform->postion2d.y -= 1;
-	else
+	else if (elapsedTime >5.0f && elapsedTime < 10.0f )
 		daddy->transform->postion2d.y += 1;
+
+	elapsedTime = elapsedTime + dt;
+	if (elapsedTime >= 10.0f)
+		elapsedTime = 0.0f;
 }

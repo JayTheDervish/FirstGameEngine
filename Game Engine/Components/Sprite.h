@@ -32,7 +32,7 @@ public:
 
 	void Initialize(GameObject* parent);
 
-	void Update();
+	void Update(float dt);
 
 	SDL_Surface * surface;
 
