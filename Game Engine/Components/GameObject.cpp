@@ -34,3 +34,8 @@ void GameObject::Update(float dt)
 	if (controller) { controller->Update(dt); }
 	if (updown) { updown->Update(dt); }
 }
+
+Component * GameObject::getComponent(COMPONENTS component)
+{
+	return nullptr;
+}

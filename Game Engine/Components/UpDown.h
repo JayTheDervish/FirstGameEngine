@@ -32,6 +32,8 @@ public:
 	void Initialize(GameObject * parent);
 
 	void Update(float dt);
+
+	void Serialize(FILE **fpp);
 private:
 	GameObject * daddy;
 	float elapsedTime;

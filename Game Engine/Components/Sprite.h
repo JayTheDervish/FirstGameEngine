@@ -36,6 +36,8 @@ public:
 
 	SDL_Surface * surface;
 
+	void Serialize(FILE **fpp);
+
 private:
 	GameObject * daddy;
 };

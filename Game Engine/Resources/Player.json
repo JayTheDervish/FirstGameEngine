@@ -10,7 +10,7 @@
 				"y": 0
 			}
 		},
-		"Sprite": "",
-		"Controller": "Resources/voltprime.bmp"
+		"Sprite": "Resources/voltprime.bmp",
+		"Controller": ""
 	}
 }

@@ -43,3 +43,7 @@ void UpDown::Update(float dt)
 	if (elapsedTime >= 10.0f)
 		elapsedTime = 0.0f;
 }
+
+void UpDown::Serialize(FILE ** fpp)
+{
+}

@@ -18,10 +18,22 @@ Creation date: 10/26/2017
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <iostream>
+
+enum COMPONENTS
+{
+	TRANSFORM,
+	SPRITE,
+	CONTROLLER,
+	UPDOWN,
+	BODY
+};
+
 class Component
 {
 public:
 	virtual void Update(float dt) = 0;
+	virtual void Serialize(FILE **fpp) = 0;
 
 private:
 };

@@ -34,3 +34,7 @@ void Sprite::Initialize(GameObject * parent)
 void Sprite::Update(float dt)
 {
 }
+
+void Sprite::Serialize(FILE ** fpp)
+{
+}

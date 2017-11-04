@@ -1,3 +1,7 @@
-﻿  GameObject.cpp
-  Game Engine.vcxproj -> C:\SandBox\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.exe
-  Game Engine.vcxproj -> C:\SandBox\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.pdb (Full PDB)
+﻿  Main.cpp
+c:\users\jtcoleman\desktop\game engine - 1 - application startup\game engine\main.cpp(122): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jtcoleman\desktop\game engine - 1 - application startup\game engine\main.cpp(123): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jtcoleman\desktop\game engine - 1 - application startup\game engine\main.cpp(129): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jtcoleman\desktop\game engine - 1 - application startup\game engine\main.cpp(130): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Game Engine.vcxproj -> C:\Users\JTColeman\Desktop\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.exe
+  Game Engine.vcxproj -> C:\Users\JTColeman\Desktop\Game Engine - 1 - Application Startup\Game Engine\Debug\Game Engine.pdb (Full PDB)

@@ -34,3 +34,7 @@ void Transform::Initialize(GameObject * parent)
 void Transform::Update(float dt)
 {
 }
+
+void Transform::Serialize(FILE ** fpp)
+{
+}

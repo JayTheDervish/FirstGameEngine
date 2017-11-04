@@ -87,3 +87,7 @@ void Controller::Update(float dt)
 #pragma endregion Input
 
 }
+
+void Controller::Serialize(FILE ** fpp)
+{
+}

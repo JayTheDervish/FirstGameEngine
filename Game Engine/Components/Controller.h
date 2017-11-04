@@ -36,6 +36,8 @@ public:
 
 	void Update(float dt);
 
+	void Serialize(FILE **fpp);
+
 private:
 	GameObject * daddy;
 };

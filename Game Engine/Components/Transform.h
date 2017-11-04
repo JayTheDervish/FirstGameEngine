@@ -35,6 +35,7 @@ public:
 
 	Vector2D postion2d;
 
+	void Serialize(FILE **fpp);
 
 private:
 	GameObject * daddy;
