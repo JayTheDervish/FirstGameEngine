@@ -91,6 +91,7 @@
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
+    <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathLibraries\LineSegment2D.c" />
