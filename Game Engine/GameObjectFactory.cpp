@@ -10,7 +10,7 @@ Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
 Project:	jcoleman_CS529_GameObjectFactorycpp
 Author:		Jay Coleman j.coleman 60000217
-Creation date: 10/26/2017
+Creation date: 11/2/2017
 
 - End Header --------------------------------------------------------*/
 
@@ -24,11 +24,13 @@ GameObjectFactory::~GameObjectFactory()
 {
 }
 
-GameObject * GameObjectFactory::CreateObject(std::string type)
+GameObject * GameObjectFactory::CreateObject(std::string filename)
 {
 	GameObject * newObj = NULL;
 
+	//Archetype serialization
 
 
+	//return object for initialization
 	return newObj;
 }

@@ -110,6 +110,7 @@
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="MathLibraries\LineSegment2D.h" />
     <ClInclude Include="MathLibraries\Math2D.h" />
     <ClInclude Include="MathLibraries\Matrix2D.h" />

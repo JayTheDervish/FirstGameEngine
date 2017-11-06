@@ -10,13 +10,15 @@ Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
 Project:	jcoleman_CS529_GameObjectFactoryh
 Author:		Jay Coleman j.coleman 60000217
-Creation date: 10/26/2017
+Creation date: 11/2/2017
 
 - End Header --------------------------------------------------------*/
 
 #pragma once
 
 #include "Components\GameObject.h"
+#include <string>
+#include <iostream>
 
 #ifndef GAMEOBJECTFACTORY_H
 #define GAMEOBJECTFACTORY_H
@@ -27,7 +29,7 @@ public:
 	GameObjectFactory();
 	~GameObjectFactory();
 
-	GameObject * CreateObject(std::string type);
+	GameObject * CreateObject(std::string filename);
 private:
 };
 
