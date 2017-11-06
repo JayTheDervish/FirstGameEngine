@@ -1,0 +1,24 @@
+{
+	"Level" :
+	{"Objects" :
+	{
+		"Player":
+		{
+			"position2D":
+			{
+				"x": 0,
+				"y": 0
+			}
+		},
+		"Enemy":
+		{
+		"position2D":
+			{
+				"x": 200,
+				"y": 200
+			}
+		}
+	}
+	
+}
+}

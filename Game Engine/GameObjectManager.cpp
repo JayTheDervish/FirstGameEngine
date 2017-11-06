@@ -5,32 +5,30 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 
 File Name:	GameObjectFactory.h
-Purpose:	Contains the declaration for the GameObjectFactory class.
+Purpose:	Contains the definition for the GameObjectManager class.
 Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
-Project:	jcoleman_CS529_GameObjectFactoryh
+Project:	jcoleman_CS529_GameObjectManagercpp
 Author:		Jay Coleman j.coleman 60000217
 Creation date: 11/2/2017
 
 - End Header --------------------------------------------------------*/
 
-#pragma once
+#include "GameObjectManager.h"
 
-#include "Components\GameObject.h"
-#include <string>
-#include <iostream>
-
-#ifndef GAMEOBJECTFACTORY_H
-#define GAMEOBJECTFACTORY_H
-
-class GameObjectFactory
+GameObjectManager::GameObjectManager()
 {
-public:
-	GameObjectFactory();
-	~GameObjectFactory();
+}
 
-	GameObject * CreateObject(std::string filename);
-private:
-};
+GameObjectManager::~GameObjectManager()
+{
+	for (std::vector<GameObject *>::iterator it = objects.begin(); it != objects.end(); ++it) {
+		delete *it;
+	}
+}
 
-#endif // !GAMEOBJECTFACTORY_H
+void GameObjectManager::Load(nlohmann::json filename)
+{
+	
+
+}
