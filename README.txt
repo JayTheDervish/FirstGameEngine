@@ -11,7 +11,7 @@ Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
 Project:	jcoleman_CS529_readme_1
 Author:		Jay Coleman j.coleman 60000217
-Creation date: 10/19/2017
+Creation date: 11/5/2017
 
 - End Header --------------------------------------------------------*/
 
@@ -29,10 +29,4 @@ Player 2 movement maps to arrow keys, action buttons are right control and 0 on 
 (Note: Controller is a Logitech Dual Action, but it should map 
 one to one with an Xbox controller.) 
 
-Note: Joystick mode is the only mode functioning correctly due to the following:
-A non specified exception was thrown when I tried last using keyboard
-input on the line while(SDL_PollEvents(&e)). I removed SDL_PumpEvents so it is not 
-called twice, but I still received an exception that was not specified i.e. like 
-heap corruption. My goal is to have both input styles working (keyboard worked
-before I abstracted out the Resource Manager and Frame Rate Controller into their
-own classes and outside of main) when the project is finished.
+Update (11/5/2017): Serialization is not working (thus factory isn't either), but components are in place and I will be working this week to get that going.
