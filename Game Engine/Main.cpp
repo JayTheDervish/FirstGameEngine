@@ -19,6 +19,7 @@ Creation date: 10/19/2017
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "FrameRateController.h"
+#include "GameObjectManager.h"
 #include "Components\GameObject.h"
 #include "Components\Sprite.h"
 #include "Components\Transform.h"
@@ -26,7 +27,8 @@ Creation date: 10/19/2017
 #include <SDL_surface.h>
 #include <Windows.h>
 #include <vector>
-
+#include <fstream>
+#include "json.hpp"
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -90,6 +92,16 @@ int main(int argc, char* args[])
 	
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
+
+	GameObjectManager * goManager = new GameObjectManager();
+
+	std::ifstream inputfile("level.json");
+
+	nlohmann::json j;
+
+	inputfile >> j;
+	
+	//Load("level.json");
 
 	//Creating game objects (one for each player/enemy)
 	//Put in factory

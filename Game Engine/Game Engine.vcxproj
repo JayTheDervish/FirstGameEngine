@@ -92,6 +92,7 @@
     <ClCompile Include="Components\UpDown.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathLibraries\LineSegment2D.c" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Components\UpDown.h" />
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="GameObjectFactory.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MathLibraries\LineSegment2D.h" />
@@ -120,6 +122,11 @@
   <ItemGroup>
     <Image Include="Resources\Volt.bmp" />
     <Image Include="Resources\VoltStormHelm.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Enemy.json" />
+    <None Include="Resources\level.json" />
+    <None Include="Resources\Player.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
