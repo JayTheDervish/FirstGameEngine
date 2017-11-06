@@ -99,9 +99,13 @@ int main(int argc, char* args[])
 
 	nlohmann::json j;
 
-	inputfile >> j;
 	
-	//Load("level.json");
+
+	//inputfile >> j;
+	
+
+	//Load Level
+	goManager->Load(j);
 
 	//Creating game objects (one for each player/enemy)
 	//Put in factory

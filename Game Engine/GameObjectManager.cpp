@@ -22,10 +22,13 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
-
+	for (std::vector<GameObject *>::iterator it = objects.begin(); it != objects.end(); ++it) {
+		delete *it;
+	}
 }
 
 void GameObjectManager::Load(nlohmann::json filename)
 {
+	
 
 }
