@@ -1,24 +1,26 @@
 {
-	"Level" :
-	{"Objects" :
-	{
-		"Player":
-		{
-			"position2D":
-			{
-				"x": 0,
-				"y": 0
-			}
-		},
-		"Enemy":
-		{
-		"position2D":
-			{
-				"x": 200,
-				"y": 200
-			}
-		}
-	}
-	
-}
-}
+  "Objects": [
+    {
+      "Player": {
+        "Transform": {
+          "position2D": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      }
+    }
+    ,
+    {
+      "Enemy": {
+        "Transform": {
+          "position2D": {
+            "x": 200,
+            "y": 200
+          }
+        }
+      }
+    }
+  ]
+
+    }
