@@ -38,3 +38,8 @@ void Transform::Update(float dt)
 void Transform::Serialize(FILE ** fpp)
 {
 }
+
+GameObject * Transform::GetOwner()
+{
+	return daddy;
+}

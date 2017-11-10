@@ -38,3 +38,8 @@ void Sprite::Update(float dt)
 void Sprite::Serialize(FILE ** fpp)
 {
 }
+
+GameObject * Sprite::GetOwner()
+{
+	return daddy;
+}

@@ -38,6 +38,8 @@ public:
 
 	void Serialize(FILE **fpp);
 
+	GameObject * GetOwner();
+
 private:
 	GameObject * daddy;
 };
