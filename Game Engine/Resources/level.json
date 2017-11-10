@@ -1,7 +1,7 @@
 {
   "Objects": [
     {
-      "Player": {
+      "Player.json": {
         "Transform": {
           "position2D": {
             "x": 0,
@@ -12,7 +12,7 @@
     }
     ,
     {
-      "Enemy": {
+      "Enemy.json": {
         "Transform": {
           "position2D": {
             "x": 200,
