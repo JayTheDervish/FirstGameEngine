@@ -91,3 +91,8 @@ void Controller::Update(float dt)
 void Controller::Serialize(FILE ** fpp)
 {
 }
+
+GameObject * Controller::GetOwner()
+{
+	return daddy;
+}

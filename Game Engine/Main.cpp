@@ -95,13 +95,13 @@ int main(int argc, char* args[])
 
 	GameObjectManager * goManager = new GameObjectManager();
 
-	std::ifstream inputfile("level.json");
+	std::ifstream inputfile("Resources/level.json");
 
 	nlohmann::json j;
 
 	
 
-	//inputfile >> j;
+	inputfile >> j;
 	
 
 	//Load Level

@@ -1,24 +1,26 @@
 {
-	"Level" :
-	{"Objects" :
-	{
-		"Player":
-		{
-			"position2D":
-			{
-				"x": 0,
-				"y": 0
-			}
-		},
-		"Enemy":
-		{
-		"position2D":
-			{
-				"x": 200,
-				"y": 200
-			}
-		}
-	}
-	
-}
-}
+  "Objects": [
+    {
+      "Player.json": {
+        "Transform": {
+          "position2D": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      }
+    }
+    ,
+    {
+      "Enemy.json": {
+        "Transform": {
+          "position2D": {
+            "x": 200,
+            "y": 200
+          }
+        }
+      }
+    }
+  ]
+
+    }

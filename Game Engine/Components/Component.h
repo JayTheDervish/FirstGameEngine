@@ -35,6 +35,8 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Serialize(FILE **fpp) = 0;
 
+	virtual GameObject * GetOwner() = 0;
+
 private:
 };
 

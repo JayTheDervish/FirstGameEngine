@@ -34,6 +34,7 @@ public:
 	void Update(float dt);
 
 	void Serialize(FILE **fpp);
+	GameObject * GetOwner();
 private:
 	GameObject * daddy;
 	float elapsedTime;

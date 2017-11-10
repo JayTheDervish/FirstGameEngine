@@ -47,3 +47,8 @@ void UpDown::Update(float dt)
 void UpDown::Serialize(FILE ** fpp)
 {
 }
+
+GameObject * UpDown::GetOwner()
+{
+	return daddy;
+}
