@@ -30,6 +30,8 @@ enum COMPONENTS
 	BODY
 };
 
+class GameObject;
+
 class Component
 {
 public:

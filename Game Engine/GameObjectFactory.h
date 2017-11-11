@@ -19,6 +19,7 @@ Creation date: 11/2/2017
 #include "Components\GameObject.h"
 #include <string>
 #include <iostream>
+#include "json.hpp"
 
 #ifndef GAMEOBJECTFACTORY_H
 #define GAMEOBJECTFACTORY_H
@@ -29,7 +30,7 @@ public:
 	GameObjectFactory();
 	~GameObjectFactory();
 
-	GameObject * CreateObject(std::string filename);
+	GameObject * CreateObject(nlohmann::json j);
 private:
 };
 

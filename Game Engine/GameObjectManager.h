@@ -19,6 +19,7 @@ Creation date: 11/2/2017
 #include "Components\GameObject.h"
 #include <vector>
 #include "json.hpp"
+#include "GameObjectFactory.h"
 
 #ifndef GAMEOBJECTMANAGER_H
 #define GAMEOBJECTMANAGER_H
@@ -36,6 +37,7 @@ public:
 	
 
 private:
+	GameObjectFactory * GOFactory;
 };
 
 #endif // !GAMEOBJECTMANAGER_H
