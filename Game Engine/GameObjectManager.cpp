@@ -31,15 +31,14 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::Load(nlohmann::json filename)
 {
-	nlohmann::json j; //Objects
-	nlohmann::json o; //Enemy.json
+	nlohmann::json o; //Objects
+	int i = 0;
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {
-		 j = filename[it.key()][0];
-		 o = filename[it.key()][1];
-		std::cout << it.key() << " : " << it.value() << "\n";
+		 o = filename[it.key()][i];
+		 objects.push_back(GOFactory->CreateObject(o));
+		++i;
 	}
 
-	GOFactory->CreateObject(j);
-	GOFactory->CreateObject(o);
+	
 
 }

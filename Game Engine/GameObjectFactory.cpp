@@ -33,6 +33,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		std::cout << it.key() << " : " << it.value() << "\n";
 	}
 
+
 	//return object for initialization
 	return newObj;
 }
