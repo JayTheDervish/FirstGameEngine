@@ -29,7 +29,7 @@ GameObjectManager::~GameObjectManager()
 	delete GOFactory;
 }
 
-void GameObjectManager::Load(nlohmann::json filename)
+void GameObjectManager::LoadLevel(nlohmann::json filename)
 {
 	nlohmann::json o; //Objects
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {

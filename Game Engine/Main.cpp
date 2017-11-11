@@ -105,7 +105,7 @@ int main(int argc, char* args[])
 	
 
 	//Load Level
-	goManager->Load(j);
+	goManager->LoadLevel(j);
 
 	//Creating game objects (one for each player/enemy)
 	//Put in factory

@@ -32,7 +32,7 @@ public:
 
 	std::vector<GameObject *> objects;
 
-	void Load(nlohmann::json filename);
+	void LoadLevel(nlohmann::json filename);
 
 	
 
