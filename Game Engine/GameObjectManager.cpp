@@ -33,7 +33,7 @@ void GameObjectManager::Load(nlohmann::json filename)
 {
 	nlohmann::json o; //Objects
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {
-		for (int i = 0; ; ++i)
+		for (int i = 0;/*Put a decent condition here*/ ; ++i)
 		{
 			o = filename[it.key()][i];
 			objects.push_back(GOFactory->CreateObject(o));
