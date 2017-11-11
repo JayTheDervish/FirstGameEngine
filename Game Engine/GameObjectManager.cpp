@@ -33,8 +33,10 @@ void GameObjectManager::Load(nlohmann::json filename)
 	nlohmann::json k; //Player.json
 	nlohmann::json l; //Transform
 	nlohmann::json m; //position2D
+	nlohmann::json o; //Enemy.json
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {
 		 j = filename[it.key()][0];
+		 o = filename[it.key()][1];
 		std::cout << it.key() << " : " << it.value() << "\n";
 	}
 

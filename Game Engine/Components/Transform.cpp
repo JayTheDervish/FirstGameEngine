@@ -35,7 +35,7 @@ void Transform::Update(float dt)
 {
 }
 
-void Transform::Serialize(FILE ** fpp)
+void Transform::Serialize(nlohmann::json j)
 {
 }
 

@@ -36,7 +36,7 @@ public:
 
 	void Update(float dt);
 
-	void Serialize(FILE **fpp);
+	void Serialize(nlohmann::json j);
 
 	GameObject * GetOwner();
 

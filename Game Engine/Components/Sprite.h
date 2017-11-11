@@ -36,7 +36,7 @@ public:
 
 	SDL_Surface * surface;
 
-	void Serialize(FILE **fpp);
+	void Serialize(nlohmann::json j);
 
 	GameObject * GetOwner();
 
