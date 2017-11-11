@@ -32,11 +32,12 @@ GameObjectManager::~GameObjectManager()
 void GameObjectManager::Load(nlohmann::json filename)
 {
 	nlohmann::json o; //Objects
-	int i = 0;
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {
-		 o = filename[it.key()][i];
-		 objects.push_back(GOFactory->CreateObject(o));
-		++i;
+		for (int i = 0; ; ++i)
+		{
+			o = filename[it.key()][i];
+			objects.push_back(GOFactory->CreateObject(o));
+		}
 	}
 
 	
