@@ -40,6 +40,4 @@ void GameObjectManager::LoadLevel(nlohmann::json filename)
 		}
 	}
 
-	
-
 }
