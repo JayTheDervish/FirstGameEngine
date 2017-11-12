@@ -41,3 +41,9 @@ void GameObjectManager::LoadLevel(nlohmann::json filename)
 	}
 
 }
+
+void GameObjectManager::UpdateAll(float dt)
+{
+	for (int i = 0; i < objects.size(); ++i)
+		objects[i]->Update(dt);
+}

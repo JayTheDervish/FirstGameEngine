@@ -172,6 +172,9 @@ int main(int argc, char* args[])
 		}
 
 		//Update all GameObjects
+		//Call UpdateAll(dt) on GOManager
+		goManager->UpdateAll(dt);
+
 		object->Update(dt);
 		enemy->Update(dt);
 

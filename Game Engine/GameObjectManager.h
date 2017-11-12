@@ -34,6 +34,7 @@ public:
 
 	void LoadLevel(nlohmann::json filename);
 
+	void UpdateAll(float dt);
 	
 
 private:
