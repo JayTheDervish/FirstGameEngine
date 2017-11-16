@@ -44,7 +44,7 @@ void UpDown::Update(float dt)
 		elapsedTime = 0.0f;
 }
 
-void UpDown::Serialize(FILE ** fpp)
+void UpDown::Serialize(nlohmann::json j)
 {
 }
 

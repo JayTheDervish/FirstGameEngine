@@ -19,6 +19,7 @@ Creation date: 11/2/2017
 #include "Components\GameObject.h"
 #include <vector>
 #include "json.hpp"
+#include "GameObjectFactory.h"
 
 #ifndef GAMEOBJECTMANAGER_H
 #define GAMEOBJECTMANAGER_H
@@ -31,11 +32,13 @@ public:
 
 	std::vector<GameObject *> objects;
 
-	void Load(nlohmann::json filename);
+	void LoadLevel(nlohmann::json filename);
 
+	void UpdateAll(float dt);
 	
 
 private:
+	GameObjectFactory * GOFactory;
 };
 
 #endif // !GAMEOBJECTMANAGER_H

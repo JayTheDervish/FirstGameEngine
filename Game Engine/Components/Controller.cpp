@@ -88,7 +88,7 @@ void Controller::Update(float dt)
 
 }
 
-void Controller::Serialize(FILE ** fpp)
+void Controller::Serialize(nlohmann::json j)
 {
 }
 

@@ -35,7 +35,7 @@ public:
 
 	Vector2D postion2d;
 
-	void Serialize(FILE **fpp);
+	void Serialize(nlohmann::json j);
 
 	GameObject * GetOwner();
 

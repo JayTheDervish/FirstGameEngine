@@ -24,11 +24,16 @@ GameObjectFactory::~GameObjectFactory()
 {
 }
 
-GameObject * GameObjectFactory::CreateObject(std::string filename)
+GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 {
 	GameObject * newObj = NULL;
 
 	//Archetype serialization
+	for (nlohmann::json::iterator it = j.begin(); it != j.end(); ++it) {
+		std::cout << it.key() << " : " << it.value() << "\n";
+	}
+
+
 
 
 	//return object for initialization

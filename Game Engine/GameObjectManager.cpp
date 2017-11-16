@@ -18,6 +18,7 @@ Creation date: 11/2/2017
 
 GameObjectManager::GameObjectManager()
 {
+	GOFactory = new GameObjectFactory();
 }
 
 GameObjectManager::~GameObjectManager()
@@ -25,31 +26,24 @@ GameObjectManager::~GameObjectManager()
 	for (std::vector<GameObject *>::iterator it = objects.begin(); it != objects.end(); ++it) {
 		delete *it;
 	}
+	delete GOFactory;
 }
 
-void GameObjectManager::Load(nlohmann::json filename)
+void GameObjectManager::LoadLevel(nlohmann::json filename)
 {
-	nlohmann::json j; //Objects
-	nlohmann::json k; //Player.json
-	nlohmann::json l; //Transform
-	nlohmann::json m; //position2D
+	nlohmann::json o; //Objects
 	for (nlohmann::json::iterator it = filename.begin(); it != filename.end(); ++it) {
-		 j = filename[it.key()][0];
-		std::cout << it.key() << " : " << it.value() << "\n";
+		for (int i = 0; i < filename[it.key()].size() ; ++i)
+		{
+			o = filename[it.key()][i];
+			objects.push_back(GOFactory->CreateObject(o));
+		}
 	}
 
-	for (nlohmann::json::iterator it = j.begin(); it != j.end(); ++it) {
-		k = j[it.key()];
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}
+}
 
-	for (nlohmann::json::iterator it = k.begin(); it != k.end(); ++it) {
-		l = k[it.key()];
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}
-
-	for (nlohmann::json::iterator it = l.begin(); it != l.end(); ++it) {
-		m = l[it.key()];
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}
+void GameObjectManager::UpdateAll(float dt)
+{
+	for (int i = 0; i < objects.size(); ++i)
+		objects[i]->Update(dt);
 }

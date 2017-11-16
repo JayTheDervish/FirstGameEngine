@@ -19,6 +19,7 @@ Creation date: 10/26/2017
 #define COMPONENT_H
 
 #include <iostream>
+#include "..\json.hpp"
 
 enum COMPONENTS
 {
@@ -29,11 +30,13 @@ enum COMPONENTS
 	BODY
 };
 
+class GameObject;
+
 class Component
 {
 public:
 	virtual void Update(float dt) = 0;
-	virtual void Serialize(FILE **fpp) = 0;
+	virtual void Serialize(nlohmann::json j) = 0;
 
 	virtual GameObject * GetOwner() = 0;
 

@@ -37,5 +37,9 @@ void GameObject::Update(float dt)
 
 Component * GameObject::getComponent(COMPONENTS component)
 {
-	return nullptr;
+	std::map<COMPONENTS, Component*>::iterator it;
+	it = components.find(component);
+	if (it != components.end())
+		return it->second;
+	return NULL;
 }

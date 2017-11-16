@@ -35,7 +35,7 @@ void Sprite::Update(float dt)
 {
 }
 
-void Sprite::Serialize(FILE ** fpp)
+void Sprite::Serialize(nlohmann::json j)
 {
 }
 
