@@ -37,9 +37,15 @@ void UpDown::Update(float dt)
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
 	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
+	{
 		transform->postion2d.y -= 1;
-	else if (elapsedTime >5.0f && elapsedTime < 10.0f )
+		transform->postion2d.x += 1;
+	}
+	else if (elapsedTime > 5.0f && elapsedTime < 10.0f)
+	{
 		transform->postion2d.y += 1;
+		transform->postion2d.x -= 1;
+	}
 
 	elapsedTime = elapsedTime + dt;
 	if (elapsedTime >= 10.0f)
