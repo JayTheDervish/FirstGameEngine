@@ -11,7 +11,7 @@ Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
 Project:	jcoleman_CS529_readme_1
 Author:		Jay Coleman j.coleman 60000217
-Creation date: 11/5/2017
+Creation date: 11/16/2017
 
 - End Header --------------------------------------------------------*/
 
@@ -29,4 +29,5 @@ Player 2 movement maps to arrow keys, action buttons are right control and 0 on 
 (Note: Controller is a Logitech Dual Action, but it should map 
 one to one with an Xbox controller.) 
 
-Update (11/5/2017): Serialization is not working (thus factory isn't either), but components are in place and I will be working this week to get that going.
+Update (11/16/2017): Serialization is done. Event Handling is in place but not completely done.
+Will work on adding it over the weekend.

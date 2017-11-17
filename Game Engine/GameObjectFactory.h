@@ -17,12 +17,15 @@ Creation date: 11/2/2017
 #pragma once
 
 #include "Components\GameObject.h"
+#include "ResourceManager.h"
 #include <string>
-#include <iostream>
+#include <fstream>
 #include "json.hpp"
 
 #ifndef GAMEOBJECTFACTORY_H
 #define GAMEOBJECTFACTORY_H
+
+extern ResourceManager resources;
 
 class GameObjectFactory
 {

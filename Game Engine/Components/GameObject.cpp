@@ -23,16 +23,25 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	if (transform) { delete transform; }
-	if (sprite) { delete sprite; }
-	if (controller) { delete controller; }
-	if (updown) { delete updown; }
+	//loop through all components and delete them.
+	for (std::map<COMPONENTS, Component*>::iterator it = components.begin(); it != components.end(); ++it)
+	{
+		delete it->second;
+	}
+
+	//clear map
+	components.clear();
+
 }
 
 void GameObject::Update(float dt)
 {
-	if (controller) { controller->Update(dt); }
-	if (updown) { updown->Update(dt); }
+	//loop through all components and update them
+	for (std::map<COMPONENTS, Component*>::iterator it = components.begin(); it != components.end(); ++it)
+	{
+		it->second->Update(dt);
+	}
+
 }
 
 Component * GameObject::getComponent(COMPONENTS component)
@@ -42,4 +51,14 @@ Component * GameObject::getComponent(COMPONENTS component)
 	if (it != components.end())
 		return it->second;
 	return NULL;
+}
+
+void GameObject::AddComponent(COMPONENTS type, Component * component)
+{
+	components.insert(std::pair<COMPONENTS, Component*>(type, component) );
+}
+
+void GameObject::HandleEvent()
+{
+
 }

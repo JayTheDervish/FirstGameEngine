@@ -3,33 +3,27 @@
     {
       "Player.json": {
         "Transform": {
-          "position2D": {
             "x": 0,
             "y": 0
           }
         }
+    }
+    ,
+    {
+      "Enemy.json": {
+        "Transform": {
+            "x": 500,
+            "y": 200
+          }
       }
     }
     ,
     {
       "Enemy.json": {
         "Transform": {
-          "position2D": {
             "x": 200,
-            "y": 200
+            "y": 250
           }
-        }
-      }
-    }
-    ,
-    {
-      "Wall1.json": {
-        "Transform": {
-          "position2D": {
-            "x": 0,
-            "y": 200
-          }
-        }
       }
     }
       ]

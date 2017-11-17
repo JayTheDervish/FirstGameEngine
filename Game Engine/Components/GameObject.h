@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 #include "UpDown.h"
 #include "Component.h"
 #include <map>
+#include <string>
 
 #ifndef GameObject_H
 #define GameObject_H
@@ -34,17 +35,21 @@ public:
 	//Calls Updates for each Compoenent
 	void Update(float dt);
 
+	//GameObect ID
+	std::string gameObjectID;
+
 	//Allows access to other components
 	Component * getComponent(COMPONENTS component);
 
+	//Add Components
+	void AddComponent(COMPONENTS type, Component* component);
+
+	//Method to Handle events
+	void HandleEvent();
+
 	//map with all components
 	std::map<COMPONENTS, Component*> components;
-	
-	//delete these after testing and add to map
-	Transform * transform;
-	Sprite * sprite;
-	Controller * controller;
-	UpDown * updown;
+
 
 private:
 	

@@ -2,17 +2,19 @@
   "Components": [
     {
       "Transform": {
-        "position2D": {
           "x": 100,
           "y": 100
-        }
       }
     },
     { 
-    "Sprite"
-    :
-    "Resources/voltprime.bmp"
-},
-    { "Controller": "yes" }
+    "Sprite":"c"
+    },
+    {
+      "Controller": "yes"
+    },
+    {
+      "Body": "yes"
+    }
+
 	]
 }

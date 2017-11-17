@@ -1,21 +1,19 @@
 {
   "Components": [
     {
-      "Controller": "no"
-    },
-    {
-      "Sprite": "Resources/GrineerProsecutor.bmp"
+      "Sprite": "e"
     },
     {
       "Transform": {
-        "position2D": {
           "x": 0,
           "y": 0
         }
-      }
     },
     {
       "UpDown": "yes"
+    },
+    {
+      "Body": "yes"
     }
   ]
 }

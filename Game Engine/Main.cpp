@@ -107,46 +107,6 @@ int main(int argc, char* args[])
 	//Load Level
 	goManager->LoadLevel(j);
 
-	//Creating game objects (one for each player/enemy)
-	//Put in factory
-#pragma region Object Factory creation
-		//Player
-		GameObject * object = new GameObject();
-		object->transform = new Transform(0, 0);
-		object->transform->Initialize(object);
-		//240 x 180
-		object->sprite = new Sprite(resources.getSprite('c'));
-		object->sprite->Initialize(object);
-		object->controller = new Controller();
-		object->controller->Initialize(object);
-
-		//Enemy
-		GameObject * enemy = new GameObject();
-		enemy->transform = new Transform(200, 400);
-		enemy->transform->Initialize(enemy);
-		//200 x 200
-		enemy->sprite = new Sprite(resources.getSprite('e'));
-		enemy->sprite->Initialize(enemy);
-		enemy->updown = new UpDown();
-		enemy->updown->Initialize(enemy);
-	
-	
-		SDL_Rect * players[2];
-
-		players[0] = new SDL_Rect();
-
-		players[0]->x = object->transform->postion2d.x;
-		players[0]->y = object->transform->postion2d.y;
-		players[0]->h = 175;
-		players[0]->w = 280;
-
-		players[1] = new SDL_Rect();
-
-		players[1]->x = enemy->transform->postion2d.x;
-		players[1]->y = enemy->transform->postion2d.y;
-		players[1]->h = 160;
-		players[1]->w = 256;
-#pragma endregion Object Factory creation
 
 	// Game loop
 #pragma region Game Loop
@@ -175,14 +135,27 @@ int main(int argc, char* args[])
 		//Call UpdateAll(dt) on GOManager
 		goManager->UpdateAll(dt);
 
-		object->Update(dt);
-		enemy->Update(dt);
-
 		//update screen buffer
-		std::vector<Vector2D> positions;
-		positions.push_back(object->transform->postion2d);
-		positions.push_back(enemy->transform->postion2d);
-		resources.Draw(pWindowSurface, players, positions);
+
+		
+		for (auto go : goManager->objects)
+		{
+			SDL_Rect * rect = new SDL_Rect();
+			
+			Transform * pTransform = (Transform *)go->getComponent(TRANSFORM);
+			Sprite * pSprite = (Sprite *)go->getComponent(SPRITE);
+
+			if (pTransform && pSprite) {
+				rect->x = pTransform->postion2d.x;
+				rect->y = pTransform->postion2d.y;
+
+				rect->h = pSprite->surface->h;
+				rect->w = pSprite->surface->w;
+
+				SDL_BlitSurface(pSprite->surface, NULL, pWindowSurface, rect);
+			}
+		}
+
 
 		//update screen
 		SDL_UpdateWindowSurface(pWindow);
@@ -194,11 +167,13 @@ int main(int argc, char* args[])
 #pragma endregion Game Loop
 
 	//Delete all GameObjects
-	delete object;
-	delete enemy;
+	delete goManager;
+
+
 
 	// Close if opened
 	delete frameRateController;
+	delete inputManager;
 
 	// Close and destroy the window
 	SDL_DestroyWindow(pWindow);

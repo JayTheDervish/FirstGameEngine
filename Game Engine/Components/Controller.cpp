@@ -35,14 +35,16 @@ void Controller::Update(float dt)
 #pragma region Input
 	inputManager->Update();
 
+	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
+
 	if (inputManager->isP1DownPressed())
-		daddy->transform->postion2d.y += -1;
+		transform->postion2d.y += -1;
 	if (inputManager->isP1UpPressed())
-		daddy->transform->postion2d.y += 1;
+		transform->postion2d.y += 1;
 	if (inputManager->isP1RightPressed())
-		daddy->transform->postion2d.x += 1;
+		transform->postion2d.x += 1;
 	if (inputManager->isP1LeftPressed())
-		daddy->transform->postion2d.x += -1;
+		transform->postion2d.x += -1;
 
 	/*
 	if (inputManager.isP2DownPressed())
