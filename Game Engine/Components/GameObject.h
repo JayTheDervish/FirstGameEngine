@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 #include "UpDown.h"
 #include "Body.h"
 #include "Component.h"
+#include "..\EventManager.h"
 #include <map>
 #include <string>
 
@@ -46,7 +47,7 @@ public:
 	void AddComponent(COMPONENTS type, Component* component);
 
 	//Method to Handle events
-	void HandleEvent();
+	void HandleEvent(EventType type);
 
 	//map with all components
 	std::map<COMPONENTS, Component*> components;

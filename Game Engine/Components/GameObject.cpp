@@ -58,7 +58,7 @@ void GameObject::AddComponent(COMPONENTS type, Component * component)
 	components.insert(std::pair<COMPONENTS, Component*>(type, component) );
 }
 
-void GameObject::HandleEvent()
+void GameObject::HandleEvent(EventType type)
 {
-
+	//Code to do stuff based on EventType enum
 }

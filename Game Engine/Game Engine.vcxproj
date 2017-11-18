@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Components\Body.cpp" />
     <ClCompile Include="Components\Controller.cpp" />
     <ClCompile Include="Components\GameObject.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Components\Body.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\Controller.h" />
