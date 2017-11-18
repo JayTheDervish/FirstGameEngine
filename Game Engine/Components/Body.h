@@ -39,6 +39,8 @@ public:
 
 	void Integrate(float gravity, float dt);
 
+	void Update(float dt);
+
 	void Initialize(GameObject * parent);
 
 	void Serialize(nlohmann::json j);

@@ -73,6 +73,12 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				controller->Initialize(newObj);
 				newObj->AddComponent(CONTROLLER, controller);
 			}
+			else if (!component["Body"].is_null())
+			{
+				Body * body = new Body();
+				body->Initialize(newObj);
+				newObj->AddComponent(BODY, body);
+			}
 		}
 	}
 	if (!j["Enemy.json"].is_null())
@@ -113,6 +119,12 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				UpDown * updown = new UpDown();
 				updown->Initialize(newObj);
 				newObj->AddComponent(UPDOWN, updown);
+			}
+			else if (!component["Body"].is_null())
+			{
+				Body * body = new Body();
+				body->Initialize(newObj);
+				newObj->AddComponent(BODY, body);
 			}
 		}
 	}

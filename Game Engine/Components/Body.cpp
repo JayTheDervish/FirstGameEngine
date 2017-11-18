@@ -46,6 +46,10 @@ void Body::Integrate(float gravity, float dt)
 	transfrom->postion2d.y = mPosY;
 }
 
+void Body::Update(float dt)
+{
+}
+
 void Body::Initialize(GameObject * parent)
 {
 	daddy = parent;

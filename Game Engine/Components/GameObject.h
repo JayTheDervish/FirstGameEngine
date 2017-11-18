@@ -19,6 +19,7 @@ Creation date: 10/26/2017
 #include "Transform.h"
 #include "Controller.h"
 #include "UpDown.h"
+#include "Body.h"
 #include "Component.h"
 #include <map>
 #include <string>

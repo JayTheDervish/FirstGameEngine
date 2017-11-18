@@ -20,9 +20,6 @@ Creation date: 10/19/2017
 #include "ResourceManager.h"
 #include "FrameRateController.h"
 #include "GameObjectManager.h"
-#include "Components\GameObject.h"
-#include "Components\Sprite.h"
-#include "Components\Transform.h"
 #include "MathLibraries\Vector2D.h"
 #include <SDL_surface.h>
 #include <Windows.h>
@@ -132,7 +129,6 @@ int main(int argc, char* args[])
 		}
 
 		//Update all GameObjects
-		//Call UpdateAll(dt) on GOManager
 		goManager->UpdateAll(dt);
 
 		//update screen buffer
