@@ -16,14 +16,18 @@ Creation date: 10/26/2017
 
 #pragma once
 
-#ifndef Body_h
-#define Body_h
 
 #include "Component.h"
 #include "GameObject.h"
 #include "..\Shapes.h"
 
+#ifndef Body_h
+#define Body_h
+
+
 class GameObject;
+
+class Shape;
 
 class Body : public Component
 {
