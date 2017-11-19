@@ -31,8 +31,10 @@ class Shape
 public:
 	Shape(SHAPE_TYPE type);
 
-	void Initialize(Body * parent);
-	Body * getOwner();
+	virtual ~Shape();
+	virtual void Initialize(Body * parent);
+	virtual Body * getOwner();
+
 	SHAPE_TYPE shape;
 
 private:
