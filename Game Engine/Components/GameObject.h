@@ -21,7 +21,7 @@ Creation date: 10/26/2017
 #include "UpDown.h"
 #include "Body.h"
 #include "Component.h"
-#include "..\EventManager.h"
+#include "..\EventManager.h" //I do not like this include
 #include <map>
 #include <string>
 

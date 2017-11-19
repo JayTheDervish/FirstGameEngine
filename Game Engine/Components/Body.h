@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 
 #include "Component.h"
 #include "GameObject.h"
+#include "..\Shapes.h"
 
 class GameObject;
 
@@ -46,7 +47,10 @@ public:
 	void Serialize(nlohmann::json j);
 
 	GameObject * GetOwner();
+
 private:
 	GameObject * daddy;
+
+	Shape * shape;
 };
 #endif // !Body_h

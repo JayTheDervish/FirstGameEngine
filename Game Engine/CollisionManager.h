@@ -15,10 +15,19 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #pragma once
+#ifndef CollisionManager_h
+#define CollisionManager_h
+
+#include <list>
+
+
 class CollisionManager
 {
 public:
 	CollisionManager();
 	~CollisionManager();
+
+	std::list</*Contacts*/int *> contacts;
 };
 
+#endif // !CollisionManager_h
