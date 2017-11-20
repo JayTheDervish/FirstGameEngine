@@ -29,6 +29,7 @@ class Body;
 class Shape
 {
 public:
+	Shape() {}
 	Shape(SHAPE_TYPE type);
 
 	virtual ~Shape();

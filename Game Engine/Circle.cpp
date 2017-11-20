@@ -4,7 +4,7 @@ Copyright (C) 2017 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 
-File Name:	Body.h
+File Name:	Circle.cpp
 Purpose:	Contains the definition for the Circle class.
 Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
