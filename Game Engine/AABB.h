@@ -30,7 +30,7 @@ public:
 	AABB();
 	~AABB();
 
-
+	float height, width;
 };
 
 #endif // ! AABB_h
