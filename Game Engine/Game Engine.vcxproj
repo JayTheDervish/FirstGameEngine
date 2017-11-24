@@ -141,6 +141,7 @@
     <None Include="Resources\Enemy.json" />
     <None Include="Resources\level.json" />
     <None Include="Resources\Player.json" />
+    <None Include="Resources\Wall1.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

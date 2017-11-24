@@ -128,9 +128,9 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 		}
 	}
-	/*if (!j["Wall1.json"].is_null())
+	if (!j["Wall1.json"].is_null())
 	{
-		std::ifstream inputfile("Resources/Enemy.json");
+		std::ifstream inputfile("Resources/Wall1.json");
 		nlohmann::json o;
 		inputfile >> o;
 
@@ -139,7 +139,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		{
 			o["Components"][i];
 		}
-	}*/
+	}
 
 	//return object for initialization
 	return newObj;
