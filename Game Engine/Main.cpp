@@ -15,6 +15,8 @@ Creation date: 10/19/2017
 - End Header --------------------------------------------------------*/
 
 #include <SDL.h>
+#include <gl\glew.h>
+#include <gl\freeglut.h>
 #include "stdio.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
@@ -82,7 +84,7 @@ int main(int argc, char* args[])
 		freopen_s(&file, "CONOUT$", "wt", stderr);
 		freopen_s(&file, "CONOUT$", "wt", stdin);
 
-		SetConsoleTitle(L"Game Engine Console Input");
+	//	SetConsoleTitle(L"Game Engine Console Input");
 	}
 
 
