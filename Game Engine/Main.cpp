@@ -38,16 +38,79 @@ extern "C" FILE * __cdecl __iob_func(void)
 
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 
+#define WINDOW_TITLE_PREFIX "Combat Game Engine"
+
 float FRAME_TIME_CAP = (1.0f / 60.0f) * 1000.0f;
+
+int CurrentWidth = 800,
+CurrentHeight = 600,
+WindowHandle = 0;
+
+unsigned FrameCount = 0;
+
+GLuint
+VertexShaderId,
+FragmentShaderId,
+ProgramId,
+VaoId,
+VboId,
+ColorBufferId;
+
+const GLchar* VertexShader =
+{
+	"#version 400\n"\
+
+	"layout(location=0) in vec4 in_Position;\n"\
+	"layout(location=1) in vec4 in_Color;\n"\
+	"out vec4 ex_Color;\n"\
+
+	"void main(void)\n"\
+	"{\n"\
+	"  gl_Position = in_Position;\n"\
+	"  ex_Color = in_Color;\n"\
+	"}\n"
+};
+
+const GLchar* FragmentShader =
+{
+	"#version 400\n"\
+
+	"in vec4 ex_Color;\n"\
+	"out vec4 out_Color;\n"\
+
+	"void main(void)\n"\
+	"{\n"\
+	"  out_Color = ex_Color;\n"\
+	"}\n"
+};
+
 
 InputManager * inputManager = new InputManager(1, 'j');
 ResourceManager resources;
+
+
+//TODO: Put in Renderer
+void Initialize(int, char*[]);
+void InitWindow(int, char*[]);
+void ResizeFunction(int, int);
+void RenderFunction(void);
+void TimerFunction(int);
+void IdleFunction(void);
+
+void Cleanup(void);
+void CreateVBO(void);
+void DestroyVBO(void);
+void CreateShaders(void);
+void DestroyShaders(void);
 
 int main(int argc, char* args[])
 {
 	SDL_Window *pWindow;
 	int error = 0;
 	bool appIsRunning = true;
+
+
+
 
 	// Initialize SDL
 	if((error = SDL_Init( SDL_INIT_VIDEO )) < 0 )
@@ -56,12 +119,14 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	//Initialize(argc, args);
+
 
 	pWindow = SDL_CreateWindow("Game Engine Test",		// window title
 		SDL_WINDOWPOS_UNDEFINED,					// initial x position
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
-		800,										// width, in pixels
-		600,										// height, in pixels
+		CurrentWidth,										// width, in pixels
+		CurrentHeight,										// height, in pixels
 		SDL_WINDOW_SHOWN);
 
 	// Check that the window was successfully made
@@ -72,23 +137,27 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	SDL_GLContext context = SDL_GL_CreateContext(pWindow);
 
-	SDL_Surface * pWindowSurface = SDL_GetWindowSurface(pWindow);
+//	SDL_Surface * pWindowSurface = SDL_GetWindowSurface(pWindow);
 
 	//To create the console
-	if (AllocConsole())
-	{
-		FILE* file;
+	//if (AllocConsole())
+	//{
+	//	FILE* file;
 
-		freopen_s(&file, "CONOUT$", "wt", stdout);
-		freopen_s(&file, "CONOUT$", "wt", stderr);
-		freopen_s(&file, "CONOUT$", "wt", stdin);
+	//	freopen_s(&file, "CONOUT$", "wt", stdout);
+	//	freopen_s(&file, "CONOUT$", "wt", stderr);
+	//	freopen_s(&file, "CONOUT$", "wt", stdin);
 
 	//	SetConsoleTitle(L"Game Engine Console Input");
-	}
+	//}
+	glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
 
-
-	
+	CreateShaders();
+	CreateVBO();
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
@@ -116,7 +185,7 @@ int main(int argc, char* args[])
 		float dt = frameRateController->getDeltaTime();
 		
 		//clearing the screen
-		SDL_FillRect(pWindowSurface, NULL, 0);
+//		SDL_FillRect(pWindowSurface, NULL, 0);
 
 
 		SDL_Event e;
@@ -150,19 +219,22 @@ int main(int argc, char* args[])
 				rect->h = pSprite->surface->h;
 				rect->w = pSprite->surface->w;
 
-				SDL_BlitSurface(pSprite->surface, NULL, pWindowSurface, rect);
+			//	SDL_BlitSurface(pSprite->surface, NULL, pWindowSurface, rect);
 			}
 		}
 
 
 		//update screen
-		SDL_UpdateWindowSurface(pWindow);
+		//SDL_UpdateWindowSurface(pWindow);
+		RenderFunction();
+
 
 		//wait frames out
 		frameRateController->WaitFrames();
 		
 	}
 #pragma endregion Game Loop
+
 
 	//Delete all GameObjects
 	delete goManager;
@@ -179,5 +251,241 @@ int main(int argc, char* args[])
 	// Quit SDL subsystems
 	SDL_Quit();
 	
+	exit(EXIT_SUCCESS);
+
 	return 0;
 }
+
+
+void Initialize(int argc, char* argv[])
+{
+	InitWindow(argc, argv);
+
+	fprintf(
+		stdout,
+		"INFO: OpenGL Version: %s\n",
+		glGetString(GL_VERSION)
+	);
+
+
+	CreateShaders();
+	CreateVBO();
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+void InitWindow(int argc, char* argv[])
+{
+	glutInit(&argc, argv);
+	glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
+
+	glutInitContextVersion(4, 0);
+	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
+	glutInitContextProfile(GLUT_CORE_PROFILE);
+
+	glutSetOption(
+		GLUT_ACTION_ON_WINDOW_CLOSE,
+		GLUT_ACTION_GLUTMAINLOOP_RETURNS
+	);
+
+	glutInitWindowSize(CurrentWidth, CurrentHeight);
+
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+	WindowHandle = glutCreateWindow(WINDOW_TITLE_PREFIX);
+
+	if (WindowHandle < 1) {
+		fprintf(
+			stderr,
+			"ERROR: Could not create a new rendering window.\n"
+		);
+		exit(EXIT_FAILURE);
+	}
+	glutReshapeFunc(ResizeFunction);
+	glutDisplayFunc(RenderFunction);
+	glutIdleFunc(IdleFunction);
+	glutTimerFunc(0, TimerFunction, 0);
+	glutCloseFunc(Cleanup);
+
+
+}
+
+	void ResizeFunction(int Width, int Height)
+	{
+		CurrentWidth = Width;
+		CurrentHeight = Height;
+		glViewport(0, 0, CurrentWidth, CurrentHeight);
+	}
+
+	void RenderFunction(void)
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		glutSwapBuffers();
+		glutPostRedisplay();
+	}
+
+	void IdleFunction(void)
+	{
+		glutPostRedisplay();
+	}
+
+	void TimerFunction(int Value)
+	{
+		if (0 != Value) {
+			char* TempString = (char*)
+				malloc(512 + strlen(WINDOW_TITLE_PREFIX));
+
+			sprintf(
+				TempString,
+				"%s: %d Frames Per Second @ %d x %d",
+				WINDOW_TITLE_PREFIX,
+				FrameCount * 4,
+				CurrentWidth,
+				CurrentHeight
+			);
+
+			glutSetWindowTitle(TempString);
+			free(TempString);
+		}
+
+		FrameCount = 0;
+		glutTimerFunc(250, TimerFunction, 1);
+	}
+
+	void Cleanup(void)
+	{
+		DestroyShaders();
+		DestroyVBO();
+	}
+
+	void CreateVBO(void)
+	{
+		GLfloat Vertices[] = {
+			-0.8f, -0.8f, 0.0f, 1.0f,
+			0.0f,  0.8f, 0.0f, 1.0f,
+			0.8f, -0.8f, 0.0f, 1.0f
+		};
+
+		GLfloat Colors[] = {
+			1.0f, 0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f
+		};
+
+		GLenum ErrorCheckValue = glGetError();
+
+		glGenVertexArrays(1, &VaoId);
+		glBindVertexArray(VaoId);
+
+		glGenBuffers(1, &VboId);
+		glBindBuffer(GL_ARRAY_BUFFER, VboId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+
+		glGenBuffers(1, &ColorBufferId);
+		glBindBuffer(GL_ARRAY_BUFFER, ColorBufferId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Colors), Colors, GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+
+		ErrorCheckValue = glGetError();
+		if (ErrorCheckValue != GL_NO_ERROR)
+		{
+			fprintf(
+				stderr,
+				"ERROR: Could not create a VBO: %s \n",
+				gluErrorString(ErrorCheckValue)
+			);
+
+			exit(-1);
+		}
+	}
+
+	void DestroyVBO(void)
+	{
+		GLenum ErrorCheckValue = glGetError();
+
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glDeleteBuffers(1, &ColorBufferId);
+		glDeleteBuffers(1, &VboId);
+
+		glBindVertexArray(0);
+		glDeleteVertexArrays(1, &VaoId);
+
+		ErrorCheckValue = glGetError();
+		if (ErrorCheckValue != GL_NO_ERROR)
+		{
+			fprintf(
+				stderr,
+				"ERROR: Could not destroy the VBO: %s \n",
+				gluErrorString(ErrorCheckValue)
+			);
+
+			exit(-1);
+		}
+	}
+
+	void CreateShaders(void)
+	{
+		GLenum ErrorCheckValue = glGetError();
+
+		VertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(VertexShaderId, 1, &VertexShader, NULL);
+		glCompileShader(VertexShaderId);
+
+		FragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(FragmentShaderId, 1, &FragmentShader, NULL);
+		glCompileShader(FragmentShaderId);
+
+		ProgramId = glCreateProgram();
+		glAttachShader(ProgramId, VertexShaderId);
+		glAttachShader(ProgramId, FragmentShaderId);
+		glLinkProgram(ProgramId);
+		glUseProgram(ProgramId);
+
+		ErrorCheckValue = glGetError();
+		if (ErrorCheckValue != GL_NO_ERROR)
+		{
+			fprintf(
+				stderr,
+				"ERROR: Could not create the shaders: %s \n",
+				gluErrorString(ErrorCheckValue)
+			);
+
+			exit(-1);
+		}
+	}
+
+	void DestroyShaders(void)
+	{
+		GLenum ErrorCheckValue = glGetError();
+
+		glUseProgram(0);
+
+		glDetachShader(ProgramId, VertexShaderId);
+		glDetachShader(ProgramId, FragmentShaderId);
+
+		glDeleteShader(FragmentShaderId);
+		glDeleteShader(VertexShaderId);
+
+		glDeleteProgram(ProgramId);
+
+		ErrorCheckValue = glGetError();
+		if (ErrorCheckValue != GL_NO_ERROR)
+		{
+			fprintf(
+				stderr,
+				"ERROR: Could not destroy the shaders: %s \n",
+				gluErrorString(ErrorCheckValue)
+			);
+
+			exit(-1);
+		}
+	}
