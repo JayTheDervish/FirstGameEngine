@@ -56,20 +56,16 @@ VaoId,
 VboId,
 ColorBufferId;
 
-const GLchar* VertexShader =
-{
-	"#version 400\n"\
-
-	"layout(location=0) in vec4 in_Position;\n"\
-	"layout(location=1) in vec4 in_Color;\n"\
-	"out vec4 ex_Color;\n"\
-
-	"void main(void)\n"\
-	"{\n"\
-	"  gl_Position = in_Position;\n"\
-	"  ex_Color = in_Color;\n"\
-	"}\n"
-};
+const char* VertexShader =
+	"#version 400\n\
+	layout(location=0) in vec4 in_Position;\
+	layout(location=1) in vec4 in_Color;\
+	out vec4 ex_Color;\
+	void main(void)\
+	{\
+	  gl_Position = in_Position;\
+	  ex_Color = in_Color;\
+	}";
 
 const GLchar* FragmentShader =
 {
@@ -122,7 +118,7 @@ int main(int argc, char* args[])
 	//Initialize(argc, args);
 
 
-	pWindow = SDL_CreateWindow("Game Engine Test",		// window title
+	pWindow = SDL_CreateWindow("Combat Game Engine",		// window title
 		SDL_WINDOWPOS_UNDEFINED,					// initial x position
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
 		CurrentWidth,										// width, in pixels
@@ -142,18 +138,26 @@ int main(int argc, char* args[])
 //	SDL_Surface * pWindowSurface = SDL_GetWindowSurface(pWindow);
 
 	//To create the console
-	//if (AllocConsole())
-	//{
-	//	FILE* file;
+	if (AllocConsole())
+	{
+		FILE* file;
 
-	//	freopen_s(&file, "CONOUT$", "wt", stdout);
-	//	freopen_s(&file, "CONOUT$", "wt", stderr);
-	//	freopen_s(&file, "CONOUT$", "wt", stdin);
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+		freopen_s(&file, "CONOUT$", "wt", stdin);
 
-	//	SetConsoleTitle(L"Game Engine Console Input");
-	//}
+		//SetConsoleTitle(L"Game Engine Console Input");
+	}
+
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
+	if (err != GLEW_OK) {
+		// Problem: glewInit failed, something is seriously wrong.
+		std::cout << "glewInit failed: " << glewGetErrorString(err) << std::endl;
+		std::cout << "INFO: OpenGL Version: " <<
+			glGetString(GL_VERSION) << std::endl;
+	//	exit(1);
+	}
 
 	CreateShaders();
 	CreateVBO();
