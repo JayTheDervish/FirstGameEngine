@@ -293,6 +293,36 @@ bool InputManager::isP1DownReleased()
 	return false;
 }
 
+bool InputManager::isRotateLeftPressed()
+{
+	if (inputMode == 'j')
+	{
+		if (currentJoystick1State[6] && prevJoystick1State[6])
+			return true;
+	}
+	else
+	{
+		if (currentKeyboardState[SDL_SCANCODE_Q])
+			return true;
+	}
+	return false;
+}
+
+bool InputManager::isRotateRightPressed()
+{
+	if (inputMode == 'j')
+	{
+		if (currentJoystick1State[7] && prevJoystick1State[7])
+			return true;
+	}
+	else
+	{
+		if (currentKeyboardState[SDL_SCANCODE_E])
+			return true;
+	}
+	return false;
+}
+
 //Player 1
 bool InputManager::isP1Action1Pressed()
 {

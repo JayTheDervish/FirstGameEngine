@@ -384,7 +384,7 @@ void Initialize(int argc, char* argv[])
 				gluErrorString(ErrorCheckValue)
 			);
 
-			exit(-1);
+		//	exit(-1);
 		}
 	}
 
@@ -442,7 +442,7 @@ void Initialize(int argc, char* argv[])
 				gluErrorString(ErrorCheckValue)
 			);
 
-			exit(-1);
+		//	exit(-1);
 		}
 	}
 

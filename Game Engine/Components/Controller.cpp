@@ -46,6 +46,11 @@ void Controller::Update(float dt)
 	if (inputManager->isP1LeftPressed())
 		transform->postion2d.x += -1 * dt;
 
+	if (inputManager->isRotateLeftPressed())
+		transform->angle += -1 * dt;
+	if (inputManager->isRotateRightPressed())
+		transform->angle += 1 * dt;
+
 	/*
 	if (inputManager.isP2DownPressed())
 		players[1]->y += -1;

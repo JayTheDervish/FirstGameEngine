@@ -59,6 +59,11 @@ public:
 
 	bool isP1DownReleased();
 
+	bool isRotateLeftPressed();
+	bool isRotateRightPressed();
+
+
+
 	bool isP2UpPressed();
 
 	bool isP2UpTriggered();
