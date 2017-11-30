@@ -15,8 +15,8 @@ Creation date: 10/19/2017
 - End Header --------------------------------------------------------*/
 
 #include <SDL.h>
-#include <gl\glew.h>
-#include <gl\freeglut.h>
+#include <glew.h>
+#include <freeglut.h>
 #include "stdio.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
@@ -57,13 +57,14 @@ VboId,
 ColorBufferId;
 
 const char* VertexShader =
-	"#version 400\n\
+"#version 400\n\
 	layout(location=0) in vec4 in_Position;\
 	layout(location=1) in vec4 in_Color;\
+	uniform mat4 modelingMatrix;\
 	out vec4 ex_Color;\
 	void main(void)\
 	{\
-	  gl_Position = in_Position;\
+	  gl_Position = modelingMatrix*in_Position;\
 	  ex_Color = in_Color;\
 	}";
 
@@ -81,13 +82,13 @@ const GLchar* FragmentShader =
 };
 
 
-InputManager * inputManager = new InputManager(1, 'j');
+InputManager * inputManager = new InputManager(1, 'k');
 ResourceManager resources;
-
+GameObjectManager * goManager = new GameObjectManager();
 
 //TODO: Put in Renderer
 void Initialize(int, char*[]);
-void InitWindow(int, char*[]);
+//void InitWindow(int, char*[]);
 void ResizeFunction(int, int);
 void RenderFunction(void);
 void TimerFunction(int);
@@ -116,14 +117,16 @@ int main(int argc, char* args[])
 	}
 
 	//Initialize(argc, args);
-
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 
 	pWindow = SDL_CreateWindow("Combat Game Engine",		// window title
 		SDL_WINDOWPOS_UNDEFINED,					// initial x position
 		SDL_WINDOWPOS_UNDEFINED,					// initial y position
 		CurrentWidth,										// width, in pixels
 		CurrentHeight,										// height, in pixels
-		SDL_WINDOW_SHOWN);
+		SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN);
 
 	// Check that the window was successfully made
 	if (NULL == pWindow)
@@ -161,11 +164,11 @@ int main(int argc, char* args[])
 
 	CreateShaders();
 	CreateVBO();
-	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
-	GameObjectManager * goManager = new GameObjectManager();
+	
 
 	std::ifstream inputfile("Resources/level.json");
 
@@ -229,9 +232,9 @@ int main(int argc, char* args[])
 
 
 		//update screen
-		//SDL_UpdateWindowSurface(pWindow);
+		ResizeFunction(CurrentWidth, CurrentHeight);
 		RenderFunction();
-
+		SDL_GL_SwapWindow(pWindow);
 
 		//wait frames out
 		frameRateController->WaitFrames();
@@ -243,11 +246,10 @@ int main(int argc, char* args[])
 	//Delete all GameObjects
 	delete goManager;
 
-
-
 	// Close if opened
 	delete frameRateController;
 	delete inputManager;
+	Cleanup();
 
 	// Close and destroy the window
 	SDL_DestroyWindow(pWindow);
@@ -263,7 +265,6 @@ int main(int argc, char* args[])
 
 void Initialize(int argc, char* argv[])
 {
-	InitWindow(argc, argv);
 
 	fprintf(
 		stdout,
@@ -277,42 +278,6 @@ void Initialize(int argc, char* argv[])
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void InitWindow(int argc, char* argv[])
-{
-	glutInit(&argc, argv);
-	glewExperimental = GL_TRUE;
-	GLenum err = glewInit();
-
-	glutInitContextVersion(4, 0);
-	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-	glutInitContextProfile(GLUT_CORE_PROFILE);
-
-	glutSetOption(
-		GLUT_ACTION_ON_WINDOW_CLOSE,
-		GLUT_ACTION_GLUTMAINLOOP_RETURNS
-	);
-
-	glutInitWindowSize(CurrentWidth, CurrentHeight);
-
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-
-	WindowHandle = glutCreateWindow(WINDOW_TITLE_PREFIX);
-
-	if (WindowHandle < 1) {
-		fprintf(
-			stderr,
-			"ERROR: Could not create a new rendering window.\n"
-		);
-		exit(EXIT_FAILURE);
-	}
-	glutReshapeFunc(ResizeFunction);
-	glutDisplayFunc(RenderFunction);
-	glutIdleFunc(IdleFunction);
-	glutTimerFunc(0, TimerFunction, 0);
-	glutCloseFunc(Cleanup);
-
-
-}
 
 	void ResizeFunction(int Width, int Height)
 	{
@@ -325,10 +290,16 @@ void InitWindow(int argc, char* argv[])
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		for (auto gameObject : goManager->objects) {
+			Transform* pTransform = static_cast<Transform*>(gameObject->getComponent(TRANSFORM));
 
-		glutSwapBuffers();
-		glutPostRedisplay();
+			if (pTransform) {
+				glUseProgram(ProgramId);
+				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
+			}
+
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+		}
 	}
 
 	void IdleFunction(void)
@@ -368,14 +339,22 @@ void InitWindow(int argc, char* argv[])
 	void CreateVBO(void)
 	{
 		GLfloat Vertices[] = {
+			-0.8f, 0.8f, 0.0f, 1.0f,
+			0.8f, 0.8f, 0.0f, 1.0f,
 			-0.8f, -0.8f, 0.0f, 1.0f,
-			0.0f,  0.8f, 0.0f, 1.0f,
+
+			-0.8f, -0.8f, 0.0f, 1.0f,
+			0.8f,  0.8f, 0.0f, 1.0f,
 			0.8f, -0.8f, 0.0f, 1.0f
 		};
 
 		GLfloat Colors[] = {
-			1.0f, 0.0f, 0.0f, 1.0f,
-			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+
+			0.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
 			0.0f, 0.0f, 1.0f, 1.0f
 		};
 

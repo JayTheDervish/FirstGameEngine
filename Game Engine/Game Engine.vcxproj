@@ -102,7 +102,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathLibraries\LineSegment2D.c" />
     <ClCompile Include="MathLibraries\Math2D.c" />
-    <ClCompile Include="MathLibraries\Matrix2D.c" />
+    <ClCompile Include="MathLibraries\Matrix2D.cpp" />
     <ClCompile Include="MathLibraries\Vector2D.c" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

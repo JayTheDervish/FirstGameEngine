@@ -38,13 +38,13 @@ void Controller::Update(float dt)
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
 	if (inputManager->isP1DownPressed())
-		transform->postion2d.y += -1;
+		transform->postion2d.y += -1*dt;
 	if (inputManager->isP1UpPressed())
-		transform->postion2d.y += 1;
+		transform->postion2d.y += 1*dt;
 	if (inputManager->isP1RightPressed())
-		transform->postion2d.x += 1;
+		transform->postion2d.x += 1*dt;
 	if (inputManager->isP1LeftPressed())
-		transform->postion2d.x += -1;
+		transform->postion2d.x += -1 * dt;
 
 	/*
 	if (inputManager.isP2DownPressed())
@@ -55,6 +55,9 @@ void Controller::Update(float dt)
 		players[1]->x += 1;
 	if (inputManager.isP2LeftPressed())
 		players[1]->x += -1;*/
+
+	/*if (inputManager->isP1Action2Released())
+		printf("Player 1 Action Button 2 is released.\n");*/
 
 	if (inputManager->isP1Action1Pressed())
 		printf("Player 1 Action Button 1 is pressed.\n");

@@ -20,6 +20,9 @@ Transform::Transform(int x, int y)
 {
 	postion2d.x = x;
 	postion2d.y = y;
+
+	scale.x = 1;
+	scale.y = 1;
 }
 
 Transform::~Transform()
@@ -33,6 +36,16 @@ void Transform::Initialize(GameObject * parent)
 
 void Transform::Update(float dt)
 {
+	Matrix2D translate;
+	Matrix2D rotation;
+	Matrix2D scaleMat;
+
+	Matrix2DTranslate(&translate, postion2d.x, postion2d.y);
+	Matrix2DScale(&scaleMat, scale.x, scale.y);
+	Matrix2DRotRad(&rotation, angle);
+
+	Matrix2DConcat(&modelingMatrix, &rotation, &scaleMat);
+	Matrix2DConcat(&modelingMatrix, &translate, &modelingMatrix);
 }
 
 void Transform::Serialize(nlohmann::json j)

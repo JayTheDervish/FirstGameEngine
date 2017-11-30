@@ -17,7 +17,7 @@ Creation date: 10/19/2017
 #pragma once
 
 #include "Component.h"
-#include "..\MathLibraries\Vector2D.h"
+#include "..\MathLibraries\Matrix2D.h"
 
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
@@ -34,6 +34,9 @@ public:
 	void Update(float dt);
 
 	Vector2D postion2d;
+	Vector2D scale;
+	float angle;
+	Matrix2D modelingMatrix;
 
 	void Serialize(nlohmann::json j);
 

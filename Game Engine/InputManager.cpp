@@ -90,7 +90,7 @@ InputManager::InputManager(int numPlayers, char mode)
 
 		//memset(currentKeyboardState, SDL_GetKeyboardState(&length), length * sizeof(Uint8));
 
-		prevKeyboardState = new Uint8();
+		prevKeyboardState = new Uint8[length];
 
 		memset(prevKeyboardState, 0, length * sizeof(Uint8));
 	}
@@ -303,7 +303,7 @@ bool InputManager::isP1Action1Pressed()
 	}
 	else
 	{
-		if (currentKeyboardState[SDL_SCANCODE_SPACE] && prevKeyboardState[SDL_SCANCODE_SPACE])
+		if (currentKeyboardState[SDL_SCANCODE_SPACE])
 			return true;
 	}
 	return false;
@@ -827,10 +827,11 @@ void InputManager::Update()
 	{
 		//Copy current to previous
 		memcpy(prevKeyboardState, currentKeyboardState, length * sizeof(Uint8));
+		currentKeyboardState = SDL_GetKeyboardState(&length);
 
 		//Update Current
 	//	memcpy(currentKeyboardState, SDL_GetKeyboardState(&length), length * sizeof(Uint8));
-		SDL_PumpEvents();
+		 SDL_PumpEvents();
 	}
 	
 }

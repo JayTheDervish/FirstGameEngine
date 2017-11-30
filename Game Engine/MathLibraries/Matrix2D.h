@@ -6,7 +6,7 @@
 
 typedef struct Matrix2D
 {
-	float m[3][3];
+	float m[4][4];
 }Matrix2D;
 
 ////////////////////
