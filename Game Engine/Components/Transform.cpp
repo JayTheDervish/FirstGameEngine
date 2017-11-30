@@ -23,6 +23,7 @@ Transform::Transform(int x, int y)
 
 	scale.x = 1;
 	scale.y = 1;
+	skin = false;
 }
 
 Transform::~Transform()

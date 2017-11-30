@@ -18,6 +18,7 @@ Creation date: 10/26/2017
 
 #include "Component.h"
 #include "..\InputManager.h"
+#include "Transform.h"
 
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H

@@ -27,6 +27,7 @@ Creation date: 10/19/2017
 #include <Windows.h>
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include "json.hpp"
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
@@ -52,8 +53,12 @@ GLuint
 VertexShaderId,
 FragmentShaderId,
 ProgramId,
+TextProgram,
+TextureVertexShaderId,
+TextureFragShaderId,
 VaoId,
 VboId,
+texture_buffer,
 ColorBufferId;
 
 const char* VertexShader =
@@ -80,6 +85,70 @@ const GLchar* FragmentShader =
 	"  out_Color = ex_Color;\n"\
 	"}\n"
 };
+
+const char* VertexShaderTexture =
+"#version 400\n\
+	layout(location=0) in vec4 in_Position;\
+	layout(location=1) in vec4 in_Color;\
+attribute vec2 texture_coord;\
+	uniform mat4 modelingMatrix;\
+	out vec4 ex_Color;\
+out vec2 vtexture_coord;\
+	void main(void)\
+	{\
+	  gl_Position = modelingMatrix*in_Position;\
+	  ex_Color = in_Color;\
+		vtexture_coord = texture_coord;\
+	}";
+
+const GLchar* FragmentShaderTexture =
+{
+	"#version 400\n"\
+
+	"uniform sampler2D usampler;\n" \
+	"in vec2 vtexture_coord;\n"\
+	"in vec4 ex_Color;\n"\
+	"out vec4 out_Color;\n"\
+
+	"void main(void)\n"\
+	"{\n"\
+	"vec3 diffuse_color = texture(usampler, vtexture_coord).xyz;\n"\
+	"  out_Color = vec4(diffuse_color, 1);\n"\
+	"}\n"
+};
+
+// read a 24-bit color bitmap image file
+//   Note: caller is responsible for deallocating the
+//         RGB data
+unsigned char* loadBitmapFile(const char *fname, int *width, int *height) {
+	std::fstream in(fname, std::ios_base::in | std::ios_base::binary);
+	char header[38];
+	in.read(header, 38);
+	unsigned offset = *reinterpret_cast<unsigned*>(header + 10);
+	int W = *reinterpret_cast<int*>(header + 18),
+		H = *reinterpret_cast<int*>(header + 22),
+		S = 3 * W;
+	S += (4 - S % 4) % 4;
+	int size = S*H;
+	in.seekg(offset, std::ios_base::beg);
+	unsigned char *data = new unsigned char[size];
+	in.read(reinterpret_cast<char*>(data), size);
+	if (!in) {
+		delete[] data;
+		return 0;
+	}
+
+	for (int j = 0; j < H; ++j) {
+		for (int i = 0; i < W; ++i) {
+			int index = S*j + 3 * i;
+			std::swap(data[index + 0], data[index + 2]);
+		}
+	}
+
+	*width = W;
+	*height = H;
+	return data;
+}
 
 
 InputManager * inputManager = new InputManager(1, 'k');
@@ -293,10 +362,15 @@ void Initialize(int argc, char* argv[])
 		for (auto gameObject : goManager->objects) {
 			Transform* pTransform = static_cast<Transform*>(gameObject->getComponent(TRANSFORM));
 
-			if (pTransform) {
+			if (pTransform && !pTransform->skin) {
 				glUseProgram(ProgramId);
 				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
 			}
+			else if (pTransform && pTransform->skin) {
+				glUseProgram(TextProgram);
+				glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
+			}
+
 
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
@@ -444,6 +518,31 @@ void Initialize(int argc, char* argv[])
 
 		//	exit(-1);
 		}
+
+		TextureVertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(TextureVertexShaderId, 1, &VertexShaderTexture, NULL);
+		glCompileShader(TextureVertexShaderId);
+
+		TextureFragShaderId = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(TextureFragShaderId, 1, &FragmentShaderTexture, NULL);
+		glCompileShader(TextureFragShaderId);
+
+		TextProgram = glCreateProgram();
+		glAttachShader(TextProgram, TextureVertexShaderId);
+		glAttachShader(TextProgram, TextureFragShaderId);
+		glLinkProgram(TextProgram);
+		//glUseProgram(TextProgram);
+
+		int width, height;
+		unsigned char *rgbdata = loadBitmapFile("image.bmp", &width, &height);
+		glGenTextures(1, &texture_buffer);
+		glBindTexture(GL_TEXTURE_2D, texture_buffer);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, rgbdata);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
 	void DestroyShaders(void)

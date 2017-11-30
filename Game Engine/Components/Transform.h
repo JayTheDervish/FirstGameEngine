@@ -37,6 +37,7 @@ public:
 	Vector2D scale;
 	float angle;
 	Matrix2D modelingMatrix;
+	bool skin;
 
 	void Serialize(nlohmann::json j);
 

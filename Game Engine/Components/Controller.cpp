@@ -47,9 +47,9 @@ void Controller::Update(float dt)
 		transform->postion2d.x += -1 * dt;
 
 	if (inputManager->isRotateLeftPressed())
-		transform->angle += -1 * dt;
-	if (inputManager->isRotateRightPressed())
 		transform->angle += 1 * dt;
+	if (inputManager->isRotateRightPressed())
+		transform->angle += -1 * dt;
 
 	/*
 	if (inputManager.isP2DownPressed())
@@ -65,7 +65,14 @@ void Controller::Update(float dt)
 		printf("Player 1 Action Button 2 is released.\n");*/
 
 	if (inputManager->isP1Action1Pressed())
+	{
+		Transform* pTransform = static_cast<Transform*>(daddy->getComponent(TRANSFORM));
+		if (pTransform->skin)
+			pTransform->skin = false;
+		else
+			pTransform->skin = true;
 		printf("Player 1 Action Button 1 is pressed.\n");
+	}
 	if (inputManager->isP1Action1Triggered())
 		printf("Player 1 Action Button 1 is triggered.\n");
 	if (inputManager->isP1Action1Released())
