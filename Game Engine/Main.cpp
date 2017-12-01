@@ -92,6 +92,7 @@ const char* VertexShaderTexture =
 	layout(location=1) in vec4 in_Color;\
 attribute vec2 texture_coord;\
 	uniform mat4 modelingMatrix;\
+	uniform mat4 orthographicMatrix;\
 	out vec4 ex_Color;\
 out vec2 vtexture_coord;\
 	void main(void)\
@@ -168,6 +169,10 @@ void CreateVBO(void);
 void DestroyVBO(void);
 void CreateShaders(void);
 void DestroyShaders(void);
+void glOrthog(
+	const float &b, const float &t, const float &l, const float &r,
+	const float &n, const float &f,
+	Matrix2D &M);
 
 int main(int argc, char* args[])
 {
@@ -359,22 +364,57 @@ void Initialize(int argc, char* argv[])
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		Matrix2D orthoMatrix;
+
+		glOrthog(static_cast<float>(CurrentHeight), 0.0f, 0.0f, static_cast<float>(CurrentWidth), 0.0f, 0.0f, orthoMatrix);
+
 		for (auto gameObject : goManager->objects) {
 			Transform* pTransform = static_cast<Transform*>(gameObject->getComponent(TRANSFORM));
 
 			if (pTransform && !pTransform->skin) {
 				glUseProgram(ProgramId);
 				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
 			}
 			else if (pTransform && pTransform->skin) {
 				glUseProgram(TextProgram);
 				glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
 			}
 
 
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 	}
+
+	// set the OpenGL orthographic projection matrix
+	void glOrthog(
+		const float &b, const float &t, const float &l, const float &r,
+		const float &n, const float &f,
+		Matrix2D &M)
+	{
+		// set OpenGL perspective projection matrix
+		M.m[0][0] = 2 / (r - l);
+		M.m[0][1] = 0;
+		M.m[0][2] = 0;
+		M.m[0][3] = 0;
+
+		M.m[1][0] = 0;
+		M.m[1][1] = 2 / (t - b);
+		M.m[1][2] = 0;
+		M.m[1][3] = 0;
+
+		M.m[2][0] = 0;
+		M.m[2][1] = 0;
+		M.m[2][2] = -2 / (f - n);
+		M.m[2][3] = 0;
+
+		M.m[3][0] = -(r + l) / (r - l);
+		M.m[3][1] = -(t + b) / (t - b);
+		M.m[3][2] = -(f + n) / (f - n);
+		M.m[3][3] = 1;
+	}
+
 
 	void IdleFunction(void)
 	{
