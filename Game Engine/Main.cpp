@@ -330,8 +330,6 @@ int main(int argc, char* args[])
 
 	// Quit SDL subsystems
 	SDL_Quit();
-	
-	exit(EXIT_SUCCESS);
 
 	return 0;
 }
