@@ -19,6 +19,8 @@ Creation date: 10/26/2017
 #define CollisionManager_h
 
 #include <list>
+#include "Shapes.h"
+#include "MathLibraries\Vector2D.h"
 
 
 class CollisionManager
@@ -26,6 +28,14 @@ class CollisionManager
 public:
 	CollisionManager();
 	~CollisionManager();
+
+	void reset();
+
+	bool checkCollisionAndGenContacts(Shape shape1, Vector2D position1, Shape shape2, Vector2D position2);
+
+	typedef bool(*func)(Shape shape1, Vector2D position1, Shape shape2, Vector2D position);
+
+	 bool CollisionArray[2][2];
 
 	std::list</*Contacts*/int *> contacts;
 };

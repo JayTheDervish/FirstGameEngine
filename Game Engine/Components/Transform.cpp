@@ -21,9 +21,9 @@ Transform::Transform(int x, int y)
 	postion2d.x = x;
 	postion2d.y = y;
 
-	scale.x = 1;
-	scale.y = 1;
-	skin = false;
+	scale.x = 0.1f;
+	scale.y = 0.1f;
+	skin = true;
 }
 
 Transform::~Transform()

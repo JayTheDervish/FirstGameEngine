@@ -17,8 +17,6 @@ Creation date: 10/26/2017
 #pragma once
 
 
-#include "Components\Body.h"
-
 #ifndef Shapes_h
 #define Shapes_h
 

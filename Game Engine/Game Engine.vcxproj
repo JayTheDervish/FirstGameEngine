@@ -94,6 +94,7 @@
     <ClCompile Include="Components\Sprite.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
+    <ClCompile Include="Contacts.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FrameRateController.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Components\Sprite.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\UpDown.h" />
+    <ClInclude Include="Contacts.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="FrameRateController.h" />
     <ClInclude Include="GameObjectFactory.h" />
@@ -132,6 +134,7 @@
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shapes.h" />
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Volt.bmp" />

@@ -29,6 +29,10 @@ Creation date: 10/19/2017
 #include <fstream>
 #include <iostream>
 #include "json.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -59,6 +63,8 @@ TextureFragShaderId,
 VaoId,
 VboId,
 texture_buffer,
+texcoord_buffer,
+atexture_coord,
 ColorBufferId;
 
 const char* VertexShader =
@@ -118,38 +124,7 @@ const GLchar* FragmentShaderTexture =
 	"}\n"
 };
 
-// read a 24-bit color bitmap image file
-//   Note: caller is responsible for deallocating the
-//         RGB data
-unsigned char* loadBitmapFile(const char *fname, int *width, int *height) {
-	std::fstream in(fname, std::ios_base::in | std::ios_base::binary);
-	char header[38];
-	in.read(header, 38);
-	unsigned offset = *reinterpret_cast<unsigned*>(header + 10);
-	int W = *reinterpret_cast<int*>(header + 18),
-		H = *reinterpret_cast<int*>(header + 22),
-		S = 3 * W;
-	S += (4 - S % 4) % 4;
-	int size = S*H;
-	in.seekg(offset, std::ios_base::beg);
-	unsigned char *data = new unsigned char[size];
-	in.read(reinterpret_cast<char*>(data), size);
-	if (!in) {
-		delete[] data;
-		return 0;
-	}
 
-	for (int j = 0; j < H; ++j) {
-		for (int i = 0; i < W; ++i) {
-			int index = S*j + 3 * i;
-			std::swap(data[index + 0], data[index + 2]);
-		}
-	}
-
-	*width = W;
-	*height = H;
-	return data;
-}
 
 
 InputManager * inputManager = new InputManager(1, 'k');
@@ -161,8 +136,6 @@ void Initialize(int, char*[]);
 //void InitWindow(int, char*[]);
 void ResizeFunction(int, int);
 void RenderFunction(void);
-void TimerFunction(int);
-void IdleFunction(void);
 
 void Cleanup(void);
 void CreateVBO(void);
@@ -248,7 +221,6 @@ int main(int argc, char* args[])
 
 	nlohmann::json j;
 
-	
 
 	inputfile >> j;
 	
@@ -325,6 +297,7 @@ int main(int argc, char* args[])
 	delete inputManager;
 	Cleanup();
 
+
 	// Close and destroy the window
 	SDL_DestroyWindow(pWindow);
 
@@ -364,7 +337,7 @@ void Initialize(int argc, char* argv[])
 
 		Matrix2D orthoMatrix;
 
-		glOrthog(static_cast<float>(CurrentHeight), 0.0f, 0.0f, static_cast<float>(CurrentWidth), 0.0f, 0.0f, orthoMatrix);
+		glOrthog(static_cast<float>(CurrentHeight), 0.0f, 0.0f, static_cast<float>(CurrentWidth), 0.1f, 1000.0f, orthoMatrix);
 
 		for (auto gameObject : goManager->objects) {
 			Transform* pTransform = static_cast<Transform*>(gameObject->getComponent(TRANSFORM));
@@ -380,7 +353,8 @@ void Initialize(int argc, char* argv[])
 				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
 			}
 
-
+			// select the texture to use
+			glBindTexture(GL_TEXTURE_2D, texture_buffer);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 	}
@@ -414,33 +388,6 @@ void Initialize(int argc, char* argv[])
 	}
 
 
-	void IdleFunction(void)
-	{
-		glutPostRedisplay();
-	}
-
-	void TimerFunction(int Value)
-	{
-		if (0 != Value) {
-			char* TempString = (char*)
-				malloc(512 + strlen(WINDOW_TITLE_PREFIX));
-
-			sprintf(
-				TempString,
-				"%s: %d Frames Per Second @ %d x %d",
-				WINDOW_TITLE_PREFIX,
-				FrameCount * 4,
-				CurrentWidth,
-				CurrentHeight
-			);
-
-			glutSetWindowTitle(TempString);
-			free(TempString);
-		}
-
-		FrameCount = 0;
-		glutTimerFunc(250, TimerFunction, 1);
-	}
 
 	void Cleanup(void)
 	{
@@ -451,13 +398,13 @@ void Initialize(int argc, char* argv[])
 	void CreateVBO(void)
 	{
 		GLfloat Vertices[] = {
-			-0.8f, 0.8f, 0.0f, 1.0f,
-			0.8f, 0.8f, 0.0f, 1.0f,
-			-0.8f, -0.8f, 0.0f, 1.0f,
+			-0.8f, 0.8f, -1.0f, 1.0f,
+			0.8f, 0.8f, -1.0f, 1.0f,
+			-0.8f, -0.8f, -1.0f, 1.0f,
 
-			-0.8f, -0.8f, 0.0f, 1.0f,
-			0.8f,  0.8f, 0.0f, 1.0f,
-			0.8f, -0.8f, 0.0f, 1.0f
+			-0.8f, -0.8f, -1.0f, 1.0f,
+			0.8f,  0.8f, -1.0f, 1.0f,
+			0.8f, -0.8f, -1.0f, 1.0f
 		};
 
 		GLfloat Colors[] = {
@@ -490,14 +437,22 @@ void Initialize(int argc, char* argv[])
 		ErrorCheckValue = glGetError();
 		if (ErrorCheckValue != GL_NO_ERROR)
 		{
-			fprintf(
-				stderr,
-				"ERROR: Could not create a VBO: %s \n",
-				gluErrorString(ErrorCheckValue)
-			);
-
-		//	exit(-1);
 		}
+
+		glGenBuffers(1, &texcoord_buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, texcoord_buffer);
+		float texcoords[] = {
+			0.0, 1.0,
+			0.0, 0.0,
+			1.0, 0.0,
+			0.0, 1.0,
+			1.0, 0.0,
+			1.0, 1.0
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), texcoords, GL_STATIC_DRAW);
+
+		
 	}
 
 	void DestroyVBO(void)
@@ -517,11 +472,7 @@ void Initialize(int argc, char* argv[])
 		ErrorCheckValue = glGetError();
 		if (ErrorCheckValue != GL_NO_ERROR)
 		{
-			fprintf(
-				stderr,
-				"ERROR: Could not destroy the VBO: %s \n",
-				gluErrorString(ErrorCheckValue)
-			);
+			
 
 			exit(-1);
 		}
@@ -548,11 +499,7 @@ void Initialize(int argc, char* argv[])
 		ErrorCheckValue = glGetError();
 		if (ErrorCheckValue != GL_NO_ERROR)
 		{
-			fprintf(
-				stderr,
-				"ERROR: Could not create the shaders: %s \n",
-				gluErrorString(ErrorCheckValue)
-			);
+			
 
 		//	exit(-1);
 		}
@@ -569,10 +516,9 @@ void Initialize(int argc, char* argv[])
 		glAttachShader(TextProgram, TextureVertexShaderId);
 		glAttachShader(TextProgram, TextureFragShaderId);
 		glLinkProgram(TextProgram);
-		//glUseProgram(TextProgram);
 
-		int width, height;
-		unsigned char *rgbdata = loadBitmapFile("image.bmp", &width, &height);
+		int width, height, n;
+		unsigned char *rgbdata = stbi_load("tank1.bmp", &width, &height, &n, 0);
 		glGenTextures(1, &texture_buffer);
 		glBindTexture(GL_TEXTURE_2D, texture_buffer);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
@@ -581,6 +527,11 @@ void Initialize(int argc, char* argv[])
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glBindBuffer(GL_ARRAY_BUFFER, texcoord_buffer);
+		glVertexAttribPointer(atexture_coord, 2, GL_FLOAT, false, 0, 0);
+		glEnableVertexAttribArray(atexture_coord);	
+		
 	}
 
 	void DestroyShaders(void)
@@ -600,11 +551,7 @@ void Initialize(int argc, char* argv[])
 		ErrorCheckValue = glGetError();
 		if (ErrorCheckValue != GL_NO_ERROR)
 		{
-			fprintf(
-				stderr,
-				"ERROR: Could not destroy the shaders: %s \n",
-				gluErrorString(ErrorCheckValue)
-			);
+			
 
 			exit(-1);
 		}
