@@ -29,9 +29,13 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::reset()
 {
+	//clears contacts
+	contacts.clear();
 }
 
 bool CollisionManager::checkCollisionAndGenContacts(Shape shape1, Vector2D position1, Shape shape2, Vector2D position2)
 {
+
+
 	return false;
 }

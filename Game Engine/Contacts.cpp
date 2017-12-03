@@ -18,8 +18,10 @@ Creation date: 10/26/2017
 
 
 
-Contacts::Contacts()
+Contacts::Contacts(Body* body1, Body* body2)
 {
+	bodies[0] = body1;
+	bodies[1] = body2;
 }
 
 

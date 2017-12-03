@@ -21,7 +21,8 @@ class Contacts
 {
 public:
 	//Needs to be made by Colls manager
-	Contacts();
+	Contacts(Body* body1, Body* body2);
+
 	~Contacts();
 
 	//bodies in contact with each other.

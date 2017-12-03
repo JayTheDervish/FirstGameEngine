@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 #include <list>
 #include "Shapes.h"
 #include "MathLibraries\Vector2D.h"
+#include "Contacts.h"
 
 
 class CollisionManager
@@ -40,7 +41,7 @@ public:
 
 	 bool CollisionArray[2][2];
 
-	std::list</*Contacts*/int *> contacts;
+	std::list<Contacts*> contacts;
 };
 
 #endif // !CollisionManager_h
