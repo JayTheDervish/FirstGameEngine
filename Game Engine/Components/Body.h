@@ -40,7 +40,7 @@ public:
 	float mVelX, mVelY;
 	float mAccelX, mAccelY;
 	float totalForceX, totalForceY;
-	float mass, invMass;
+	float mass = 1, invMass = 1;
 
 	void Integrate(float gravity, float dt);
 

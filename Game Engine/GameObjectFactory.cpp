@@ -28,10 +28,6 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 {
 	GameObject * newObj = new GameObject();
 
-	
-	for (nlohmann::json::iterator it = j.begin(); it != j.end(); ++it) {
-		std::cout << it.key() << " : " << it.value() << "\n";
-	}
 
 	//Archetype serialization
 	if (!j["Player.json"].is_null())
@@ -52,10 +48,13 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 				nlohmann::json trans = playertransform["Transform"];
 
-				int x = trans["x"];
-				int y = trans["y"];
+				nlohmann::json scales = component["Transform"];
 
-				Transform * transform = new Transform(x, y);
+				float x = trans["x"];
+				float y = trans["y"];
+				float scale = scales["scale"];
+
+				Transform * transform = new Transform(x, y, scale);
 				transform->Initialize(newObj);
 				newObj->AddComponent(TRANSFORM, transform);
 			}
@@ -99,10 +98,14 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 				nlohmann::json trans = enemytransform["Transform"];
 
-				int x = trans["x"];
-				int y = trans["y"];
+				nlohmann::json scales = component["Transform"]["scale"];
 
-				Transform * transform = new Transform(x, y);
+				float x = trans["x"];
+				float y = trans["y"];
+
+				float scale = component["Transform"]["scale"];
+
+				Transform * transform = new Transform(x, y, scale);
 				transform->Initialize(newObj);
 				newObj->AddComponent(TRANSFORM, transform);
 			}

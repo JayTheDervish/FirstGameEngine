@@ -16,10 +16,23 @@ Creation date: 10/26/2017
 
 #include "PhysicsManager.h"
 
+
 PhysicsManager::PhysicsManager()
 {
 }
 
 PhysicsManager::~PhysicsManager()
 {
+}
+
+void PhysicsManager::Update(float dt)
+{
+	for (auto gameObject : goManager->objects)
+	{
+		Body* pBody = static_cast<Body*>(gameObject->getComponent(BODY));
+		if (pBody)
+		{
+			pBody->Integrate(0, dt);
+		}
+	}
 }

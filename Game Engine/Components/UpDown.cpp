@@ -38,13 +38,13 @@ void UpDown::Update(float dt)
 
 	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
 	{
-		transform->postion2d.y -= 1;
-		transform->postion2d.x += 1;
+		transform->postion2d.y -= 0.5*dt;
+		transform->postion2d.x += 0.5*dt;
 	}
 	else if (elapsedTime > 5.0f && elapsedTime < 10.0f)
 	{
-		transform->postion2d.y += 1;
-		transform->postion2d.x -= 1;
+		transform->postion2d.y += 0.5*dt;
+		transform->postion2d.x -= 0.5*dt;
 	}
 
 	elapsedTime = elapsedTime + dt;

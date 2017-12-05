@@ -19,8 +19,9 @@ Creation date: 10/26/2017
 #define Sprite_H
 
 #include <SDL_surface.h>
+#include <glew.h>
+#include <freeglut.h>
 #include "Transform.h"
-#include "Component.h"
 
 class GameObject;
 
@@ -33,6 +34,7 @@ public:
 	void Initialize(GameObject* parent);
 
 	void Update(float dt);
+	void Draw();
 
 	SDL_Surface * surface;
 
@@ -42,6 +44,24 @@ public:
 
 private:
 	GameObject * daddy;
+
+	GLuint
+		VertexShaderId,
+		FragmentShaderId,
+		ProgramId,
+		TextProgram,
+		TextureVertexShaderId,
+		TextureFragShaderId,
+		VaoId,
+		VboId,
+		texture_buffer,
+		texcoord_buffer,
+		atexture_coord,
+		ColorBufferId;
+
+	void CreateVBO();
+
+	void DestroyVBO();
 };
 
 #endif // !Sprite_H

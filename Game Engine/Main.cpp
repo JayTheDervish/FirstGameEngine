@@ -22,6 +22,7 @@ Creation date: 10/19/2017
 #include "ResourceManager.h"
 #include "FrameRateController.h"
 #include "GameObjectManager.h"
+#include "PhysicsManager.h"
 #include "MathLibraries\Vector2D.h"
 #include <SDL_surface.h>
 #include <Windows.h>
@@ -59,13 +60,7 @@ FragmentShaderId,
 ProgramId,
 TextProgram,
 TextureVertexShaderId,
-TextureFragShaderId,
-VaoId,
-VboId,
-texture_buffer,
-texcoord_buffer,
-atexture_coord,
-ColorBufferId;
+TextureFragShaderId;
 
 const char* VertexShader =
 "#version 400\n\
@@ -132,14 +127,10 @@ ResourceManager resources;
 GameObjectManager * goManager = new GameObjectManager();
 
 //TODO: Put in Renderer
-void Initialize(int, char*[]);
-//void InitWindow(int, char*[]);
 void ResizeFunction(int, int);
 void RenderFunction(void);
 
 void Cleanup(void);
-void CreateVBO(void);
-void DestroyVBO(void);
 void CreateShaders(void);
 void DestroyShaders(void);
 void glOrthog(
@@ -154,7 +145,7 @@ int main(int argc, char* args[])
 	bool appIsRunning = true;
 
 
-
+	PhysicsManager physics;
 
 	// Initialize SDL
 	if((error = SDL_Init( SDL_INIT_VIDEO )) < 0 )
@@ -185,8 +176,6 @@ int main(int argc, char* args[])
 
 	SDL_GLContext context = SDL_GL_CreateContext(pWindow);
 
-//	SDL_Surface * pWindowSurface = SDL_GetWindowSurface(pWindow);
-
 	//To create the console
 	if (AllocConsole())
 	{
@@ -210,8 +199,7 @@ int main(int argc, char* args[])
 	}
 
 	CreateShaders();
-	CreateVBO();
-	glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
+	
 
 	FrameRateController * frameRateController = new FrameRateController(FRAME_TIME_CAP);
 
@@ -227,6 +215,7 @@ int main(int argc, char* args[])
 
 	//Load Level
 	goManager->LoadLevel(j);
+	glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
 
 
 	// Game loop
@@ -234,11 +223,11 @@ int main(int argc, char* args[])
 	while(true == appIsRunning)
 	{
 		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		float dt = frameRateController->getDeltaTime();
 		
 		//clearing the screen
-//		SDL_FillRect(pWindowSurface, NULL, 0);
 
 
 		SDL_Event e;
@@ -252,33 +241,18 @@ int main(int argc, char* args[])
 
 		}
 
+
+		//Call Physics Manager Update
+		physics.Update(dt);
+
 		//Update all GameObjects
 		goManager->UpdateAll(dt);
-
-		//update screen buffer
-
-		
-		for (auto go : goManager->objects)
-		{
-			SDL_Rect * rect = new SDL_Rect();
-			
-			Transform * pTransform = (Transform *)go->getComponent(TRANSFORM);
-			Sprite * pSprite = (Sprite *)go->getComponent(SPRITE);
-
-			if (pTransform && pSprite) {
-				rect->x = pTransform->postion2d.x;
-				rect->y = pTransform->postion2d.y;
-
-				rect->h = pSprite->surface->h;
-				rect->w = pSprite->surface->w;
-
-			//	SDL_BlitSurface(pSprite->surface, NULL, pWindowSurface, rect);
-			}
-		}
+	
+	
 
 
 		//update screen
-		ResizeFunction(CurrentWidth, CurrentHeight);
+		//ResizeFunction(CurrentWidth, CurrentHeight);
 		RenderFunction();
 		SDL_GL_SwapWindow(pWindow);
 
@@ -308,20 +282,7 @@ int main(int argc, char* args[])
 }
 
 
-void Initialize(int argc, char* argv[])
-{
 
-	fprintf(
-		stdout,
-		"INFO: OpenGL Version: %s\n",
-		glGetString(GL_VERSION)
-	);
-
-
-	CreateShaders();
-	CreateVBO();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-}
 
 
 	void ResizeFunction(int Width, int Height)
@@ -333,29 +294,34 @@ void Initialize(int argc, char* argv[])
 
 	void RenderFunction(void)
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
 
 		Matrix2D orthoMatrix;
 
 		glOrthog(static_cast<float>(CurrentHeight), 0.0f, 0.0f, static_cast<float>(CurrentWidth), 0.1f, 1000.0f, orthoMatrix);
 
 		for (auto gameObject : goManager->objects) {
-			Transform* pTransform = static_cast<Transform*>(gameObject->getComponent(TRANSFORM));
+			Sprite* pSprite = static_cast<Sprite*>(gameObject->getComponent(SPRITE));
 
-			if (pTransform && !pTransform->skin) {
+			if (pSprite ) {
+				
 				glUseProgram(ProgramId);
-				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
+				Transform * pTransform = static_cast<Transform *>(pSprite->GetOwner()->getComponent(TRANSFORM));
+				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
+				pSprite->Draw();
+				//
+			//	glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
+				//glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
 			}
-			else if (pTransform && pTransform->skin) {
+		/*	else if (pTransform && pTransform->skin) {
 				glUseProgram(TextProgram);
-				glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, (float*)&pTransform->modelingMatrix.m[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
 				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
-			}
+			}*/
 
 			// select the texture to use
-			glBindTexture(GL_TEXTURE_2D, texture_buffer);
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+	//		glBindTexture(GL_TEXTURE_2D, texture_buffer);
+	//		glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 	}
 
@@ -392,91 +358,11 @@ void Initialize(int argc, char* argv[])
 	void Cleanup(void)
 	{
 		DestroyShaders();
-		DestroyVBO();
 	}
 
-	void CreateVBO(void)
-	{
-		GLfloat Vertices[] = {
-			-0.8f, 0.8f, -1.0f, 1.0f,
-			0.8f, 0.8f, -1.0f, 1.0f,
-			-0.8f, -0.8f, -1.0f, 1.0f,
+	
 
-			-0.8f, -0.8f, -1.0f, 1.0f,
-			0.8f,  0.8f, -1.0f, 1.0f,
-			0.8f, -0.8f, -1.0f, 1.0f
-		};
-
-		GLfloat Colors[] = {
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f
-		};
-
-		GLenum ErrorCheckValue = glGetError();
-
-		glGenVertexArrays(1, &VaoId);
-		glBindVertexArray(VaoId);
-
-		glGenBuffers(1, &VboId);
-		glBindBuffer(GL_ARRAY_BUFFER, VboId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(0);
-
-		glGenBuffers(1, &ColorBufferId);
-		glBindBuffer(GL_ARRAY_BUFFER, ColorBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Colors), Colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(1);
-
-		ErrorCheckValue = glGetError();
-		if (ErrorCheckValue != GL_NO_ERROR)
-		{
-		}
-
-		glGenBuffers(1, &texcoord_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, texcoord_buffer);
-		float texcoords[] = {
-			0.0, 1.0,
-			0.0, 0.0,
-			1.0, 0.0,
-			0.0, 1.0,
-			1.0, 0.0,
-			1.0, 1.0
-		};
-
-		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), texcoords, GL_STATIC_DRAW);
-
-		
-	}
-
-	void DestroyVBO(void)
-	{
-		GLenum ErrorCheckValue = glGetError();
-
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glDeleteBuffers(1, &ColorBufferId);
-		glDeleteBuffers(1, &VboId);
-
-		glBindVertexArray(0);
-		glDeleteVertexArrays(1, &VaoId);
-
-		ErrorCheckValue = glGetError();
-		if (ErrorCheckValue != GL_NO_ERROR)
-		{
-			
-
-			exit(-1);
-		}
-	}
+	
 
 	void CreateShaders(void)
 	{
@@ -517,20 +403,7 @@ void Initialize(int argc, char* argv[])
 		glAttachShader(TextProgram, TextureFragShaderId);
 		glLinkProgram(TextProgram);
 
-		int width, height, n;
-		unsigned char *rgbdata = stbi_load("tank1.bmp", &width, &height, &n, 0);
-		glGenTextures(1, &texture_buffer);
-		glBindTexture(GL_TEXTURE_2D, texture_buffer);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, rgbdata);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glBindBuffer(GL_ARRAY_BUFFER, texcoord_buffer);
-		glVertexAttribPointer(atexture_coord, 2, GL_FLOAT, false, 0, 0);
-		glEnableVertexAttribArray(atexture_coord);	
 		
 	}
 
