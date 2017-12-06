@@ -16,12 +16,14 @@ Creation date: 10/26/2017
 
 #pragma once
 
-#ifndef PhysicsManager_h
-#define PhysicsManager_h
+
 
 #include "Components\GameObject.h"
 #include "GameObjectManager.h"
+#include "Components\Body.h"
 
+#ifndef PhysicsManager_h
+#define PhysicsManager_h
 
 extern GameObjectManager * goManager;
 

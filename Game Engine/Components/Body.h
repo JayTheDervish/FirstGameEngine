@@ -18,7 +18,6 @@ Creation date: 10/26/2017
 
 
 #include "Component.h"
-#include "GameObject.h"
 #include "..\Shapes.h"
 
 #ifndef Body_h

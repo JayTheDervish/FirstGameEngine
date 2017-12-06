@@ -15,6 +15,7 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #include "Body.h"
+#include "GameObject.h"
 
 Body::Body()
 {
