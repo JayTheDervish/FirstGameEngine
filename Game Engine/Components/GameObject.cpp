@@ -61,4 +61,8 @@ void GameObject::AddComponent(COMPONENTS type, Component * component)
 void GameObject::HandleEvent(EventType type)
 {
 	//Code to do stuff based on EventType enum
+	for (auto compos : components)
+	{
+
+	}
 }

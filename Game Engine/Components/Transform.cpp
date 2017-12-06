@@ -56,6 +56,10 @@ void Transform::Serialize(nlohmann::json j)
 {
 }
 
+void Transform::HandleEvents(EventType events)
+{
+}
+
 GameObject * Transform::GetOwner()
 {
 	return daddy;

@@ -20,6 +20,7 @@ Creation date: 10/26/2017
 
 #include <iostream>
 #include "..\json.hpp"
+#include "..\EventManager.h"
 
 enum COMPONENTS
 {
@@ -39,6 +40,8 @@ public:
 	virtual void Serialize(nlohmann::json j) = 0;
 
 	virtual GameObject * GetOwner() = 0;
+
+	virtual void HandleEvents(EventType events) = 0;
 
 private:
 };

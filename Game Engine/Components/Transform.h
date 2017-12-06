@@ -41,6 +41,8 @@ public:
 
 	void Serialize(nlohmann::json j);
 
+	void HandleEvents(EventType events);
+
 	GameObject * GetOwner();
 
 private:

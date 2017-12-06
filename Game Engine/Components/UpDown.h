@@ -34,6 +34,9 @@ public:
 	void Update(float dt);
 
 	void Serialize(nlohmann::json j);
+
+	void HandleEvents(EventType events);
+
 	GameObject * GetOwner();
 private:
 	GameObject * daddy;

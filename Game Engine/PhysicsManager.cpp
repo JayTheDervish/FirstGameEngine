@@ -32,7 +32,7 @@ void PhysicsManager::Update(float dt)
 		Body* pBody = static_cast<Body*>(gameObject->getComponent(BODY));
 		if (pBody)
 		{
-			pBody->Integrate(0, dt);
+			//pBody->Integrate(0, dt);
 		}
 	}
 }

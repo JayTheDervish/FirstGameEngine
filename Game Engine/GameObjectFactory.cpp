@@ -144,6 +144,23 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		}
 	}
 
+	//Create Bullet
+	if (!j["bullet"].is_null())
+	{
+		newObj->gameObjectID = "Bullet";
+
+		nlohmann::json trans = j["Transform"];
+
+		float x = trans["x"];
+		float y = trans["y"];
+
+		float scale = j["Transform"]["scale"];
+
+		Transform * transform = new Transform(x, y, scale);
+		transform->Initialize(newObj);
+		newObj->AddComponent(TRANSFORM, transform);
+	}
+
 	//return object for initialization
 	return newObj;
 }

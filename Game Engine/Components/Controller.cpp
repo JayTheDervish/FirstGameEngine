@@ -16,6 +16,7 @@ Creation date: 10/26/2017
 
 #include "Controller.h"
 #include "GameObject.h"
+#include "..\json.hpp"
 
 Controller::Controller()
 {
@@ -66,11 +67,16 @@ void Controller::Update(float dt)
 
 	if (inputManager->isP1Action1Pressed())
 	{
-		Transform* pTransform = static_cast<Transform*>(daddy->getComponent(TRANSFORM));
-		if (pTransform->skin)
-			pTransform->skin = false;
-		else
-			pTransform->skin = true;
+		nlohmann::json j = { "bullet",{
+			{ "Transform", 
+				{ "x", static_cast<Transform*>(daddy->getComponent(TRANSFORM))->postion2d.x },
+				{ "y", static_cast<Transform*>(daddy->getComponent(TRANSFORM))->postion2d.y },
+				{ "scale", 0.01 }
+			} 
+		} };
+
+		goManager->CreateObject(j);
+
 		printf("Player 1 Action Button 1 is pressed.\n");
 	}
 	if (inputManager->isP1Action1Triggered())
@@ -106,6 +112,10 @@ void Controller::Update(float dt)
 }
 
 void Controller::Serialize(nlohmann::json j)
+{
+}
+
+void Controller::HandleEvents(EventType events)
 {
 }
 

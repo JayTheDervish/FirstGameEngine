@@ -35,8 +35,9 @@ public:
 	void LoadLevel(nlohmann::json filename);
 
 	void UpdateAll(float dt);
-	
 
+	void CreateObject(nlohmann::json j);
+	
 private:
 	GameObjectFactory * GOFactory;
 };

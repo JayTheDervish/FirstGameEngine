@@ -19,11 +19,14 @@ Creation date: 10/26/2017
 #include "Component.h"
 #include "..\InputManager.h"
 #include "Transform.h"
+#include "..\GameObjectManager.h"
 
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
 
 extern InputManager * inputManager;
+
+extern GameObjectManager * goManager;
 
 class GameObject;
 
@@ -38,6 +41,8 @@ public:
 	void Update(float dt);
 
 	void Serialize(nlohmann::json j);
+
+	void HandleEvents(EventType events);
 
 	GameObject * GetOwner();
 

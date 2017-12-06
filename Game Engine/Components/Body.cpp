@@ -63,6 +63,10 @@ void Body::Serialize(nlohmann::json j)
 {
 }
 
+void Body::HandleEvents(EventType events)
+{
+}
+
 GameObject * Body::GetOwner()
 {
 	return daddy;

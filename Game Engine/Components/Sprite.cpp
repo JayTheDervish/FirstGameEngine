@@ -54,6 +54,10 @@ void Sprite::Serialize(nlohmann::json j)
 {
 }
 
+void Sprite::HandleEvents(EventType events)
+{
+}
+
 GameObject * Sprite::GetOwner()
 {
 	return daddy;

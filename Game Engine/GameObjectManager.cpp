@@ -26,6 +26,7 @@ GameObjectManager::~GameObjectManager()
 	for (std::vector<GameObject *>::iterator it = objects.begin(); it != objects.end(); ++it) {
 		delete *it;
 	}
+	objects.clear();
 	delete GOFactory;
 }
 
@@ -46,4 +47,9 @@ void GameObjectManager::UpdateAll(float dt)
 {
 	for (int i = 0; i < objects.size(); ++i)
 		objects[i]->Update(dt);
+}
+
+void GameObjectManager::CreateObject(nlohmann::json j)
+{
+	objects.push_back(GOFactory->CreateObject(j));
 }
