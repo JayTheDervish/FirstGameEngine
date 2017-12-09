@@ -51,7 +51,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		for (int i = 0; i < o["Components"].size(); ++i)
 		{
 			nlohmann::json component = o["Components"][i];
-			if (!component["Transform"].is_null())
+			if (AcryJson::ValueExists(component, "Transform") /*!component["Transform"].is_null()*/)
 			{
 				nlohmann::json playertransform = j["Player.json"];
 
@@ -59,9 +59,9 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 				nlohmann::json scales = component["Transform"];
 
-				float x = trans["x"];
-				float y = trans["y"];
-				float scaleVal = scales["scale"];
+				float x = playertransform["Transform"]["x"];
+				float y = playertransform["Transform"]["y"];
+				float scaleVal = component["Transform"]["scale"];
 
 
 				Vector2D scale;
