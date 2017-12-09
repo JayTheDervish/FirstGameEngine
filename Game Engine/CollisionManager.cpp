@@ -24,6 +24,7 @@ extern "C" {
 
 CollisionManager::CollisionManager()
 {
+	reset();
 }
 
 
