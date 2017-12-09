@@ -164,6 +164,8 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		nlohmann::json o;
 		inputfile >> o;
 
+		newObj->gameObjectID = "Wall1";
+
 		//Go through Components array and serialize components
 		for (int i = 0; i < o["Components"].size(); ++i)
 		{
@@ -171,13 +173,13 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			nlohmann::json component = o["Components"][i];
 			if (!component["Transform"].is_null())
 			{
-				nlohmann::json enemytransform = j["Enemy.json"];
+				nlohmann::json walltransform = j["Wall1.json"];
 
-				nlohmann::json trans = enemytransform["Transform"];
+				nlohmann::json trans = walltransform["Transform"];
 
 				nlohmann::json scales = component["Transform"]["scale"];
 
-/*  Fix Json or this*/				float x = trans["x"];
+				float x = trans["x"];
 				float y = trans["y"];
 
 				Vector2D scale;
@@ -209,9 +211,11 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 		if (AcryJson::ValueExists(j, "Wall2.json"))
 		{
-			std::ifstream inputfile("Resources/Wall1.json");
+			std::ifstream inputfile("Resources/Wall2.json");
 			nlohmann::json o;
 			inputfile >> o;
+
+			newObj->gameObjectID = "Wall2";
 
 			//Go through Components array and serialize components
 			for (int i = 0; i < o["Components"].size(); ++i)
@@ -220,9 +224,9 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				nlohmann::json component = o["Components"][i];
 				if (!component["Transform"].is_null())
 				{
-					nlohmann::json enemytransform = j["Enemy.json"];
+					nlohmann::json walltransform = j["Wall2.json"];
 
-					nlohmann::json trans = enemytransform["Transform"];
+					nlohmann::json trans = walltransform["Transform"];
 
 					nlohmann::json scales = component["Transform"]["scale"];
 

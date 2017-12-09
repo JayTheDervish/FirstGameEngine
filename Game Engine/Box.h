@@ -18,19 +18,19 @@ Creation date: 10/26/2017
 
 #include "Shapes.h"
 
-#ifndef  AABB_h
-#define AABB_h
+#ifndef  BOX_h
+#define BOX_h
 
 
 
-class AABB :
+class Box :
 	public Shape
 {
 public:
-	AABB();
-	~AABB();
+	Box();
+	~Box();
 
 	float height, width;
 };
 
-#endif // ! AABB_h
+#endif // ! BOX_h

@@ -14,15 +14,15 @@ Creation date: 10/26/2017
 
 - End Header --------------------------------------------------------*/
 
-#include "AABB.h"
+#include "Box.h"
 
 
 
-AABB::AABB()
+Box::Box()
 {
 }
 
 
-AABB::~AABB()
+Box::~Box()
 {
 }

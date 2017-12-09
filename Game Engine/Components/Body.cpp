@@ -19,6 +19,7 @@ Creation date: 10/26/2017
 #include "Transform.h"
 #include "..\Shapes.h"
 #include "..\Circle.h"
+#include "..\Box.h"
 
 Body::Body()
 {
@@ -63,6 +64,11 @@ void Body::Initialize(GameObject * parent)
 
 	if (shape->shape == CIRCLE)
 		static_cast<Circle *>(shape)->radius = transform->scale.x;
+	else
+	{
+		static_cast<Box *>(shape)->height = transform->scale.y;
+		static_cast<Box *>(shape)->width = transform->scale.x;
+	}
 
 	mPosX = mPrevPosX = transform->postion2d.x;
 	mPosY = mPrevPosY = transform->postion2d.y;
