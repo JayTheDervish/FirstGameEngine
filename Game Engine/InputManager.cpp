@@ -752,9 +752,11 @@ int InputManager::GetP1Xpos()
 
 
 
-void InputManager::Update()
+bool InputManager::Update()
 {
 
+	
+#pragma region Joystick Update
 	if (inputMode == 'j')
 	{
 		//Copy current to previous
@@ -853,16 +855,34 @@ void InputManager::Update()
 			}
 		}
 	}
+#pragma endregion Joystick Update
 	else
 	{
+
+		appIsRunning = true;
+
 		//Copy current to previous
 		memcpy(prevKeyboardState, currentKeyboardState, length * sizeof(Uint8));
-		currentKeyboardState = SDL_GetKeyboardState(&length);
 
-		//Update Current
-	//	memcpy(currentKeyboardState, SDL_GetKeyboardState(&length), length * sizeof(Uint8));
-		 SDL_PumpEvents();
+
+		//Update Current State
+		SDL_Event e;
+		while (SDL_PollEvent(&e) != 0)
+		{
+			//User requests quit
+			if (e.type == SDL_QUIT)
+			{
+				appIsRunning = false;
+			}
+
+		}
+
+		currentKeyboardState = SDL_GetKeyboardState(&length);
+		
 	}
+	
+
+	return appIsRunning;
 	
 }
 

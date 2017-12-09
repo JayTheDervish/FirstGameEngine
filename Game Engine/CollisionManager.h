@@ -34,7 +34,7 @@ public:
 	//resets list of contacts after integration
 	void reset();
 
-	bool checkCollisionAndGenContacts(Shape shape1, Vector2D position1, Shape shape2, Vector2D position2);
+	bool checkCollisionAndGenContacts(Shape* shape1, Vector2D position1, Shape* shape2, Vector2D position2);
 
 	//Will be used to determine collision type
 	typedef bool(*func)(Shape shape1, Vector2D position1, Shape shape2, Vector2D position);

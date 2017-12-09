@@ -100,6 +100,7 @@
     <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="jsonreader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathLibraries\LineSegment2D.c" />
     <ClCompile Include="MathLibraries\Math2D.c" />
@@ -128,6 +129,8 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonReader.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="MathLibraries\LineSegment2D.h" />
     <ClInclude Include="MathLibraries\Math2D.h" />
     <ClInclude Include="MathLibraries\Matrix2D.h" />

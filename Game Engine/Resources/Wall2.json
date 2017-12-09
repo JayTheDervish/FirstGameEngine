@@ -1,0 +1,20 @@
+{
+  "Components": [
+    {
+      "Sprite": "e"
+    },
+    {
+      "Transform": {
+          "x": 0,
+          "y": 0,
+		  "scale": {
+			 "x": 2,
+			 "y": 0.1
+			}
+        }
+    },
+    {
+      "Body": "yes"
+    }
+  ]
+}

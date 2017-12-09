@@ -15,13 +15,8 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 #pragma once
 
-#include "Sprite.h"
-#include "Transform.h"
-#include "Controller.h"
-#include "UpDown.h"
-#include "Component.h"
-#include "Body.h"
 #include "..\EventManager.h" //I do not like this include
+#include "Component.h"
 #include <map>
 #include <string>
 
@@ -39,6 +34,9 @@ public:
 
 	//GameObect ID
 	std::string gameObjectID;
+
+	//Alive/Dead
+	bool alive;
 
 	//Allows access to other components
 	Component * getComponent(COMPONENTS component);

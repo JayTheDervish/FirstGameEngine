@@ -27,7 +27,7 @@ class GameObject;
 class Transform : public Component
 {
 public:
-	Transform(float x, float y, float scaleVal);
+	Transform(float x, float y, Vector2D scale);
 	~Transform();
 
 	void Initialize(GameObject * parent);

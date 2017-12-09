@@ -15,7 +15,11 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #include "CollisionManager.h"
+#include "Circle.h"
 
+extern "C" {
+	#include "MathLibraries\Math2D.h"
+}
 
 
 CollisionManager::CollisionManager()
@@ -33,8 +37,10 @@ void CollisionManager::reset()
 	contacts.clear();
 }
 
-bool CollisionManager::checkCollisionAndGenContacts(Shape shape1, Vector2D position1, Shape shape2, Vector2D position2)
+bool CollisionManager::checkCollisionAndGenContacts(Shape* shape1, Vector2D position1, Shape* shape2, Vector2D position2)
 {
+	if ((shape1->shape == CIRCLE) && (shape2->shape == CIRCLE))
+		return StaticCircleToStaticCircle(&position1, static_cast<Circle*>(shape1)->radius, &position2, static_cast<Circle*>(shape2)->radius);
 
 
 	return false;

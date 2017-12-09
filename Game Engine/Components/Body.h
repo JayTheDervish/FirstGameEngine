@@ -17,15 +17,12 @@ Creation date: 10/26/2017
 #pragma once
 
 
-#include "Component.h"
-#include "..\Shapes.h"
-
 #ifndef Body_h
 #define Body_h
 
+#include "Component.h"
 
 class GameObject;
-
 class Shape;
 
 class Body : public Component
@@ -41,7 +38,7 @@ public:
 	float totalForceX, totalForceY;
 	float mass = 1, invMass = 1;
 
-	void Integrate(float gravity, float dt);
+	void Integrate(float dt);
 
 	void Update(float dt);
 
@@ -52,6 +49,8 @@ public:
 	void HandleEvents(EventType events);
 
 	GameObject * GetOwner();
+
+	Shape * getShape();
 
 private:
 	GameObject * daddy;

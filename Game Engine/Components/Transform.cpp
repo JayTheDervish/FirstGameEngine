@@ -16,13 +16,12 @@ Creation date: 10/26/2017
 
 #include "Transform.h"
 
-Transform::Transform(float  x, float y, float scaleVal)
+Transform::Transform(float  x, float y, Vector2D scale)
 {
 	postion2d.x = x;
 	postion2d.y = y;
 
-	scale.x = scaleVal;
-	scale.y = scaleVal;
+	scale = scale;
 
 	skin = false;
 }
@@ -33,8 +32,6 @@ Transform::~Transform()
 
 void Transform::Initialize(GameObject * parent)
 {
-
-//	std::cout << "Inside Tranform Init" << std::endl;
 	daddy = parent;
 }
 

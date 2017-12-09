@@ -15,6 +15,15 @@ Creation date: 11/2/2017
 - End Header --------------------------------------------------------*/
 
 #include "GameObjectFactory.h"
+#include "Components\Transform.h"
+#include "Components\Sprite.h"
+#include "Components\Controller.h"
+#include "Components\UpDown.h"
+#include "Components\Body.h"
+#include "Components\GameObject.h"
+#include "ResourceManager.h"
+#include "JsonReader.h"
+
 
 GameObjectFactory::GameObjectFactory()
 {
@@ -30,7 +39,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 
 	//Archetype serialization
-	if (!j["Player.json"].is_null())
+	if (AcryJson::ValueExists(j, "Player.json"))
 	{
 		newObj->gameObjectID = "Player";
 
@@ -52,7 +61,13 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 				float x = trans["x"];
 				float y = trans["y"];
-				float scale = scales["scale"];
+				float scaleVal = scales["scale"];
+
+
+				Vector2D scale;
+
+				scale.x = scale.y = scaleVal;
+
 
 				Transform * transform = new Transform(x, y, scale);
 				transform->Initialize(newObj);
@@ -62,13 +77,15 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			{
 				std::string spriteIcon = component["Sprite"];
 
-				Sprite * sprite = new Sprite(resources.getSprite(spriteIcon[0]));
+				Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
 				sprite->Initialize(newObj);
 				newObj->AddComponent(SPRITE, sprite);
 			}
 			else if (!component["Controller"].is_null())
 			{
-				Controller * controller = new Controller();
+				std::string bullet;
+				bullet = component.at("Bullet").get<std::string>();
+				Controller * controller = new Controller(bullet);
 				controller->Initialize(newObj);
 				newObj->AddComponent(CONTROLLER, controller);
 			}
@@ -80,7 +97,10 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 		}
 	}
-	if (!j["Enemy.json"].is_null())
+
+
+
+	if (AcryJson::ValueExists(j, "Enemy.json"))
 	{
 		newObj->gameObjectID = "Enemy";
 
@@ -103,7 +123,11 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				float x = trans["x"];
 				float y = trans["y"];
 
-				float scale = component["Transform"]["scale"];
+				float scaleVal = component["Transform"]["scale"];
+
+				Vector2D scale;
+
+				scale.x = scale.y = scaleVal;
 
 				Transform * transform = new Transform(x, y, scale);
 				transform->Initialize(newObj);
@@ -113,7 +137,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			{
 				std::string spriteIcon = component["Sprite"];
 
-				Sprite * sprite = new Sprite(resources.getSprite(spriteIcon[0]));
+				Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
 				sprite->Initialize(newObj);
 				newObj->AddComponent(SPRITE, sprite);
 			}
@@ -131,7 +155,10 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 		}
 	}
-	if (!j["Wall1.json"].is_null())
+
+
+
+	if (AcryJson::ValueExists(j, "Wall1.json"))
 	{
 		std::ifstream inputfile("Resources/Wall1.json");
 		nlohmann::json o;
@@ -141,26 +168,143 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 		for (int i = 0; i < o["Components"].size(); ++i)
 		{
 			o["Components"][i];
+			nlohmann::json component = o["Components"][i];
+			if (!component["Transform"].is_null())
+			{
+				nlohmann::json enemytransform = j["Enemy.json"];
+
+				nlohmann::json trans = enemytransform["Transform"];
+
+				nlohmann::json scales = component["Transform"]["scale"];
+
+/*  Fix Json or this*/				float x = trans["x"];
+				float y = trans["y"];
+
+				Vector2D scale;
+
+				scale.x = component["Transform"]["scale"]["x"];
+				scale.y = component["Transform"]["scale"]["y"];
+
+				Transform * transform = new Transform(x, y, scale);
+				transform->Initialize(newObj);
+				newObj->AddComponent(TRANSFORM, transform);
+			}
+			else if (!component["Sprite"].is_null())
+			{
+				std::string spriteIcon = component["Sprite"];
+
+				Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
+				sprite->Initialize(newObj);
+				newObj->AddComponent(SPRITE, sprite);
+			}
+			else if (!component["Body"].is_null())
+			{
+				Body * body = new Body();
+				body->Initialize(newObj);
+				newObj->AddComponent(BODY, body);
+			}
 		}
+
+
+
+		if (AcryJson::ValueExists(j, "Wall2.json"))
+		{
+			std::ifstream inputfile("Resources/Wall1.json");
+			nlohmann::json o;
+			inputfile >> o;
+
+			//Go through Components array and serialize components
+			for (int i = 0; i < o["Components"].size(); ++i)
+			{
+				o["Components"][i];
+				nlohmann::json component = o["Components"][i];
+				if (!component["Transform"].is_null())
+				{
+					nlohmann::json enemytransform = j["Enemy.json"];
+
+					nlohmann::json trans = enemytransform["Transform"];
+
+					nlohmann::json scales = component["Transform"]["scale"];
+
+					float x = trans["x"];
+					float y = trans["y"];
+
+					Vector2D scale;
+
+					scale.x = component["Transform"]["scale"]["x"];
+					scale.y = component["Transform"]["scale"]["y"];
+
+					Transform * transform = new Transform(x, y, scale);
+					transform->Initialize(newObj);
+					newObj->AddComponent(TRANSFORM, transform);
+				}
+				else if (!component["Sprite"].is_null())
+				{
+					std::string spriteIcon = component["Sprite"];
+
+					Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
+					sprite->Initialize(newObj);
+					newObj->AddComponent(SPRITE, sprite);
+				}
+				else if (!component["Body"].is_null())
+				{
+					Body * body = new Body();
+					body->Initialize(newObj);
+					newObj->AddComponent(BODY, body);
+				}
+			}
+		}
+
+		//Create Bullet
+		bool bullet = AcryJson::ValueExists(j, "bullet");
+		if (bullet)
+		{
+			newObj->gameObjectID = "bullet";
+
+			bool components = AcryJson::ValueExists(j["bullet"], "Components");
+
+			if (components)
+			{
+
+				for (int i = 0; i < j["bullet"]["Components"].size(); ++i)
+				{
+
+					nlohmann::json component = j["bullet"]["Components"][i];
+
+					if (!component["Transform"].is_null()/*AcryJson::ValueExists(j["Components"][i], "Transform")*/)
+					{
+						float x = component["Transform"]["x"];
+						float y = component["Transform"]["y"];
+
+						float scaleVal = component["Transform"]["scale"];
+
+						Vector2D scale;
+
+						scale.x = scale.y = scaleVal;
+
+						Transform * transform = new Transform(x, y, scale);
+						transform->Initialize(newObj);
+						newObj->AddComponent(TRANSFORM, transform);
+					}
+					else if (!component["Sprite"].is_null()/*AcryJson::ValueExists(j["Components"][i], "Sprite")*/)
+					{
+						std::string spriteIcon = component["Sprite"];
+
+						Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
+						sprite->Initialize(newObj);
+						newObj->AddComponent(SPRITE, sprite);
+					}
+					else if (!component["Body"].is_null()/*AcryJson::ValueExists(j["Components"][i], "Body")*/)
+					{
+						Body * body = new Body();
+						body->Initialize(newObj);
+						newObj->AddComponent(BODY, body);
+					}
+				}
+			}
+		}
+
+		//return object for initialization
+		return newObj;
 	}
-
-	//Create Bullet
-	if (!j["bullet"].is_null())
-	{
-		newObj->gameObjectID = "Bullet";
-
-		nlohmann::json trans = j["Transform"];
-
-		float x = trans["x"];
-		float y = trans["y"];
-
-		float scale = j["Transform"]["scale"];
-
-		Transform * transform = new Transform(x, y, scale);
-		transform->Initialize(newObj);
-		newObj->AddComponent(TRANSFORM, transform);
-	}
-
-	//return object for initialization
-	return newObj;
 }

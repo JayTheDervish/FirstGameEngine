@@ -17,23 +17,18 @@ Creation date: 10/26/2017
 #pragma once
 
 #include "Component.h"
-#include "..\InputManager.h"
-#include "Transform.h"
-#include "..\GameObjectManager.h"
 
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
 
-extern InputManager * inputManager;
 
-extern GameObjectManager * goManager;
 
 class GameObject;
 
 class Controller : public Component
 {
 public:
-	Controller();
+	Controller(std::string bullet);
 	~Controller();
 
 	void Initialize(GameObject * parent);
@@ -48,6 +43,8 @@ public:
 
 private:
 	GameObject * daddy;
+	std::string bullet;
+
 };
 
 #endif // !CONTROLLER_H

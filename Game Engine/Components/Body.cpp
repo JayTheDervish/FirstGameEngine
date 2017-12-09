@@ -16,6 +16,9 @@ Creation date: 10/26/2017
 
 #include "Body.h"
 #include "GameObject.h"
+#include "Transform.h"
+#include "..\Shapes.h"
+#include "..\Circle.h"
 
 Body::Body()
 {
@@ -25,12 +28,12 @@ Body::~Body()
 {
 }
 
-void Body::Integrate(float gravity, float dt)
+void Body::Integrate(float dt)
 {
 	mPrevPosX = mPosX;
 	mPrevPosY = mPosY;
 
-	totalForceY += gravity;
+	
 	mAccelX = totalForceX * invMass;
 	mAccelY = totalForceY * invMass;
 
@@ -54,10 +57,15 @@ void Body::Update(float dt)
 void Body::Initialize(GameObject * parent)
 {
 	daddy = parent;
-	Transform * transfrom = (Transform *)daddy->getComponent(TRANSFORM);
+	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
-	mPosX = mPrevPosX = transfrom->postion2d.x;
-	mPosY = mPrevPosY = transfrom->postion2d.y;
+	shape = new Shape();
+
+	if (shape->shape == CIRCLE)
+		static_cast<Circle *>(shape)->radius = transform->scale.x;
+
+	mPosX = mPrevPosX = transform->postion2d.x;
+	mPosY = mPrevPosY = transform->postion2d.y;
 }
 
 void Body::Serialize(nlohmann::json j)
@@ -71,4 +79,9 @@ void Body::HandleEvents(EventType events)
 GameObject * Body::GetOwner()
 {
 	return daddy;
+}
+
+Shape * Body::getShape()
+{
+	return shape;
 }

@@ -24,6 +24,8 @@ Creation date: 11/2/2017
 #ifndef GAMEOBJECTMANAGER_H
 #define GAMEOBJECTMANAGER_H
 
+class GameObjectFactory;
+
 class GameObjectManager
 {
 public:
@@ -32,12 +34,19 @@ public:
 
 	std::vector<GameObject *> objects;
 
+	std::vector<GameObject *> spawns;
+
+	std::vector<GameObject *> graveyard;
+
 	void LoadLevel(nlohmann::json filename);
 
 	void UpdateAll(float dt);
 
-	void CreateObject(nlohmann::json j);
+	void KillDead();
+
+	GameObject* CreateObject(nlohmann::json j);
 	
+	static GameObjectManager* goManager;
 private:
 	GameObjectFactory * GOFactory;
 };

@@ -16,6 +16,8 @@ Creation date: 11/2/2017
 
 #include "GameObjectManager.h"
 
+GameObjectManager* GameObjectManager::goManager = nullptr;
+
 GameObjectManager::GameObjectManager()
 {
 	GOFactory = new GameObjectFactory();
@@ -30,6 +32,8 @@ GameObjectManager::~GameObjectManager()
 	delete GOFactory;
 }
 
+
+//Loads level from Json File
 void GameObjectManager::LoadLevel(nlohmann::json filename)
 {
 	nlohmann::json o; //Objects
@@ -43,13 +47,35 @@ void GameObjectManager::LoadLevel(nlohmann::json filename)
 
 }
 
+
+//Calls every Object's Update method
 void GameObjectManager::UpdateAll(float dt)
 {
 	for (int i = 0; i < objects.size(); ++i)
+	{
 		objects[i]->Update(dt);
+		if (!objects[i]->alive)
+			graveyard.push_back(objects[i]);
+	}
+
+	KillDead();
+
+	//Spawn new objects
+	for (int i = 0; i < spawns.size(); ++i)
+		objects.push_back(spawns[i]);
+	spawns.clear();
 }
 
-void GameObjectManager::CreateObject(nlohmann::json j)
+void GameObjectManager::KillDead()
 {
-	objects.push_back(GOFactory->CreateObject(j));
+	for (auto objPointer : graveyard)
+		objects.erase(std::remove(objects.begin(), objects.end(), objPointer), objects.end());
+	graveyard.clear();
+}
+
+
+//Can create an object during gameplay.
+ GameObject* GameObjectManager::CreateObject(nlohmann::json j)
+{
+	return GOFactory->CreateObject(j);
 }

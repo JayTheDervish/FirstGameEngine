@@ -15,9 +15,6 @@ Creation date: 11/2/2017
 - End Header --------------------------------------------------------*/
 
 #pragma once
-
-#include "Components\GameObject.h"
-#include "ResourceManager.h"
 #include <string>
 #include <fstream>
 #include "json.hpp"
@@ -25,8 +22,8 @@ Creation date: 11/2/2017
 #ifndef GAMEOBJECTFACTORY_H
 #define GAMEOBJECTFACTORY_H
 
-extern ResourceManager resources;
 
+class GameObject;
 class GameObjectFactory
 {
 public:

@@ -16,16 +16,11 @@ Creation date: 10/26/2017
 
 #pragma once
 
-
-
-#include "Components\GameObject.h"
-#include "GameObjectManager.h"
-#include "Components\Body.h"
-
 #ifndef PhysicsManager_h
 #define PhysicsManager_h
 
-extern GameObjectManager * goManager;
+#include "CollisionManager.h"
+
 
 class PhysicsManager
 {
@@ -36,6 +31,7 @@ public:
 	void Update(float dt);
 
 private:
+	CollisionManager * collisions;
 };
 
 #endif // !PhysicsManager_h

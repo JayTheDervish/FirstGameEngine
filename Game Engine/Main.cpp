@@ -18,12 +18,9 @@ Creation date: 10/19/2017
 #include <glew.h>
 #include <freeglut.h>
 #include "stdio.h"
-#include "InputManager.h"
-#include "ResourceManager.h"
-#include "FrameRateController.h"
-#include "GameObjectManager.h"
-#include "PhysicsManager.h"
+#include "Main.h"
 #include "MathLibraries\Vector2D.h"
+#include "PhysicsManager.h"
 #include <SDL_surface.h>
 #include <Windows.h>
 #include <vector>
@@ -32,6 +29,15 @@ Creation date: 10/19/2017
 #include "json.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+#include "MathLibraries\Matrix2D.h"
+
+
+#include "GameObjectManager.h"
+#include "Components\Transform.h"
+#include "Components\Sprite.h"
+
+
 
 
 
@@ -49,7 +55,7 @@ extern "C" FILE * __cdecl __iob_func(void)
 float FRAME_TIME_CAP = (1.0f / 60.0f) * 1000.0f;
 
 int CurrentWidth = 800,
-CurrentHeight = 600,
+CurrentHeight = 800,
 WindowHandle = 0;
 
 unsigned FrameCount = 0;
@@ -122,11 +128,7 @@ const GLchar* FragmentShaderTexture =
 
 
 
-InputManager * inputManager = new InputManager(1, 'k');
-ResourceManager resources;
-GameObjectManager * goManager = new GameObjectManager();
 
-//TODO: Put in Renderer
 void ResizeFunction(int, int);
 void RenderFunction(void);
 
@@ -146,7 +148,10 @@ int main(int argc, char* args[])
 
 
 	PhysicsManager physics;
+	
 
+	GameObjectManager::goManager = new GameObjectManager();
+	ResourceManager::resources = new ResourceManager();
 	// Initialize SDL
 	if((error = SDL_Init( SDL_INIT_VIDEO )) < 0 )
 	{
@@ -214,13 +219,13 @@ int main(int argc, char* args[])
 	
 
 	//Load Level
-	goManager->LoadLevel(j);
+	GameObjectManager::goManager->LoadLevel(j);
 	glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
 
 
 	// Game loop
 #pragma region Game Loop
-	while(true == appIsRunning)
+	while(inputManager->Update())
 	{
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -230,26 +235,11 @@ int main(int argc, char* args[])
 		//clearing the screen
 
 
-		SDL_Event e;
-		while (SDL_PollEvent(&e) != 0)
-		{
-			//User requests quit
-			if (e.type == SDL_QUIT)
-			{
-				appIsRunning = false;
-			}
-
-		}
-
-
 		//Call Physics Manager Update
 		physics.Update(dt);
 
 		//Update all GameObjects
-		goManager->UpdateAll(dt);
-	
-	
-
+		GameObjectManager::goManager->UpdateAll(dt);
 
 		//update screen
 		//ResizeFunction(CurrentWidth, CurrentHeight);
@@ -264,8 +254,8 @@ int main(int argc, char* args[])
 
 
 	//Delete all GameObjects
-	delete goManager;
-
+	delete GameObjectManager::goManager;
+	delete ResourceManager::resources;
 	// Close if opened
 	delete frameRateController;
 	delete inputManager;
@@ -300,7 +290,7 @@ int main(int argc, char* args[])
 
 		glOrthog(static_cast<float>(CurrentHeight), 0.0f, 0.0f, static_cast<float>(CurrentWidth), 0.1f, 1000.0f, orthoMatrix);
 
-		for (auto gameObject : goManager->objects) {
+		for (auto gameObject : GameObjectManager::goManager->objects) {
 			Sprite* pSprite = static_cast<Sprite*>(gameObject->getComponent(SPRITE));
 
 			if (pSprite ) {

@@ -26,6 +26,42 @@
           }
       }
     }
+	,
+    {
+      "Wall1.json": {
+        "Transform": {
+            "x": -100,
+            "y": 0
+          }
+      }
+    }
+	,
+    {
+      "Wall1.json": {
+        "Transform": {
+            "x": 100,
+            "y": 0
+          }
+      }
+    }
+	,
+    {
+      "Wall2.json": {
+        "Transform": {
+            "x": 0,
+            "y": 100
+          }
+      }
+    }
+	,
+    {
+      "Wall2.json": {
+        "Transform": {
+            "x": 0,
+            "y": -100
+          }
+      }
+    }
       ]
 
     }

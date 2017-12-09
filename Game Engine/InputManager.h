@@ -131,7 +131,9 @@ public:
 	bool isP2Action2Released();
 
 	//Call to update Keyboard State
-	void Update();
+	bool Update();
+
+
 
 private:
 	SDL_Joystick * joy1, *joy2;
@@ -155,6 +157,7 @@ private:
 
 	//Player 2 Y movement
 	int GetP2Ypos();
+	bool appIsRunning;
 };
 
 

@@ -17,8 +17,15 @@ Creation date: 10/26/2017
 
 #include "GameObject.h"
 
+//#include "Sprite.h"
+//#include "Transform.h"
+//#include "Controller.h"
+//#include "UpDown.h"
+//#include "Body.h"
+
 GameObject::GameObject()
 {
+	alive = true;
 }
 
 GameObject::~GameObject()

@@ -11,7 +11,8 @@
     "Sprite":"c"
     },
     {
-      "Controller": "yes"
+      "Controller": "yes",
+      "Bullet": "bullet"
     },
     {
       "Body": "Circle"

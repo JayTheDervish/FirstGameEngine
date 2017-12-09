@@ -16,6 +16,8 @@ Creation date: 10/19/2017
 
 #include "ResourceManager.h"
 
+
+ResourceManager* ResourceManager::resources = nullptr;
 ResourceManager::ResourceManager()
 {
 

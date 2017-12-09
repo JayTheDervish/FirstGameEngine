@@ -15,24 +15,74 @@ Creation date: 10/26/2017
 - End Header --------------------------------------------------------*/
 
 #include "PhysicsManager.h"
-
+#include "GameObjectManager.h"
+#include "Components\GameObject.h"
+#include "Components\Body.h"
+#include "Components\Transform.h"
 
 PhysicsManager::PhysicsManager()
 {
+	collisions = new CollisionManager();
 }
 
 PhysicsManager::~PhysicsManager()
 {
+	delete collisions;
 }
 
 void PhysicsManager::Update(float dt)
 {
-	for (auto gameObject : goManager->objects)
+	for (auto gameObject : GameObjectManager::goManager->objects)
 	{
 		Body* pBody = static_cast<Body*>(gameObject->getComponent(BODY));
 		if (pBody)
 		{
-			//pBody->Integrate(0, dt);
+			pBody->Integrate(dt);
 		}
 	}
+
+	collisions->reset();
+
+
+	//Loop through all game objects
+	for (auto gameObject1 : GameObjectManager::goManager->objects)
+	{
+		//For each game object
+		for (auto gameObject2 : GameObjectManager::goManager->objects)
+		{
+			if (gameObject1->gameObjectID == "bullet")
+			{
+				//Check to see if bullet hits an enemy
+				if (gameObject2->gameObjectID == "Enemy")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+						gameObject2->alive = false;
+					}
+				}
+				//Check if wall for bouncing (in future code)
+			}
+			else if (gameObject1->gameObjectID == "Player")
+			{
+				//Check to see if Player collides with Enemy
+				if (gameObject2->gameObjectID == "Enemy")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+						printf("YOU GOT HIT\n");//do stuff to handle collision
+				}
+				//Check if wall
+			}
+		}
+	}
+
+
 }

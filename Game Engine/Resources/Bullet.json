@@ -1,0 +1,19 @@
+{ "bullet": {
+  "Components": [
+    {
+      "Transform": {
+          "x": 0,
+          "y": 0,
+          "scale":  0.01
+      }
+    },
+    { 
+		"Sprite":"c"
+    },
+	{
+      "Body": "Circle"
+    }
+
+	]
+	}
+}
