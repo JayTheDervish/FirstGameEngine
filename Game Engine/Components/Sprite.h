@@ -31,6 +31,8 @@ public:
 	Sprite(SDL_Surface * sprite);
 	~Sprite();
 
+	bool skin;
+
 	void Initialize(GameObject* parent);
 
 	void Update(float dt);
@@ -43,6 +45,7 @@ public:
 	void HandleEvents(EventType events);
 
 	GameObject * GetOwner();
+	GLuint VaoId, VboId;
 
 private:
 	GameObject * daddy;
@@ -54,8 +57,6 @@ private:
 		TextProgram,
 		TextureVertexShaderId,
 		TextureFragShaderId,
-		VaoId,
-		VboId,
 		texture_buffer,
 		texcoord_buffer,
 		atexture_coord,

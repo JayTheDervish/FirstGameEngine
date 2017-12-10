@@ -64,7 +64,6 @@ void Controller::Update(float dt)
 		body->mVelY = 0;
 	if (inputManager->isP1RightPressed())
 		transform->angle += -1 * dt;
-	//	body->totalForceX += 1700*dt * cosf(transform->angle);
 	else
 		body->mVelX = 0;
 	if (inputManager->isP1LeftPressed())

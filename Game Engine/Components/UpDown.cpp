@@ -17,6 +17,7 @@ Creation date: 10/26/2017
 #include "UpDown.h"
 #include "GameObject.h"
 #include "Body.h"
+#include "Transform.h"
 
 UpDown::UpDown()
 {
@@ -36,16 +37,17 @@ void UpDown::Initialize(GameObject * parent)
 void UpDown::Update(float dt)
 {
 	Body * body = static_cast<Body*>(daddy->getComponent(BODY));
+	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
 	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
 	{
-		body->mVelY -= 0.01*dt;
-		body->mVelX += 0.01*dt;
+		body->mVelY -= 0.01*dt * sinf(transform->angle);
+		body->mVelX += 0.01*dt * cosf(transform->angle);
 	}
 	else if (elapsedTime > 5.0f && elapsedTime < 10.0f)
 	{
-		body->mVelY += 0.01*dt;
-		body->mVelX -= 0.01*dt;
+		body->mVelY += 0.01*dt * sinf(transform->angle);
+		body->mVelX -= 0.01*dt * cosf(transform->angle);
 	}
 
 	elapsedTime = elapsedTime + dt;

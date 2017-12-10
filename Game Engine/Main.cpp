@@ -6,6 +6,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 File Name:	Main.cpp
 Purpose:	Contains the main game loop and game processing.
+Inspiration: http://www.retrogames.cz/play_213-Atari2600.php
 Language:	C++
 Platform:	Windows, MS C++ compiler, VS v140
 Project:	jcoleman_CS529_maincpp
@@ -66,7 +67,10 @@ FragmentShaderId,
 ProgramId,
 TextProgram,
 TextureVertexShaderId,
-TextureFragShaderId;
+TextureFragShaderId,
+texture_buffer;
+
+GLint atexture_coord;
 
 const char* VertexShader =
 "#version 400\n\
@@ -120,8 +124,8 @@ const GLchar* FragmentShaderTexture =
 
 	"void main(void)\n"\
 	"{\n"\
-	"vec3 diffuse_color = texture(usampler, vtexture_coord).xyz;\n"\
-	"  out_Color = vec4(diffuse_color, 1);\n"\
+	"vec4 diffuse_color = texture(usampler, vtexture_coord);\n"\
+	"  out_Color = diffuse_color;\n"\
 	"}\n"
 };
 
@@ -293,25 +297,41 @@ int main(int argc, char* args[])
 		for (auto gameObject : GameObjectManager::goManager->objects) {
 			Sprite* pSprite = static_cast<Sprite*>(gameObject->getComponent(SPRITE));
 
-			if (pSprite ) {
-				
-				glUseProgram(ProgramId);
+			if (pSprite) {
 				Transform * pTransform = static_cast<Transform *>(pSprite->GetOwner()->getComponent(TRANSFORM));
-				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
-				pSprite->Draw();
-				//
-			//	glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
-				//glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
-			}
-		/*	else if (pTransform && pTransform->skin) {
-				glUseProgram(TextProgram);
-				glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(ProgramId, "orthographicMatrix"), 1, true, &orthoMatrix.m[0][0]);
-			}*/
+				
+				if (pSprite->skin)
+				{
+					glUseProgram(TextProgram);
+					glUniformMatrix4fv(glGetUniformLocation(TextProgram, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
+					atexture_coord = glGetAttribLocation(TextProgram, "texture_coord");
+					glVertexAttribPointer(atexture_coord, 2, GL_FLOAT, false, 0, 0);
+					glEnableVertexAttribArray(atexture_coord);
 
-			// select the texture to use
-	//		glBindTexture(GL_TEXTURE_2D, texture_buffer);
-	//		glDrawArrays(GL_TRIANGLES, 0, 6);
+					// select the texture to use
+					glBindTexture(GL_TEXTURE_2D, texture_buffer);
+					glAlphaFunc(GL_GREATER, 0.5f);
+					glEnable(GL_ALPHA_TEST);
+
+					glEnableVertexAttribArray(0);
+					glBindVertexArray(pSprite->VboId);
+					glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+
+					glEnableVertexAttribArray(atexture_coord);
+					glVertexAttribPointer(atexture_coord, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(4*sizeof(GLfloat)));
+
+					glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
+					
+					glBindVertexArray(0);
+				}
+				else
+				{
+					glUseProgram(ProgramId);
+					
+					glUniformMatrix4fv(glGetUniformLocation(ProgramId, "modelingMatrix"), 1, true, &pTransform->modelingMatrix.m[0][0]);
+					pSprite->Draw();
+				}
+			}
 		}
 	}
 
@@ -380,6 +400,28 @@ int main(int argc, char* args[])
 		//	exit(-1);
 		}
 
+		//Area to load image for texture
+		int x, y, n;
+		unsigned char* data = stbi_load("Resources/tankSprite.png", &x, &y, &n, STBI_rgb_alpha);
+		glGenTextures(1, &texture_buffer);
+		glBindTexture(GL_TEXTURE_2D, texture_buffer);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		stbi_image_free(data);
+
+		//Texture coordinates
+		GLfloat texTop = 0.f;
+		GLfloat texBottom = (GLfloat)y;
+		GLfloat texLeft = 0.f;
+		GLfloat texRight = (GLfloat)x;
+
+
+
 		TextureVertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(TextureVertexShaderId, 1, &VertexShaderTexture, NULL);
 		glCompileShader(TextureVertexShaderId);
@@ -401,6 +443,8 @@ int main(int argc, char* args[])
 	{
 		GLenum ErrorCheckValue = glGetError();
 
+		glDeleteTextures(1, &texture_buffer);
+
 		glUseProgram(0);
 
 		glDetachShader(ProgramId, VertexShaderId);
@@ -410,6 +454,14 @@ int main(int argc, char* args[])
 		glDeleteShader(VertexShaderId);
 
 		glDeleteProgram(ProgramId);
+
+		glDetachShader(TextProgram, TextureVertexShaderId);
+		glDetachShader(TextProgram, TextureFragShaderId);
+
+		glDeleteShader(TextureFragShaderId);
+		glDeleteShader(TextureVertexShaderId);
+
+		glDeleteProgram(TextProgram);
 
 		ErrorCheckValue = glGetError();
 		if (ErrorCheckValue != GL_NO_ERROR)

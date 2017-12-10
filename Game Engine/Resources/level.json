@@ -30,7 +30,7 @@
     {
       "Wall1.json": {
         "Transform": {
-            "x": -10,
+            "x": -1,
             "y": 0
           }
       }
@@ -39,7 +39,7 @@
     {
       "Wall1.json": {
         "Transform": {
-            "x": 10,
+            "x": 1,
             "y": 0
           }
       }
@@ -49,7 +49,7 @@
       "Wall2.json": {
         "Transform": {
             "x": 0,
-            "y": 10
+            "y": 1
           }
       }
     }
@@ -58,7 +58,7 @@
       "Wall2.json": {
         "Transform": {
             "x": 0,
-            "y": -10
+            "y": -1
           }
       }
     }

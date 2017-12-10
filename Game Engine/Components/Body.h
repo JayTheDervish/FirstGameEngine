@@ -21,6 +21,7 @@ Creation date: 10/26/2017
 #define Body_h
 
 #include "Component.h"
+#include "..\Shapes.h"
 
 class GameObject;
 class Shape;
@@ -29,6 +30,7 @@ class Body : public Component
 {
 public:
 	Body();
+	Body(SHAPE_TYPE shapeType);
 	~Body();
 
 	float mPosX, mPosY;
@@ -56,5 +58,7 @@ private:
 	GameObject * daddy;
 
 	Shape * shape;
+
+	SHAPE_TYPE type;
 };
 #endif // !Body_h

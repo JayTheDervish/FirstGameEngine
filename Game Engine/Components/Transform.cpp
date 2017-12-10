@@ -16,14 +16,12 @@ Creation date: 10/26/2017
 
 #include "Transform.h"
 
-Transform::Transform(float  x, float y, Vector2D scale)
+Transform::Transform(float  x, float y, Vector2D scale2d)
 {
 	postion2d.x = x;
 	postion2d.y = y;
 
-	scale = scale;
-
-	skin = false;
+	 scale = scale2d;
 }
 
 Transform::~Transform()

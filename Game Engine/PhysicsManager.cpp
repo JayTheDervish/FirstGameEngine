@@ -77,7 +77,11 @@ void PhysicsManager::Update(float dt)
 					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
 						continue;
 					else
-						printf("YOU GOT HIT\n");//do stuff to handle collision
+					{
+						gameObject1->alive = false;
+						printf("YOU GOT HIT\n");
+						//Fire event to game over screen
+					}
 				}
 				//Check if wall
 			}

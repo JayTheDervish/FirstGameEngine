@@ -55,21 +55,17 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			{
 				nlohmann::json playertransform = j["Player.json"];
 
-				nlohmann::json trans = playertransform["Transform"];
 
-				nlohmann::json scales = component["Transform"];
-
-				float x = playertransform["Transform"]["x"];
-				float y = playertransform["Transform"]["y"];
-				float scaleVal = component["Transform"]["scale"];
-
+				float x =  AcryJson::ParseFloat(playertransform, "Transform", "x");
+				float y = AcryJson::ParseFloat(playertransform, "Transform", "y");
+				float scaleVal = AcryJson::ParseFloat(component, "Transform", "scale");
 
 				Vector2D scale;
 
 				scale.x = scale.y = scaleVal;
 
-
 				Transform * transform = new Transform(x, y, scale);
+
 				transform->Initialize(newObj);
 				newObj->AddComponent(TRANSFORM, transform);
 			}
@@ -78,6 +74,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				std::string spriteIcon = component["Sprite"];
 
 				Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
+				sprite->skin = true;
 				sprite->Initialize(newObj);
 				newObj->AddComponent(SPRITE, sprite);
 			}
@@ -123,13 +120,14 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 				float x = trans["x"];
 				float y = trans["y"];
 
-				float scaleVal = component["Transform"]["scale"];
+				float scaleVal = AcryJson::ParseFloat(component, "Transform", "scale");
 
 				Vector2D scale;
 
 				scale.x = scale.y = scaleVal;
 
 				Transform * transform = new Transform(x, y, scale);
+
 				transform->Initialize(newObj);
 				newObj->AddComponent(TRANSFORM, transform);
 			}
@@ -139,6 +137,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 
 				Sprite * sprite = new Sprite(ResourceManager::resources->getSprite(spriteIcon[0]));
 				sprite->Initialize(newObj);
+				sprite->skin = true;
 				newObj->AddComponent(SPRITE, sprite);
 			}
 			else if (!component["UpDown"].is_null())
@@ -201,9 +200,12 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 			else if (!component["Body"].is_null())
 			{
-				Body * body = new Body();
-				body->Initialize(newObj);
-				newObj->AddComponent(BODY, body);
+				if (AcryJson::ValueExists(component, "Body", "AABB"))
+				{
+					Body * body = new Body(AABB);
+					body->Initialize(newObj);
+					newObj->AddComponent(BODY, body);
+				}
 			}
 		}
 	}
@@ -252,9 +254,12 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 			else if (!component["Body"].is_null())
 			{
-				Body * body = new Body();
-				body->Initialize(newObj);
-				newObj->AddComponent(BODY, body);
+				if (AcryJson::ValueExists(component, "Body", "AABB"))
+				{
+					Body * body = new Body(AABB);
+					body->Initialize(newObj);
+					newObj->AddComponent(BODY, body);
+				}
 			}
 		}
 	}

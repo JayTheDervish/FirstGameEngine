@@ -27,7 +27,7 @@ class GameObject;
 class Transform : public Component
 {
 public:
-	Transform(float x, float y, Vector2D scale);
+	Transform(float x, float y, Vector2D scale2d);
 	~Transform();
 
 	void Initialize(GameObject * parent);
@@ -37,7 +37,7 @@ public:
 	Vector2D scale;
 	float angle;
 	Matrix2D modelingMatrix;
-	bool skin;
+
 
 	void Serialize(nlohmann::json j);
 

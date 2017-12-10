@@ -17,12 +17,16 @@ Creation date: 10/26/2017
 #include "Body.h"
 #include "GameObject.h"
 #include "Transform.h"
-#include "..\Shapes.h"
 #include "..\Circle.h"
 #include "..\Box.h"
 
 Body::Body()
 {
+}
+
+Body::Body(SHAPE_TYPE shapeType)
+{
+	type = shapeType;
 }
 
 Body::~Body()
@@ -61,6 +65,8 @@ void Body::Initialize(GameObject * parent)
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
 	shape = new Shape();
+
+	shape->Initialize(this);
 
 	if (shape->shape == CIRCLE)
 		static_cast<Circle *>(shape)->radius = transform->scale.x;
