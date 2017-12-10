@@ -69,11 +69,11 @@ void Body::Initialize(GameObject * parent)
 	shape->Initialize(this);
 
 	if (shape->shape == CIRCLE)
-		static_cast<Circle *>(shape)->radius = transform->scale.x;
+		static_cast<Circle *>(shape)->radius = transform->scale.x * 0.5f;
 	else
 	{
-		static_cast<Box *>(shape)->height = transform->scale.y;
-		static_cast<Box *>(shape)->width = transform->scale.x;
+		static_cast<Box *>(shape)->height = transform->scale.y * 0.5f;
+		static_cast<Box *>(shape)->width = transform->scale.x * 0.5f;
 	}
 
 	mPosX = mPrevPosX = transform->postion2d.x;

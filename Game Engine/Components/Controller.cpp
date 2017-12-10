@@ -105,8 +105,8 @@ void Controller::Update(float dt)
 
 		Body* pBody = static_cast<Body*>(pGO->getComponent(BODY));
 
-		pBody->mPrevPosX = pBody->mPosX = pTransform->postion2d.x = transform->postion2d.x;
-		pBody->mPrevPosX = pBody->mPosY = pTransform->postion2d.y = transform->postion2d.y;
+		pBody->mPrevPosX = pBody->mPosX = pTransform->postion2d.x = transform->postion2d.x + 0.01 * cosf(pTransform->angle);
+		pBody->mPrevPosX = pBody->mPosY = pTransform->postion2d.y = transform->postion2d.y + 0.01 * sinf(pTransform->angle);
 
 		pTransform->angle = transform->angle;
 

@@ -39,6 +39,10 @@ void UpDown::Update(float dt)
 	Body * body = static_cast<Body*>(daddy->getComponent(BODY));
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
+	float playerFace;
+
+	transform->angle += 0.1*dt;//playerFace;
+
 	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
 	{
 		body->mVelY -= 0.01*dt * sinf(transform->angle);
