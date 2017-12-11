@@ -84,6 +84,12 @@ void PhysicsManager::Update(float dt)
 					}
 				}
 				//Check if wall
+				else if (gameObject2->gameObjectID == "Wall1")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+
+				}
 			}
 		}
 	}

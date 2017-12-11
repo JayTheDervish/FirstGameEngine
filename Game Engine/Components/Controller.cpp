@@ -118,11 +118,14 @@ void Controller::Update(float dt)
 
 	if (inputManager->isP1Action1Released())
 		printf("Player 1 Action Button 1 is released.\n");
+
+
 	if (inputManager->isP1Action2Pressed())
 		printf("Player 1 Action Button 2 is pressed.\n");
 	if (inputManager->isP1Action2Released())
 		printf("Player 1 Action Button 2 is released.\n");
 	if (inputManager->isP1Action2Triggered())
+		//Make bouncing bullets here
 		printf("Player 1 Action Button 2 is triggered.\n");
 
 

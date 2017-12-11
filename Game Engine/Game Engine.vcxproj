@@ -142,10 +142,6 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Volt.bmp" />
-    <Image Include="Resources\VoltStormHelm.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Enemy.json" />
     <None Include="Resources\level.json" />
     <None Include="Resources\Player.json" />
