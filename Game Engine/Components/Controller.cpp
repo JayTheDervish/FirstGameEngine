@@ -68,7 +68,6 @@ void Controller::Update(float dt)
 		body->mVelX = 0;
 	if (inputManager->isP1LeftPressed())
 		transform->angle += 1 * dt;
-	//	body->totalForceX += -1700 * dt  * cosf(transform->angle);
 	else
 		body->mVelX = 0;
 
@@ -116,8 +115,7 @@ void Controller::Update(float dt)
 
 		GameObjectManager::goManager->spawns.push_back(pGO);
 	}
-//	if (inputManager->isP1Action1Triggered())
-//		printf("Player 1 Action Button 1 is triggered.\n");
+
 	if (inputManager->isP1Action1Released())
 		printf("Player 1 Action Button 1 is released.\n");
 	if (inputManager->isP1Action2Pressed())
