@@ -226,11 +226,16 @@ int main(int argc, char* args[])
 	//Load Start Screen
 	windowSurface = SDL_GetWindowSurface(pWindow);
 	ResourceManager::resources->Draw(windowSurface, NULL, 0);
+
 	//Update the surface
 	SDL_UpdateWindowSurface(pWindow);
 
 	//Pause
-	SDL_Delay(2000);
+	while (inputManager->Update())
+	{
+		if (inputManager->isP1Action1Pressed())
+			break;
+	}
 
 	//Load Level
 	GameObjectManager::goManager->LoadLevel(j);
