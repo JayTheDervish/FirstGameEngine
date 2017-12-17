@@ -36,7 +36,7 @@ public:
 	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[], std::vector<Vector2D> positions);
 	static ResourceManager* resources;
 private:
-	SDL_Surface * surfaces[4]; 
+	SDL_Surface * surfaces[3]; 
 
 };
 

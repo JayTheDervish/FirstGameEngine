@@ -21,16 +21,15 @@ ResourceManager* ResourceManager::resources = nullptr;
 ResourceManager::ResourceManager()
 {
 
-	surfaces[0] = SDL_LoadBMP("Resources/Volt.bmp");
-	surfaces[1] = SDL_LoadBMP("Resources/VoltStormHelm.bmp");
-	surfaces[2] = SDL_LoadBMP("Resources/voltprime.bmp");
-	surfaces[3] = SDL_LoadBMP("Resources/GrineerProsecutor.bmp");
+	surfaces[0] = SDL_LoadBMP("Resources/StartScreen.bmp");
+	surfaces[1] = SDL_LoadBMP("Resources/YouWin.bmp");
+	surfaces[2] = SDL_LoadBMP("Resources/GameOver.bmp");
 }
 
 ResourceManager::~ResourceManager()
 {
 	//Free surfaces
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 3; ++i)
 		SDL_FreeSurface(surfaces[i]);
 	
 }

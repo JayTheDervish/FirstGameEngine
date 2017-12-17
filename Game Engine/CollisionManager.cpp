@@ -43,7 +43,9 @@ bool CollisionManager::checkCollisionAndGenContacts(Shape* shape1, Vector2D posi
 	if ((shape1->shape == CIRCLE) && (shape2->shape == CIRCLE))
 		return StaticCircleToStaticCircle(&position1, static_cast<Circle*>(shape1)->radius, &position2, static_cast<Circle*>(shape2)->radius);
 	if ((shape1->shape == CIRCLE) && (shape2->shape == AABB))
+	{
 		;//do stuff
+	}
 
 	return false;
 }
