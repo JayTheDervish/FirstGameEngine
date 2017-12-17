@@ -147,6 +147,7 @@ void glOrthog(
 int main(int argc, char* args[])
 {
 	SDL_Window *pWindow;
+	SDL_Surface *windowSurface;
 	int error = 0;
 	bool appIsRunning = true;
 
@@ -222,16 +223,29 @@ int main(int argc, char* args[])
 	inputfile >> j;
 	
 
+	//Load Start Screen
+	windowSurface = SDL_GetWindowSurface(pWindow);
+	ResourceManager::resources->Draw(windowSurface, NULL, 0);
+	//Update the surface
+	SDL_UpdateWindowSurface(pWindow);
+
+	//Pause
+	SDL_Delay(2000);
+
 	//Load Level
 	GameObjectManager::goManager->LoadLevel(j);
-	glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
+	
+
+	
+
+
 
 
 	// Game loop
 #pragma region Game Loop
 	while(inputManager->Update())
 	{
-		
+		glClearColor(0.86f, 0.59f, 0.12f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		float dt = frameRateController->getDeltaTime();

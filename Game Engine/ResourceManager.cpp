@@ -36,25 +36,18 @@ ResourceManager::~ResourceManager()
 
 SDL_Surface * ResourceManager::getSprite(char type)
 {
-	if (type == 'c')
-		return surfaces[2];
-	if (type == 'e')
-		return surfaces[3];
+	//if (type == 'c')
+	//	return surfaces[2];
+	//if (type == 'e')
+	//	return surfaces[3];
 	return nullptr;
 }
 
 
 //to be removed.
-void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players[], std::vector<Vector2D> positions)
+void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players, int screenNum)
 {
-	for (int i = 0; i < positions.size(); ++i)
-	{
-		players[i]->x = positions[i].x;
-		players[i]->y = positions[i].y;
-	}
 
-
-	SDL_BlitSurface(surfaces[2], NULL, windowSurface, players[0]);
-	SDL_BlitSurface(surfaces[3], NULL, windowSurface, players[1]);
+	SDL_BlitSurface(surfaces[screenNum], NULL, windowSurface, players);
 }
 

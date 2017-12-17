@@ -32,8 +32,7 @@ public:
 	SDL_Surface * getSprite(char type);
 
 
-	//Will move to Renderer when it is implemented.
-	void Draw(SDL_Surface * windowSurface, SDL_Rect * players[], std::vector<Vector2D> positions);
+	void Draw(SDL_Surface * windowSurface, SDL_Rect * players, int screenNum);
 	static ResourceManager* resources;
 private:
 	SDL_Surface * surfaces[3]; 
