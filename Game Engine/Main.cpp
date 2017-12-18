@@ -39,8 +39,8 @@ Creation date: 10/19/2017
 #include "Components\Sprite.h"
 
 
-
-
+bool debugMode = false;
+InputManager * inputManager = new InputManager(1, 'k');
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -58,6 +58,8 @@ float FRAME_TIME_CAP = (1.0f / 60.0f) * 1000.0f;
 int CurrentWidth = 800,
 CurrentHeight = 800,
 WindowHandle = 0;
+
+
 
 unsigned FrameCount = 0;
 
@@ -150,7 +152,8 @@ int main(int argc, char* args[])
 	SDL_Surface *windowSurface;
 	int error = 0;
 	bool appIsRunning = true;
-
+	bool gameOver = false;
+	bool youWin = false;
 
 	PhysicsManager physics;
 	
@@ -233,8 +236,14 @@ int main(int argc, char* args[])
 	//Pause
 	while (inputManager->Update())
 	{
+		if (inputManager->isP1Action2Pressed())
+			debugMode = true;
+
 		if (inputManager->isP1Action1Pressed())
+		{
+			
 			break;
+		}
 	}
 
 	//Load Level
@@ -272,9 +281,38 @@ int main(int argc, char* args[])
 		//wait frames out
 		frameRateController->WaitFrames();
 		
+
+		if (GameObjectManager::goManager->PlayerDead())
+		{
+			gameOver = true;
+			break;
+		}
+		if (GameObjectManager::goManager->YouWon())
+		{
+			youWin = true;
+			break;
+		}
+
 	}
 #pragma endregion Game Loop
 
+	//You Win screen
+	if (youWin)
+	{
+		ResourceManager::resources->Draw(windowSurface, NULL, 1);
+		//Update the surface
+		SDL_UpdateWindowSurface(pWindow);
+		SDL_Delay(5000);
+	}
+
+	//Game Over Screen
+	if (gameOver)
+	{
+		ResourceManager::resources->Draw(windowSurface, NULL, 2);
+		//Update the surface
+		SDL_UpdateWindowSurface(pWindow);
+		SDL_Delay(5000);
+	}
 
 	//Delete all GameObjects
 	delete GameObjectManager::goManager;

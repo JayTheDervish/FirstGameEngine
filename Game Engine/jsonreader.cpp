@@ -171,6 +171,7 @@ namespace AcryJson {
 
 	bool ValueExists(const json j, std::string first)
 	{
+		
 		return (j.find(first) != j.end());
 	}
 

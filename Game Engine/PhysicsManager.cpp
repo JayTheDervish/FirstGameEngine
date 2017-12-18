@@ -65,7 +65,43 @@ void PhysicsManager::Update(float dt)
 						gameObject2->alive = false;
 					}
 				}
+				//Check to see if bullet hits player
+				if (gameObject2->gameObjectID == "Player")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+						gameObject2->alive = false;
+					}
+				}
 				//Check if wall for bouncing (in future code)
+				//Check if wall
+				else if (gameObject2->gameObjectID == "Wall1")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+					}
+				}
+				else if (gameObject2->gameObjectID == "Wall2")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+					}
+				}
 			}
 			else if (gameObject1->gameObjectID == "Player")
 			{
@@ -88,7 +124,23 @@ void PhysicsManager::Update(float dt)
 				{
 					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
 					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
-
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+					}
+				}
+				else if (gameObject2->gameObjectID == "Wall2")
+				{
+					Body * body1 = static_cast<Body*>(gameObject1->getComponent(BODY));
+					Body * body2 = static_cast<Body*>(gameObject2->getComponent(BODY));
+					if (!collisions->checkCollisionAndGenContacts(body1->getShape(), static_cast<Transform *>(gameObject1->getComponent(TRANSFORM))->postion2d, body2->getShape(), static_cast<Transform *>(gameObject2->getComponent(TRANSFORM))->postion2d))
+						continue;
+					else
+					{
+						gameObject1->alive = false;
+					}
 				}
 			}
 		}

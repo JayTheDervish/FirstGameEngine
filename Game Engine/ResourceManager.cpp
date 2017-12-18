@@ -44,7 +44,7 @@ SDL_Surface * ResourceManager::getSprite(char type)
 }
 
 
-//to be removed.
+
 void ResourceManager::Draw(SDL_Surface * windowSurface, SDL_Rect * players, int screenNum)
 {
 

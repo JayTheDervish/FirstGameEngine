@@ -16,6 +16,7 @@ Creation date: 10/26/2017
 
 #include "CollisionManager.h"
 #include "Circle.h"
+#include "Box.h"
 
 extern "C" {
 	#include "MathLibraries\Math2D.h"
@@ -43,9 +44,7 @@ bool CollisionManager::checkCollisionAndGenContacts(Shape* shape1, Vector2D posi
 	if ((shape1->shape == CIRCLE) && (shape2->shape == CIRCLE))
 		return StaticCircleToStaticCircle(&position1, static_cast<Circle*>(shape1)->radius, &position2, static_cast<Circle*>(shape2)->radius);
 	if ((shape1->shape == CIRCLE) && (shape2->shape == AABB))
-	{
-		;//do stuff
-	}
+		return StaticPointToStaticRect(&position1, &position2, static_cast<Box *>(shape2)->width, static_cast<Box *>(shape2)->height);
 
 	return false;
 }

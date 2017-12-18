@@ -142,7 +142,13 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 			else if (!component["UpDown"].is_null())
 			{
-				UpDown * updown = new UpDown();
+				bool special = false;
+
+				std::string value = AcryJson::ParseString(j, "Enemy.json", "UpDown");
+
+				special = (value == "no"); 
+
+				UpDown * updown = new UpDown(special);
 				updown->Initialize(newObj);
 				newObj->AddComponent(UPDOWN, updown);
 			}
@@ -174,7 +180,7 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			{
 				nlohmann::json walltransform = j["Wall1.json"];
 
-				nlohmann::json trans = walltransform["Transform"];
+				nlohmann::json trans = j["Wall1.json"]["Transform"];
 
 				nlohmann::json scales = component["Transform"]["scale"];
 
@@ -200,12 +206,11 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 			else if (!component["Body"].is_null())
 			{
-				if (AcryJson::ValueExists(component, "Body", "AABB"))
-				{
+
 					Body * body = new Body(AABB);
 					body->Initialize(newObj);
 					newObj->AddComponent(BODY, body);
-				}
+
 			}
 		}
 	}
@@ -254,12 +259,11 @@ GameObject * GameObjectFactory::CreateObject(nlohmann::json j)
 			}
 			else if (!component["Body"].is_null())
 			{
-				if (AcryJson::ValueExists(component, "Body", "AABB"))
-				{
+
 					Body * body = new Body(AABB);
 					body->Initialize(newObj);
 					newObj->AddComponent(BODY, body);
-				}
+
 			}
 		}
 	}

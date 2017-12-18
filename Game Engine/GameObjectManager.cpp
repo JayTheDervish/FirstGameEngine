@@ -41,7 +41,10 @@ void GameObjectManager::LoadLevel(nlohmann::json filename)
 		for (int i = 0; i < filename[it.key()].size() ; ++i)
 		{
 			o = filename[it.key()][i];
-			objects.push_back(GOFactory->CreateObject(o));
+			GameObject * pGO = GOFactory->CreateObject(o);
+			if (pGO->gameObjectID == "Enemy")
+				++enemycount;
+			objects.push_back(pGO);
 		}
 	}
 
@@ -69,8 +72,24 @@ void GameObjectManager::UpdateAll(float dt)
 void GameObjectManager::KillDead()
 {
 	for (auto objPointer : graveyard)
+	{
+		if (objPointer->gameObjectID == "Player")
+			playeralive = false;
+		else if (objPointer->gameObjectID == "Enemy")
+			--enemycount;
 		objects.erase(std::remove(objects.begin(), objects.end(), objPointer), objects.end());
+	}
 	graveyard.clear();
+}
+
+bool GameObjectManager::PlayerDead()
+{
+	return !playeralive;
+}
+
+bool GameObjectManager::YouWon()
+{
+	return (enemycount == 0);
 }
 
 

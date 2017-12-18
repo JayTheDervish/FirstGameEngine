@@ -26,7 +26,7 @@ class GameObject;
 class UpDown : public Component
 {
 public:
-	UpDown();
+	UpDown(bool special);
 	~UpDown();
 
 	void Initialize(GameObject * parent);
@@ -41,6 +41,7 @@ public:
 private:
 	GameObject * daddy;
 	float elapsedTime;
+	bool _special;
 };
 
 #endif

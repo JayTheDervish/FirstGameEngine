@@ -18,9 +18,12 @@ Creation date: 10/26/2017
 #include "GameObject.h"
 #include "Body.h"
 #include "Transform.h"
+#include "..\json.hpp"
+#include "..\GameObjectManager.h"
 
-UpDown::UpDown()
+UpDown::UpDown(bool special)
 {
+	_special = special;
 }
 
 UpDown::~UpDown()
@@ -33,15 +36,41 @@ void UpDown::Initialize(GameObject * parent)
 	elapsedTime = 0.0f;
 }
 
-
+int fps = 0;
 void UpDown::Update(float dt)
 {
 	Body * body = static_cast<Body*>(daddy->getComponent(BODY));
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
-	float playerFace;
 
-	transform->angle += 0.1*dt;//playerFace;
+	if (++fps%60==0 && _special)
+	{
+
+		std::ifstream inputfile("Resources/Bullet.json");
+		nlohmann::json o;
+		inputfile >> o;
+
+		GameObject* pGO = GameObjectManager::goManager->CreateObject(o);
+
+		Transform* pTransform = static_cast<Transform*>(pGO->getComponent(TRANSFORM));
+
+
+
+		Body* pBody = static_cast<Body*>(pGO->getComponent(BODY));
+
+		pBody->mPrevPosX = pBody->mPosX = pTransform->postion2d.x = transform->postion2d.x + 0.1 * cosf(transform->angle);
+		pBody->mPrevPosX = pBody->mPosY = pTransform->postion2d.y = transform->postion2d.y + 0.1 * sinf(transform->angle);
+
+		pTransform->angle = transform->angle;
+
+		pBody->mVelX = body->mVelX + 100 * dt * cosf(pTransform->angle);
+		pBody->mVelY = body->mVelY + 100 * dt * sinf(pTransform->angle);
+
+
+		GameObjectManager::goManager->spawns.push_back(pGO);
+	}
+
+	transform->angle += 0.1*dt;
 
 	if (elapsedTime > 0.0f && elapsedTime < 5.0f)
 	{

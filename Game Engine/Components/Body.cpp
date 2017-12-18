@@ -31,6 +31,7 @@ Body::Body(SHAPE_TYPE shapeType)
 
 Body::~Body()
 {
+	delete shape;
 }
 
 void Body::Integrate(float dt)
@@ -64,7 +65,7 @@ void Body::Initialize(GameObject * parent)
 	daddy = parent;
 	Transform * transform = (Transform *)daddy->getComponent(TRANSFORM);
 
-	shape = new Shape();
+	shape = new Shape(type);
 
 	shape->Initialize(this);
 

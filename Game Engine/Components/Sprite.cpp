@@ -16,6 +16,9 @@ Creation date: 10/26/2017
 
 #include "Sprite.h"
 #include "GameObject.h"
+#include "..\Main.h"
+
+extern bool debugMode;
 
 Sprite::Sprite(SDL_Surface * sprite)
 {
@@ -43,6 +46,9 @@ void Sprite::Update(float dt)
 
 void Sprite::Draw() 
 {
+	if(debugMode)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glBindVertexArray(0);
 }

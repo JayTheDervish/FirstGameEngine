@@ -104,8 +104,8 @@ void Controller::Update(float dt)
 
 		Body* pBody = static_cast<Body*>(pGO->getComponent(BODY));
 
-		pBody->mPrevPosX = pBody->mPosX = pTransform->postion2d.x = transform->postion2d.x + 0.01 * cosf(pTransform->angle);
-		pBody->mPrevPosX = pBody->mPosY = pTransform->postion2d.y = transform->postion2d.y + 0.01 * sinf(pTransform->angle);
+		pBody->mPrevPosX = pBody->mPosX = pTransform->postion2d.x = transform->postion2d.x + 0.1 * cosf(transform->angle);
+		pBody->mPrevPosX = pBody->mPosY = pTransform->postion2d.y = transform->postion2d.y + 0.1 * sinf(transform->angle);
 
 		pTransform->angle = transform->angle;
 
@@ -117,16 +117,19 @@ void Controller::Update(float dt)
 	}
 
 	if (inputManager->isP1Action1Released())
-		printf("Player 1 Action Button 1 is released.\n");
+		;
 
 
 	if (inputManager->isP1Action2Pressed())
-		printf("Player 1 Action Button 2 is pressed.\n");
+	{
+		body->totalForceY = body->totalForceY * 4;
+		body->totalForceX = body->totalForceX * 4;;
+	}
 	if (inputManager->isP1Action2Released())
-		printf("Player 1 Action Button 2 is released.\n");
+		;
 	if (inputManager->isP1Action2Triggered())
 		//Make bouncing bullets here
-		printf("Player 1 Action Button 2 is triggered.\n");
+		;
 
 
 	/*

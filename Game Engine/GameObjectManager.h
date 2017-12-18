@@ -44,11 +44,17 @@ public:
 
 	void KillDead();
 
+	bool PlayerDead();
+
+	bool YouWon();
+
 	GameObject* CreateObject(nlohmann::json j);
 	
 	static GameObjectManager* goManager;
 private:
 	GameObjectFactory * GOFactory;
+	bool playeralive = true;
+	int enemycount = 0;
 };
 
 #endif // !GAMEOBJECTMANAGER_H

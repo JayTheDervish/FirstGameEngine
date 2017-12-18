@@ -24,7 +24,7 @@ Creation date: 10/19/2017
 
 //class GameObjectManager;
 
-extern InputManager * inputManager = new InputManager(1, 'k');
+
 
 //extern GameObjectManager * goManager;
 

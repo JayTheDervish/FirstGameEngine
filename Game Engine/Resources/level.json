@@ -3,65 +3,71 @@
     {
       "Player.json": {
         "Transform": {
-            "x": 0.0,
-            "y": 0.0
-          }
+          "x": 0.0,
+          "y": 0.0
+        },
+        "UpDown": "yes"
+      }
+    },
+    {
+      "Enemy.json": {
+        "Transform": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "UpDown": "yes"
+      }
+    },
+    {
+      "Enemy.json": {
+        "Transform": {
+          "x": -0.5,
+          "y": 0.5
+        },
+        "UpDown": "yes"
+      }
+    },
+    {
+      "Enemy.json": {
+        "Transform": {
+          "x": -0.5,
+          "y": -0.5
+        },
+        "UpDown": "no"
+      }
+    },
+    {
+      "Wall1.json": {
+        "Transform": {
+          "x": -1,
+          "y": 0
         }
-    }
-    ,
-    {
-      "Enemy.json": {
-        "Transform": {
-            "x": 0.5,
-            "y": 0.5
-          }
       }
-    }
-    ,
-    {
-      "Enemy.json": {
-        "Transform": {
-            "x": -0.5,
-            "y": 0.5
-          }
-      }
-    }
-	,
+    },
     {
       "Wall1.json": {
         "Transform": {
-            "x": -1,
-            "y": 0
-          }
+          "x": 1,
+          "y": 0
+        }
       }
-    }
-	,
-    {
-      "Wall1.json": {
-        "Transform": {
-            "x": 1,
-            "y": 0
-          }
-      }
-    }
-	,
+    },
     {
       "Wall2.json": {
         "Transform": {
-            "x": 0,
-            "y": 1
-          }
+          "x": 0,
+          "y": 1
+        }
       }
-    }
-	,
+    },
     {
       "Wall2.json": {
         "Transform": {
-            "x": 0,
-            "y": -1
-          }
+          "x": 0,
+          "y": -1
+        }
       }
     }
-      ]
+  ]
 
     }
